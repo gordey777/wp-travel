@@ -2469,4 +2469,10 @@ jQuery(document).ready(function($) {
   $('.tel-btn').click(function(event) {
     $(this).siblings('.sub-phones-wrap').toggleClass('open');
   });
+
+$('.tours-list > ul > li').click(function(event) {
+  $(this).siblings('li').removeClass('active');
+  $(this).addClass('active');
+});
+
 });

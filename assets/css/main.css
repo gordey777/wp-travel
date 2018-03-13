@@ -4191,6 +4191,7 @@ header .slogan {
   left: 0;
   display: inline-block;
   padding: 10px 0;
+  transition: all .3s;
   opacity: 0;
   background: #3a434b;
 }
@@ -4309,6 +4310,7 @@ header .slogan {
 .header--nav ul .tours-list > .sub-menu > li,
 .header--nav .headnav .tours-list > .sub-menu > li {
   position: static;
+  cursor: pointer;
 }
 
 .header--nav ul .tours-list > .sub-menu > li > a,
@@ -4317,6 +4319,7 @@ header .slogan {
   font-weight: bold;
   display: inline-block;
   padding: 15px 20px;
+  pointer-events: none;
 }
 
 .header--nav ul .tours-list > .sub-menu > li > a:hover,
@@ -4330,10 +4333,22 @@ header .slogan {
   background: transparent;
 }
 
+.header--nav ul .tours-list > .sub-menu > li:hover .sub-menu,
+.header--nav .headnav .tours-list > .sub-menu > li:hover .sub-menu {
+  z-index: -1;
+  opacity: 0;
+}
+
 .header--nav ul .tours-list > .sub-menu > li:hover a,
 .header--nav .headnav .tours-list > .sub-menu > li:hover a {
   background: url(../img/menu-bg-hover.png) no-repeat 0 0;
   background-size: 100% 100%;
+}
+
+.header--nav ul .tours-list > .sub-menu > li.active .sub-menu,
+.header--nav .headnav .tours-list > .sub-menu > li.active .sub-menu {
+  z-index: 100;
+  opacity: 1;
 }
 
 .header--nav ul .tours-list > .sub-menu > li.active a,
@@ -5246,17 +5261,18 @@ footer .footer_nav_wrap {
 @media (max-width: 768px) {
   .header--nav {
     position: relative;
+    padding: 0;
     text-align: center;
   }
   .header--nav ul,
   .header--nav .headnav {
-    position: relative;
-    display: flex;
-    padding-top: 0;
-    padding-bottom: 0;
-    justify-content: space-around;
-    align-items: center;
-    flex-flow: column nowrap;
+    display: inline-block;
+    width: 100%;
+    padding: 0;
+  }
+  .header--nav ul li,
+  .header--nav .headnav li {
+    width: 100%;
   }
   .header--nav ul .tours-list,
   .header--nav .headnav .tours-list {
