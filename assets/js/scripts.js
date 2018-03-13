@@ -2385,7 +2385,7 @@ jQuery(document).ready(function($) {
     //stagePadding:30,
     smartSpeed: 1000,
     //autoHeight: true,
-    //animateIn: 'fadeIn',
+    animateIn: 'fadeIn',
     animateOut: 'fadeOut'
   });
 

@@ -4102,6 +4102,13 @@ header .slogan {
   color: #4f5860;
 }
 
+.head-bgi {
+  background-image: url("../img/header-bg.png");
+  background-repeat: no-repeat;
+  background-position: 75% 0;
+  background-size: auto 100%;
+}
+
 .header--nav {
   position: relative;
   text-align: center;
@@ -4854,7 +4861,67 @@ footer {
   min-height: 406px;
   padding-top: 30px;
   padding-bottom: 60px;
+  color: #fff;
   background: linear-gradient(to bottom, #0f1920 0%, #485058 100%);
+}
+
+footer h3 {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  padding-top: 20px;
+  padding-left: 15px;
+  text-transform: uppercase;
+}
+
+footer a {
+  display: inline-block;
+  margin-bottom: 15px;
+  color: #fff;
+}
+
+footer p {
+  margin-bottom: 15px;
+}
+
+footer .footer-search {
+  position: relative;
+  box-sizing: border-box;
+  padding-right: 60px;
+  border: 1px solid #fff;
+  border-radius: 3px;
+}
+
+footer .footer-search .search-input {
+  width: 100%;
+  margin: 0;
+  padding: 10px 10px 10px;
+  background-color: transparent;
+}
+
+footer .footer-search .search-submit {
+  position: absolute;
+  top: 1px;
+  right: 0;
+  bottom: 1px;
+  width: 60px;
+  color: #fff;
+  border: 0;
+  border-radius: 0 3px 3px 0;
+  outline: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+footer .footer-search .search-submit:active, footer .footer-search .search-submit:focus, footer .footer-search .search-submit:hover {
+  color: #fff;
+  border: 0;
+  outline: 0;
+  box-shadow: none;
+}
+
+footer .footer-search .search-submit:hover {
+  background: #DA3730;
 }
 
 footer .footer_nav_wrap {
