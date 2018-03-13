@@ -69,8 +69,8 @@ if (typeof jQuery === 'undefined') {
 
 
       self.container.appendChild(self.options.element);
-      self.container.appendChild(self.originListHTML);
       self.container.appendChild(self.arrow);
+      self.container.appendChild(self.originListHTML);
       self.container.appendChild(self.destinationListHTML);
     }
   }
