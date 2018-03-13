@@ -4692,6 +4692,12 @@ header .slogan {
   margin: 0;
 }
 
+.section-form textarea {
+  height: 110px;
+  margin: 0;
+  color: #000;
+}
+
 .section-form .input-wrapp {
   margin-bottom: 23px;
 }
@@ -4727,6 +4733,7 @@ header .slogan {
 }
 
 .section-contacts .title-wrapp:before {
+  position: absolute;
   top: 50%;
   right: 0;
   left: 0;
@@ -4772,6 +4779,74 @@ header .slogan {
   color: #0f1920;
   border: 1px solid #4f5860;
   border-radius: 4px;
+}
+
+.section-advanteges {
+  margin-bottom: 70px;
+}
+
+.section-advanteges .title-wrapp {
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 50px;
+  text-align: center;
+}
+
+.section-advanteges .title-wrapp:before {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  right: 0;
+  left: 0;
+  display: inline-block;
+  height: 1px;
+  content: '';
+  background: #e8e8e8;
+}
+
+.section-advanteges h2 {
+  font-family: Roboto;
+  font-size: 36px;
+  font-weight: bold;
+  position: relative;
+  z-index: 2;
+  display: inline-block;
+  margin: 0;
+  padding: 0 40px;
+  color: #0f1920;
+  background-color: #fff;
+}
+
+.section-advanteges .advantage {
+  text-align: center;
+}
+
+.section-advanteges .advantage .img-wrap {
+  line-height: 100px;
+  display: inline-block;
+  width: 100%;
+  height: 100px;
+  margin-bottom: 18px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.section-advanteges .advantage .img-wrap img {
+  margin: 0 auto;
+}
+
+.section-advanteges .advantage .desc {
+  font-family: Open Sans;
+  font-size: 13px;
+  font-weight: normal;
+  font-style: normal;
+  line-height: normal;
+  display: inline-block;
+  width: 100%;
+  max-width: 160px;
+  margin: 0 auto;
+  text-align: center;
+  color: #0f1920;
 }
 
 footer {
