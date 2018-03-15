@@ -126,6 +126,101 @@ picture {
   flex-flow: row wrap;
 }
 
+.nav-tabs {
+  display: inline-block;
+
+  width: 100%;
+  margin-bottom: 30px;
+
+  text-align: center;
+  li {
+    display: inline-block;
+
+    margin-left: 35px;
+    &:first-child {
+      margin-left: auto;
+    }
+    &.active {
+      a {
+        text-decoration: none;
+        &:before {
+          right: 0;
+        }
+      }
+    }
+    a {
+      font-family: Roboto;
+      font-size: 18px;
+
+      display: inline-block;
+
+      padding: 10px 0;
+
+      transition: all .3s;
+      text-transform: uppercase;
+
+      color: #0f1920;
+      &:before {
+        position: absolute;
+        right: 100%;
+        bottom: 0;
+        left: 0;
+
+        display: inline-block;
+
+        height: 3px;
+
+        content: '';
+        transition: all .3s;
+
+        background: $red;
+      }
+      &:hover,
+      &.active {
+        text-decoration: none;
+        &:before {
+          right: 0;
+        }
+      }
+    }
+  }
+}
+
+
+
+.tab-content-wrap {
+  box-sizing: border-box;
+  padding-top: 40px;
+  padding-bottom: 40px;
+
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+}
+
+
+.tab-content {
+  position: relative;
+  .tab-pane {
+    position: absolute;
+    z-index: -1;
+    top: 0;
+
+    transition: opacity .3s;
+    pointer-events: none;
+
+    opacity: 0;
+    &.active {
+      position: relative;
+      z-index: 1;
+
+      display: inline-block;
+
+      pointer-events: auto;
+
+      opacity: 1;
+    }
+  }
+}
 
 
 
@@ -1289,6 +1384,7 @@ article {
     overflow: hidden;
 
     height: 360px;
+    margin-bottom: 50px;
 
     background: linear-gradient(180deg, rgba(0, 0, 0, .5) 12.15%, rgba(77, 77, 77, 0) 30.39%);
     background-repeat: no-repeat;
@@ -1321,19 +1417,144 @@ article {
     }
   }
   .green__alert {
+    padding-top: 15px;
+    padding-bottom: 15px;
+
     background: #219653;
+    h2 {
+      font-size: 16px;
+
+      display: inline-block;
+      float: left;
+
+      //width: 110px;
+      height: 100%;
+      margin: 0 25px 0 0;
+      padding: 10px 25px 10px 0 ;
+
+      text-transform: uppercase;
+
+      color: #fff;
+      border-right: 1px solid #fff;
+    }
+    p {
+      font-family: Open Sans;
+      font-size: 14px;
+      line-height: 18px;
+
+      display: inline-block;
+      float: left;
+
+      width: calc(100% - 150px);
+
+      vertical-align: middle;
+
+      color: #fff;
+    }
+  }
+  .page-tabs {
+    margin-bottom: 70px;
   }
 }
 .tour-day {
   height: 100vh;
 }
 
-.fixed_nav{
-  &.fixed{
-    position: fixed;
-    top: 10px;
+
+
+
+.tour-content {
+  position: relative;
+  .side-nav {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: -70px;
+
+    display: inline-block;
+    ul {
+      position: relative;
+
+      display: inline-block;
+
+      width: 100%;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      li {
+        display: inline-block;
+
+        width: 100%;
+        margin: 0 0 1px 0;
+        padding: 0 0 0 20px;
+
+        transition: all .3s;
+
+        background: transparent;
+        a {
+          font-family: Open Sans;
+          font-size: 18px;
+
+          position: relative;
+
+          display: inline-block;
+
+          width: 100%;
+          padding: 15px 50px;
+
+          transition: all .3s;
+          text-align: left;
+
+          color: #fff;
+          background: #283037;
+          &:before {
+            position: absolute;
+            top: 0;
+            right: 100%;
+            bottom: 0;
+
+            display: inline-block;
+
+            width: 0;
+
+            content: '';
+            transition: all .3s;
+
+            opacity: 0;
+            background: url('../img/side-nav-bg.png') no-repeat 0 0;
+            background-size: 100% 100%;
+          }
+          &:hover {
+            text-decoration: none;
+
+            background: darken( #283037, 15%);
+          }
+        }
+        &.active {
+          a:hover,
+          a {
+            text-decoration: none;
+
+            background: #da3630;
+            &:before {
+              width: 15px;
+
+              opacity: 1;
+            }
+          }
+        }
+      }
+    }
+    &.fixed {
+      position: fixed;
+      top: 10px;
+    }
   }
 }
+
+
+
+
 
 
 
@@ -1716,6 +1937,13 @@ footer {
     }
   }
 }
+
+
+
+
+
+
+
 
 //@import 'fonts/font_roboto';
 @import 'import/base64';
