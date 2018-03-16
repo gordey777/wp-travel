@@ -11,46 +11,33 @@
   <?php endwhile; endif; ?>
 
 
+  <?php if( have_rows('main_slider') ): ?>
     <div id="main-slider" class="owl-carousel container">
-      <div class="slide item" style="background-image: url('<?php echo get_template_directory_uri(); ?>/img/bec8ac48-6017-4bc8-8e06-56fe8f49cf1d.jpg')">
-        <div class="row">
-          <div class="slider-cont-wrap col-xs-10 col-xs-offset-1">
-          <div class="slider-cont">
-            <div class="title-wrap"><h2>Круиз до Антарктиды</h2></div>
-            <p class="time">13 дней</p>
-            <p class="price">от 200 000 р.</p>
+      <?php while ( have_rows('main_slider') ) : the_row(); ?>
+        <?php $bg_image = get_sub_field('img'); ?>
+        <div class="slide item" style="background: url(<?php if ( !empty($bg_image)) { echo $bg_image['url'];} ?>);">
+          <div class="row">
+            <div class="slider-cont-wrap col-xs-10 col-xs-offset-1">
+              <div class="slider-cont">
+                <?php if ( get_sub_field('title')) { ?>
+                  <div class="title-wrap"><h2><?php the_sub_field('title'); ?></h2></div>
+                <?php } ?>
+                <?php if ( get_sub_field('days')) { ?>
+                  <p class="time"><?php the_sub_field('days'); ?></p>
+                <?php } ?>
+                <?php if ( get_sub_field('price')) { ?>
+                  <p class="price"><?php the_sub_field('price'); ?></p>
+                <?php } ?>
+              </div>
+              <?php if ( get_sub_field('link')) { ?>
+                <a href="<?php the_sub_field('link'); ?>" class="slide-link btn"><?php the_sub_field('btn_text'); ?></a>
+              <?php } ?>
+            </div>
           </div>
-          <a href="#" class="slide-link btn">Подробнее</a>
-        </div>
-        </div>
-      </div><!-- .slide -->
-      <div class="slide item" style="background-image: url('<?php echo get_template_directory_uri(); ?>/img/bec8ac48-6017-4bc8-8e06-56fe8f49cf1d.jpg')">
-        <div class="row">
-          <div class="slider-cont-wrap col-xs-10 col-xs-offset-1">
-          <div class="slider-cont">
-            <div class="title-wrap"><h2>Круиз до Антарктиды</h2></div>
-            <p class="time">13 дней</p>
-            <p class="price">от 200 000 р.</p>
-          </div>
-          <a href="#" class="slide-link btn">Подробнее</a>
-        </div>
-        </div>
-      </div><!-- .slide -->
-      <div class="slide item" style="background-image: url('<?php echo get_template_directory_uri(); ?>/img/bec8ac48-6017-4bc8-8e06-56fe8f49cf1d.jpg')">
-        <div class="row">
-          <div class="slider-cont-wrap col-xs-10 col-xs-offset-1">
-          <div class="slider-cont">
-            <div class="title-wrap"><h2>Круиз до Антарктиды</h2></div>
-            <p class="time">13 дней</p>
-            <p class="price">от 200 000 р.</p>
-          </div>
-          <a href="#" class="slide-link btn">Подробнее</a>
-        </div>
-        </div>
-      </div><!-- .slide -->
-
+        </div><!-- .slide -->
+      <?php  endwhile; ?>
     </div>
-
+  <?php endif; ?>
 
 
   <section class="search-tags">
@@ -66,361 +53,113 @@
     </div><!-- /.container -->
   </section>
 
+
+
+  <?php $tour_sliders = get_field('tour_sliders'); ?>
+
+  <?php  if( $tour_sliders ): ?>
   <section class="tours-sliders">
     <div class="container">
+    <?php foreach( $tour_sliders as $slider__id): ?>
+
+
       <div class="row">
         <div class="col-md-10 col-md-offset-1">
           <div class="tours-title">
-            <h2>Эксклюзивные круизы</h2>
+            <h2><?php echo get_the_title($slider__id); ?></h2>
             <a href="" class="more-tours btn red-btn">Смотреть все</a>
             <div class="clearfix"></div>
           </div>
 
           <div class="tours-slider owl-carousel">
 
-            <div class="tour item">
-              <div class="img-wrap ratio" data-hkoef="0.85" style="background-image: url('<?php echo get_template_directory_uri(); ?>/img/tour-slide-1.jpg');">
-                <a href="#"><span>Подробнее</span></a>
-              </div>
-              <div class="tours-cont">
-                <h3>Дикая Африка</h3>
-                <div class="tours-subcont">
-                  <div class="tour-tags">
-                    Габон, Гамбия, Гана, Гвинея, Гвинея-Бисау, Джибути, Замбия, Зимбабве
-                    Габон, Гамбия, Гана, Гвинея, Гвинея-Бисау, Джибути, Замбия, Зимбабве
-                  </div>
-                  <div class="tour-price">230 000 руб.</div>
-                  <div class="tour-time">7 дней</div>
-                </div>
-              </div>
-            </div><!-- .item -->
 
-            <div class="tour item">
-              <div class="img-wrap ratio" data-hkoef="0.85" style="background-image: url('<?php echo get_template_directory_uri(); ?>/img/tour-slide-1.jpg');">
-                <a href="#"><span>Подробнее</span></a>
-              </div>
-              <div class="tours-cont">
-                <h3>Дикая Африка</h3>
-                <div class="tours-subcont">
-                  <div class="tour-tags">
-                    Габон, Гамбия, Гана, Гвинея, Гвинея-Бисау, Джибути, Замбия, Зимбабве
-                    Габон, Гамбия, Гана, Гвинея, Гвинея-Бисау, Джибути, Замбия, Зимбабве
-                  </div>
-                  <div class="tour-price">230 000 руб.</div>
-                  <div class="tour-time">7 дней</div>
-                </div>
-              </div>
-            </div><!-- .item -->
+            <?php $slider_obj = get_field('tours_slider', $slider__id); ?>
 
-            <div class="tour item">
-              <div class="img-wrap ratio" data-hkoef="0.85" style="background-image: url('<?php echo get_template_directory_uri(); ?>/img/tour-slide-1.jpg');">
-                <a href="#"><span>Подробнее</span></a>
-              </div>
-              <div class="tours-cont">
-                <h3>Дикая Африка</h3>
-                <div class="tours-subcont">
-                  <div class="tour-tags">
-                    Габон, Гамбия, Гана, Гвинея, Гвинея-Бисау, Джибути, Замбия, Зимбабве
-                  </div>
-                  <div class="tour-price">230 000 руб.</div>
-                  <div class="tour-time">7 дней</div>
-                </div>
-              </div>
-            </div><!-- .item -->
+            <?php $slider_args = array(
+              'numberposts' => 4,
+              'orderby'     => 'date',
+              'order'       => 'DESC',
+              'include'     => $slider_obj,
+              'post_type'   => 'post',
 
-            <div class="tour item">
-              <div class="img-wrap ratio" data-hkoef="0.85" style="background-image: url('<?php echo get_template_directory_uri(); ?>/img/tour-slide-1.jpg');">
-                <a href="#"><span>Подробнее</span></a>
-              </div>
-              <div class="tours-cont">
-                <h3>Дикая Африка</h3>
-                <div class="tours-subcont">
-                  <div class="tour-tags">
-                    Габон, Гамбия, Гана, Гвинея, Гвинея-Бисау, Джибути, Замбия, Зимбабве
-                    Габон, Гамбия, Гана, Гвинея, Гвинея-Бисау, Джибути, Замбия, Зимбабве
-                    Габон, Гамбия, Гана, Гвинея, Гвинея-Бисау, Джибути, Замбия, Зимбабве
-                  </div>
-                  <div class="tour-price">230 000 руб.</div>
-                  <div class="tour-time">7 дней</div>
-                </div>
-              </div>
-            </div><!-- .item -->
+            );
+            $slider_posts = get_posts( $slider_args ); ?>
+            <?php foreach( $slider_posts as $post): ?>
+              <?php setup_postdata($post); ?>
+                <?php $thumb_link = ''; ?>
+                <?php if ( has_post_thumbnail()) { ?>
+                  <?php $thumb_link = get_the_post_thumbnail_url( 'medium'); ?>
+                <?php } else { ?>
+                  <?php $thumb_link =  catchFirstImage(); ?>
+                <?php } ?>
 
-            <div class="tour item">
-              <div class="img-wrap ratio" data-hkoef="0.85" style="background-image: url('<?php echo get_template_directory_uri(); ?>/img/tour-slide-1.jpg');">
-                <a href="#"><span>Подробнее</span></a>
-              </div>
-              <div class="tours-cont">
-                <h3>Дикая Африка</h3>
-                <div class="tours-subcont">
-                  <div class="tour-tags">
-                    Габон, Гамбия, Гана, Гвинея, Гвинея-Бисау, Джибути, Замбия, Зимбабве
-                    Габон, Гамбия, Гана, Гвинея, Гвинея-Бисау, Джибути, Замбия, Зимбабве
-                    Габон, Гамбия, Гана, Гвинея, Гвинея-Бисау, Джибути, Замбия, Зимбабве
-                  </div>
-                  <div class="tour-price">230 000 руб.</div>
-                  <div class="tour-time">7 дней</div>
-                </div>
-              </div>
-            </div><!-- .item -->
 
-            <div class="tour item">
-              <div class="img-wrap ratio" data-hkoef="0.85" style="background-image: url('<?php echo get_template_directory_uri(); ?>/img/tour-slide-1.jpg');">
-                <a href="#"><span>Подробнее</span></a>
-              </div>
-              <div class="tours-cont">
-                <h3>Дикая Африка</h3>
-                <div class="tours-subcont">
-                  <div class="tour-tags">
-                    Габон, Гамбия, Гана, Гвинея, Гвинея-Бисау, Джибути, Замбия, Зимбабве
-                    Габон, Гамбия, Гана, Гвинея, Гвинея-Бисау, Джибути, Замбия, Зимбабве
+                <div id="tour-<?php the_ID(); ?>" <?php post_class('tour item'); ?>>
+                  <div class="img-wrap ratio" data-hkoef="0.85" style="background-image: url('<?php the_post_thumbnail_url( 'medium'); echo $thumb_link; ?>');">
+                    <a href="<?php the_permalink(); ?>"><span>Подробнее</span></a>
                   </div>
-                  <div class="tour-price">230 000 руб.</div>
-                  <div class="tour-time">7 дней</div>
-                </div>
-              </div>
-            </div><!-- .item -->
+                  <div class="tours-cont">
+                    <h3><?php the_title(); ?></h3>
+                    <div class="tours-subcont">
+                      <div class="tour-tags">
+                        Габон, Гамбия, Гана, Гвинея, Гвинея-Бисау, Джибути, Замбия, Зимбабве
+                        Габон, Гамбия, Гана, Гвинея, Гвинея-Бисау, Джибути, Замбия, Зимбабве
+                      </div>
+                      <div class="tour-price">230 000 руб.</div>
+                      <div class="tour-time">7 дней</div>
+                    </div>
+                  </div>
+                </div><!-- .item -->
+          <?php endforeach; ?>
+
+
+          <?php wp_reset_postdata(); ?>
+
+
+              <?php if( have_rows('prods_delivery', $lending__id) ): ?>
+
+                  <?php while ( have_rows('prods_delivery', $lending__id) ) : the_row(); ?>
+                    <?php $image = get_sub_field('icon'); ?>
+                      <?php if ( !empty($image)) { ?>
+                        <img src="<?php echo $image['url']; ?>" alt="" />
+                      <?php } ?>
+                    <?php the_sub_field('delivery_title'); ?>
+                  <?php  endwhile; ?>
+
+
+                <div class="tour item">
+                  <div class="img-wrap ratio" data-hkoef="0.85" style="background-image: url('<?php echo get_template_directory_uri(); ?>/img/tour-slide-1.jpg');">
+                    <a href="#"><span>Подробнее</span></a>
+                  </div>
+                  <div class="tours-cont">
+                    <h3>Дикая Африка</h3>
+                    <div class="tours-subcont">
+                      <div class="tour-tags">
+                        Габон, Гамбия, Гана, Гвинея, Гвинея-Бисау, Джибути, Замбия, Зимбабве
+                        Габон, Гамбия, Гана, Гвинея, Гвинея-Бисау, Джибути, Замбия, Зимбабве
+                      </div>
+                      <div class="tour-price">230 000 руб.</div>
+                      <div class="tour-time">7 дней</div>
+                    </div>
+                  </div>
+                </div><!-- .item -->
+
+
+
+              <?php endif; ?>
 
           </div>
         </div>
       </div><!-- /.row -->
 
-      <div class="row">
-        <div class="col-md-10 col-md-offset-1">
-          <div class="tours-title">
-            <h2>Эксклюзивные круизы</h2>
-            <a href="" class="more-tours btn red-btn">Смотреть все</a>
-            <div class="clearfix"></div>
-          </div>
-
-          <div class="tours-slider owl-carousel">
-
-            <div class="tour item">
-              <div class="img-wrap ratio" data-hkoef="0.85" style="background-image: url('<?php echo get_template_directory_uri(); ?>/img/tour-slide-1.jpg');">
-                <a href="#"><span>Подробнее</span></a>
-              </div>
-              <div class="tours-cont">
-                <h3>Дикая Африка</h3>
-                <div class="tours-subcont">
-                  <div class="tour-tags">
-                    Габон, Гамбия, Гана, Гвинея, Гвинея-Бисау, Джибути, Замбия, Зимбабве
-                    Габон, Гамбия, Гана, Гвинея, Гвинея-Бисау, Джибути, Замбия, Зимбабве
-                  </div>
-                  <div class="tour-price">230 000 руб.</div>
-                  <div class="tour-time">7 дней</div>
-                </div>
-              </div>
-            </div><!-- .item -->
-
-            <div class="tour item">
-              <div class="img-wrap ratio" data-hkoef="0.85" style="background-image: url('<?php echo get_template_directory_uri(); ?>/img/tour-slide-1.jpg');">
-                <a href="#"><span>Подробнее</span></a>
-              </div>
-              <div class="tours-cont">
-                <h3>Дикая Африка</h3>
-                <div class="tours-subcont">
-                  <div class="tour-tags">
-                    Габон, Гамбия, Гана, Гвинея, Гвинея-Бисау, Джибути, Замбия, Зимбабве
-                    Габон, Гамбия, Гана, Гвинея, Гвинея-Бисау, Джибути, Замбия, Зимбабве
-                  </div>
-                  <div class="tour-price">230 000 руб.</div>
-                  <div class="tour-time">7 дней</div>
-                </div>
-              </div>
-            </div><!-- .item -->
-
-            <div class="tour item">
-              <div class="img-wrap ratio" data-hkoef="0.85" style="background-image: url('<?php echo get_template_directory_uri(); ?>/img/tour-slide-1.jpg');">
-                <a href="#"><span>Подробнее</span></a>
-              </div>
-              <div class="tours-cont">
-                <h3>Дикая Африка</h3>
-                <div class="tours-subcont">
-                  <div class="tour-tags">
-                    Габон, Гамбия, Гана, Гвинея, Гвинея-Бисау, Джибути, Замбия, Зимбабве
-                  </div>
-                  <div class="tour-price">230 000 руб.</div>
-                  <div class="tour-time">7 дней</div>
-                </div>
-              </div>
-            </div><!-- .item -->
-
-            <div class="tour item">
-              <div class="img-wrap ratio" data-hkoef="0.85" style="background-image: url('<?php echo get_template_directory_uri(); ?>/img/tour-slide-1.jpg');">
-                <a href="#"><span>Подробнее</span></a>
-              </div>
-              <div class="tours-cont">
-                <h3>Дикая Африка</h3>
-                <div class="tours-subcont">
-                  <div class="tour-tags">
-                    Габон, Гамбия, Гана, Гвинея, Гвинея-Бисау, Джибути, Замбия, Зимбабве
-                    Габон, Гамбия, Гана, Гвинея, Гвинея-Бисау, Джибути, Замбия, Зимбабве
-                    Габон, Гамбия, Гана, Гвинея, Гвинея-Бисау, Джибути, Замбия, Зимбабве
-                  </div>
-                  <div class="tour-price">230 000 руб.</div>
-                  <div class="tour-time">7 дней</div>
-                </div>
-              </div>
-            </div><!-- .item -->
-
-            <div class="tour item">
-              <div class="img-wrap ratio" data-hkoef="0.85" style="background-image: url('<?php echo get_template_directory_uri(); ?>/img/tour-slide-1.jpg');">
-                <a href="#"><span>Подробнее</span></a>
-              </div>
-              <div class="tours-cont">
-                <h3>Дикая Африка</h3>
-                <div class="tours-subcont">
-                  <div class="tour-tags">
-                    Габон, Гамбия, Гана, Гвинея, Гвинея-Бисау, Джибути, Замбия, Зимбабве
-                    Габон, Гамбия, Гана, Гвинея, Гвинея-Бисау, Джибути, Замбия, Зимбабве
-                    Габон, Гамбия, Гана, Гвинея, Гвинея-Бисау, Джибути, Замбия, Зимбабве
-                  </div>
-                  <div class="tour-price">230 000 руб.</div>
-                  <div class="tour-time">7 дней</div>
-                </div>
-              </div>
-            </div><!-- .item -->
-
-            <div class="tour item">
-              <div class="img-wrap ratio" data-hkoef="0.85" style="background-image: url('<?php echo get_template_directory_uri(); ?>/img/tour-slide-1.jpg');">
-                <a href="#"><span>Подробнее</span></a>
-              </div>
-              <div class="tours-cont">
-                <h3>Дикая Африка</h3>
-                <div class="tours-subcont">
-                  <div class="tour-tags">
-                    Габон, Гамбия, Гана, Гвинея, Гвинея-Бисау, Джибути, Замбия, Зимбабве
-                    Габон, Гамбия, Гана, Гвинея, Гвинея-Бисау, Джибути, Замбия, Зимбабве
-                  </div>
-                  <div class="tour-price">230 000 руб.</div>
-                  <div class="tour-time">7 дней</div>
-                </div>
-              </div>
-            </div><!-- .item -->
-
-          </div>
-        </div>
-      </div><!-- /.row -->
-
-      <div class="row">
-        <div class="col-md-10 col-md-offset-1">
-          <div class="tours-title">
-            <h2>Эксклюзивные круизы</h2>
-            <a href="" class="more-tours btn red-btn">Смотреть все</a>
-            <div class="clearfix"></div>
-          </div>
-
-          <div class="tours-slider owl-carousel">
-
-            <div class="tour item">
-              <div class="img-wrap ratio" data-hkoef="0.85" style="background-image: url('<?php echo get_template_directory_uri(); ?>/img/tour-slide-1.jpg');">
-                <a href="#"><span>Подробнее</span></a>
-              </div>
-              <div class="tours-cont">
-                <h3>Дикая Африка</h3>
-                <div class="tours-subcont">
-                  <div class="tour-tags">
-                    Габон, Гамбия, Гана, Гвинея, Гвинея-Бисау, Джибути, Замбия, Зимбабве
-                    Габон, Гамбия, Гана, Гвинея, Гвинея-Бисау, Джибути, Замбия, Зимбабве
-                  </div>
-                  <div class="tour-price">230 000 руб.</div>
-                  <div class="tour-time">7 дней</div>
-                </div>
-              </div>
-            </div><!-- .item -->
-
-            <div class="tour item">
-              <div class="img-wrap ratio" data-hkoef="0.85" style="background-image: url('<?php echo get_template_directory_uri(); ?>/img/tour-slide-1.jpg');">
-                <a href="#"><span>Подробнее</span></a>
-              </div>
-              <div class="tours-cont">
-                <h3>Дикая Африка</h3>
-                <div class="tours-subcont">
-                  <div class="tour-tags">
-                    Габон, Гамбия, Гана, Гвинея, Гвинея-Бисау, Джибути, Замбия, Зимбабве
-                    Габон, Гамбия, Гана, Гвинея, Гвинея-Бисау, Джибути, Замбия, Зимбабве
-                  </div>
-                  <div class="tour-price">230 000 руб.</div>
-                  <div class="tour-time">7 дней</div>
-                </div>
-              </div>
-            </div><!-- .item -->
-
-            <div class="tour item">
-              <div class="img-wrap ratio" data-hkoef="0.85" style="background-image: url('<?php echo get_template_directory_uri(); ?>/img/tour-slide-1.jpg');">
-                <a href="#"><span>Подробнее</span></a>
-              </div>
-              <div class="tours-cont">
-                <h3>Дикая Африка</h3>
-                <div class="tours-subcont">
-                  <div class="tour-tags">
-                    Габон, Гамбия, Гана, Гвинея, Гвинея-Бисау, Джибути, Замбия, Зимбабве
-                  </div>
-                  <div class="tour-price">230 000 руб.</div>
-                  <div class="tour-time">7 дней</div>
-                </div>
-              </div>
-            </div><!-- .item -->
-
-            <div class="tour item">
-              <div class="img-wrap ratio" data-hkoef="0.85" style="background-image: url('<?php echo get_template_directory_uri(); ?>/img/tour-slide-1.jpg');">
-                <a href="#"><span>Подробнее</span></a>
-              </div>
-              <div class="tours-cont">
-                <h3>Дикая Африка</h3>
-                <div class="tours-subcont">
-                  <div class="tour-tags">
-                    Габон, Гамбия, Гана, Гвинея, Гвинея-Бисау, Джибути, Замбия, Зимбабве
-                    Габон, Гамбия, Гана, Гвинея, Гвинея-Бисау, Джибути, Замбия, Зимбабве
-                    Габон, Гамбия, Гана, Гвинея, Гвинея-Бисау, Джибути, Замбия, Зимбабве
-                  </div>
-                  <div class="tour-price">230 000 руб.</div>
-                  <div class="tour-time">7 дней</div>
-                </div>
-              </div>
-            </div><!-- .item -->
-
-            <div class="tour item">
-              <div class="img-wrap ratio" data-hkoef="0.85" style="background-image: url('<?php echo get_template_directory_uri(); ?>/img/tour-slide-1.jpg');">
-                <a href="#"><span>Подробнее</span></a>
-              </div>
-              <div class="tours-cont">
-                <h3>Дикая Африка</h3>
-                <div class="tours-subcont">
-                  <div class="tour-tags">
-                    Габон, Гамбия, Гана, Гвинея, Гвинея-Бисау, Джибути, Замбия, Зимбабве
-                    Габон, Гамбия, Гана, Гвинея, Гвинея-Бисау, Джибути, Замбия, Зимбабве
-                    Габон, Гамбия, Гана, Гвинея, Гвинея-Бисау, Джибути, Замбия, Зимбабве
-                  </div>
-                  <div class="tour-price">230 000 руб.</div>
-                  <div class="tour-time">7 дней</div>
-                </div>
-              </div>
-            </div><!-- .item -->
-
-            <div class="tour item">
-              <div class="img-wrap ratio" data-hkoef="0.85" style="background-image: url('<?php echo get_template_directory_uri(); ?>/img/tour-slide-1.jpg');">
-                <a href="#"><span>Подробнее</span></a>
-              </div>
-              <div class="tours-cont">
-                <h3>Дикая Африка</h3>
-                <div class="tours-subcont">
-                  <div class="tour-tags">
-                    Габон, Гамбия, Гана, Гвинея, Гвинея-Бисау, Джибути, Замбия, Зимбабве
-                    Габон, Гамбия, Гана, Гвинея, Гвинея-Бисау, Джибути, Замбия, Зимбабве
-                  </div>
-                  <div class="tour-price">230 000 руб.</div>
-                  <div class="tour-time">7 дней</div>
-                </div>
-              </div>
-            </div><!-- .item -->
-
-          </div>
-        </div>
-      </div><!-- /.row -->
-
+    <?php endforeach; ?>
     </div><!-- /.container -->
   </section>
+  <?php endif; ?>
+
+
+
 
 
   <section class="content-section">

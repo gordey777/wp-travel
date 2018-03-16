@@ -541,7 +541,7 @@ header {
     justify-content: space-around;
     align-items: center;
     flex-flow: row nowrap;
-    > li.has-children {
+    > li.menu-item-has-children {
       //position: static;
       > a {
         position: relative;
@@ -615,7 +615,7 @@ header {
         opacity: 0;
         background: #3a434b;
         box-shadow: 0 0 4px rgba(0, 0, 0, .4);
-        > li.has-children {
+        > li.menu-item-has-children {
           //position: static;
           > a {
             position: relative;
@@ -727,7 +727,7 @@ header {
         padding-left: 40px;
 
         background: #1d262e;
-        .has-children {
+        .menu-item-has-children {
           a {
             &:before {
               display: none;
@@ -826,6 +826,24 @@ header {
 
   padding: 0;
   .slide {
+    position: relative;
+
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    &:before {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+
+      display: inline-block;
+
+      content: '';
+
+      background: linear-gradient(270deg, rgba(79, 88, 96, .59) 0%, rgba(79, 88, 96, 0) 10.71%, rgba(79, 88, 96, 0) 89.12%, rgba(79, 88, 96, .6) 100%);
+    }
     .slider-cont-wrap {
       position: relative;
 
@@ -836,10 +854,6 @@ header {
       display:         flex;
 
       min-height: 360px;
-
-      background-repeat: no-repeat;
-      background-position: center center;
-      background-size: cover;
 
       flex-flow: row nowrap;
       align-items: center;
@@ -2688,12 +2702,12 @@ footer {
           padding-right: 35px;
         }
       }
-      > li.has-children {
+      > li.menu-item-has-children {
         > a {
           pointer-events: none;
         }
       }
-      > li.has-children:not(.tours-list), > li:not(.tours-list) {
+      > li.menu-item-has-children:not(.tours-list), > li:not(.tours-list) {
         display: inline-block;
 
         width: 100%;

@@ -1979,8 +1979,8 @@ jQuery(document).ready(function($) {
   $('.tours-slider').each(function() {
     $(this).owlCarousel({
       lazyLoad: true,
-      loop: true,
-      margin: 40,
+      loop: false,
+
       nav: true,
       dots: false,
       navText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
@@ -1990,9 +1990,11 @@ jQuery(document).ready(function($) {
           items: 1
         },
         768: {
-          items: 2
+          items: 2,
+          margin: 20
         },
         992: {
+          margin: 40,
           items: 3
         }
       }

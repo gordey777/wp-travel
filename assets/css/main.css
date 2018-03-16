@@ -4224,14 +4224,14 @@ header .slogan {
   flex-flow: row nowrap;
 }
 
-.header--nav ul > li.has-children > a,
-.header--nav .headnav > li.has-children > a {
+.header--nav ul > li.menu-item-has-children > a,
+.header--nav .headnav > li.menu-item-has-children > a {
   position: relative;
   padding-right: 35px;
 }
 
-.header--nav ul > li.has-children > a:before,
-.header--nav .headnav > li.has-children > a:before {
+.header--nav ul > li.menu-item-has-children > a:before,
+.header--nav .headnav > li.menu-item-has-children > a:before {
   font-family: 'FontAwesome';
   position: absolute;
   top: 0;
@@ -4295,14 +4295,14 @@ header .slogan {
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.4);
 }
 
-.header--nav ul li .sub-menu > li.has-children > a,
-.header--nav .headnav li .sub-menu > li.has-children > a {
+.header--nav ul li .sub-menu > li.menu-item-has-children > a,
+.header--nav .headnav li .sub-menu > li.menu-item-has-children > a {
   position: relative;
   padding-right: 35px;
 }
 
-.header--nav ul li .sub-menu > li.has-children > a:before,
-.header--nav .headnav li .sub-menu > li.has-children > a:before {
+.header--nav ul li .sub-menu > li.menu-item-has-children > a:before,
+.header--nav .headnav li .sub-menu > li.menu-item-has-children > a:before {
   display: inline-block;
   width: 25px;
   padding: 0;
@@ -4413,8 +4413,8 @@ header .slogan {
   background: #1d262e;
 }
 
-.header--nav ul .tours-list > .sub-menu .has-children a:before,
-.header--nav .headnav .tours-list > .sub-menu .has-children a:before {
+.header--nav ul .tours-list > .sub-menu .menu-item-has-children a:before,
+.header--nav .headnav .tours-list > .sub-menu .menu-item-has-children a:before {
   display: none;
 }
 
@@ -4517,6 +4517,24 @@ header .slogan {
   padding: 0;
 }
 
+#main-slider .slide {
+  position: relative;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+}
+
+#main-slider .slide:before {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: inline-block;
+  content: '';
+  background: linear-gradient(270deg, rgba(79, 88, 96, 0.59) 0%, rgba(79, 88, 96, 0) 10.71%, rgba(79, 88, 96, 0) 89.12%, rgba(79, 88, 96, 0.6) 100%);
+}
+
 #main-slider .slide .slider-cont-wrap {
   position: relative;
   display: -webkit-flex;
@@ -4525,9 +4543,6 @@ header .slogan {
   display: -o-flex;
   display: flex;
   min-height: 360px;
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: cover;
   flex-flow: row nowrap;
   align-items: center;
   justify-content: space-between;
@@ -6156,21 +6171,21 @@ footer .footer_nav_wrap {
   .header--nav .headnav > li > a {
     padding-right: 35px;
   }
-  .header--nav ul > li.has-children > a,
-  .header--nav .headnav > li.has-children > a {
+  .header--nav ul > li.menu-item-has-children > a,
+  .header--nav .headnav > li.menu-item-has-children > a {
     pointer-events: none;
   }
-  .header--nav ul > li.has-children:not(.tours-list), .header--nav ul > li:not(.tours-list),
-  .header--nav .headnav > li.has-children:not(.tours-list),
+  .header--nav ul > li.menu-item-has-children:not(.tours-list), .header--nav ul > li:not(.tours-list),
+  .header--nav .headnav > li.menu-item-has-children:not(.tours-list),
   .header--nav .headnav > li:not(.tours-list) {
     display: inline-block;
     width: 100%;
   }
-  .header--nav ul > li.has-children:not(.tours-list) .sub-menu,
-  .header--nav ul > li.has-children:not(.tours-list) .sub-menu.left, .header--nav ul > li:not(.tours-list) .sub-menu,
+  .header--nav ul > li.menu-item-has-children:not(.tours-list) .sub-menu,
+  .header--nav ul > li.menu-item-has-children:not(.tours-list) .sub-menu.left, .header--nav ul > li:not(.tours-list) .sub-menu,
   .header--nav ul > li:not(.tours-list) .sub-menu.left,
-  .header--nav .headnav > li.has-children:not(.tours-list) .sub-menu,
-  .header--nav .headnav > li.has-children:not(.tours-list) .sub-menu.left,
+  .header--nav .headnav > li.menu-item-has-children:not(.tours-list) .sub-menu,
+  .header--nav .headnav > li.menu-item-has-children:not(.tours-list) .sub-menu.left,
   .header--nav .headnav > li:not(.tours-list) .sub-menu,
   .header--nav .headnav > li:not(.tours-list) .sub-menu.left {
     position: absolute;
@@ -6179,11 +6194,11 @@ footer .footer_nav_wrap {
     left: 0;
     display: inline-block;
   }
-  .header--nav ul > li.has-children:not(.tours-list) .sub-menu li,
-  .header--nav ul > li.has-children:not(.tours-list) .sub-menu.left li, .header--nav ul > li:not(.tours-list) .sub-menu li,
+  .header--nav ul > li.menu-item-has-children:not(.tours-list) .sub-menu li,
+  .header--nav ul > li.menu-item-has-children:not(.tours-list) .sub-menu.left li, .header--nav ul > li:not(.tours-list) .sub-menu li,
   .header--nav ul > li:not(.tours-list) .sub-menu.left li,
-  .header--nav .headnav > li.has-children:not(.tours-list) .sub-menu li,
-  .header--nav .headnav > li.has-children:not(.tours-list) .sub-menu.left li,
+  .header--nav .headnav > li.menu-item-has-children:not(.tours-list) .sub-menu li,
+  .header--nav .headnav > li.menu-item-has-children:not(.tours-list) .sub-menu.left li,
   .header--nav .headnav > li:not(.tours-list) .sub-menu li,
   .header--nav .headnav > li:not(.tours-list) .sub-menu.left li {
     position: relative;

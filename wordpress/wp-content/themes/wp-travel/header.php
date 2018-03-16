@@ -33,7 +33,7 @@
 
       <div class="top-nav-wrapp">
         <nav class="lang-nav">
-          <?php wpeLangNav(); ?>
+          <?php //wpeLangNav(); ?>
           <ul class="">
             <li><a href="#"><img src="<?php echo get_template_directory_uri(); ?>/img/flag-ru.png" alt=""></a></li>
             <li><a href="#"><img src="<?php echo get_template_directory_uri(); ?>/img/flag-uk.png" alt=""></a></li>
@@ -123,10 +123,10 @@
 
     <nav class="header--nav">
       <ul class="headnav container dark-cont">
-        <li class="has-children tours-list">
+        <li class="menu-item-has-children tours-list">
           <a href="#">menu</a>
             <ul class="sub-menu">
-            <li class="has-children active">
+            <li class="menu-item-has-children active">
               <a href="#">menu</a>
               <ul class="sub-menu">
                 <li><a href="#">menu</a></li>
@@ -147,7 +147,7 @@
                 <li><a href="#">menu</a></li>
               </ul>
             </li>
-            <li class="has-children">
+            <li class="menu-item-has-children">
               <a href="#">menu</a>
               <ul class="sub-menu">
                 <li><a href="#">Menu</a></li>
