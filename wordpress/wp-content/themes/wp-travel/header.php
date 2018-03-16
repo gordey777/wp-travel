@@ -11,6 +11,7 @@
 
   <!-- icons -->
   <link href="<?php echo get_template_directory_uri(); ?>/favicon.ico" rel="shortcut icon">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i|Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&amp;subset=cyrillic-ext" rel="stylesheet">
   <!--[if lt IE 9]>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -21,17 +22,18 @@
   <?php wp_head(); ?>
 </head>
 
-<body <?php body_class(); ?>>
 
+<body <?php body_class(); ?>>
+<?php $front__id = (int)(get_option( 'page_on_front' )); ?>
 <!-- wrapper -->
 <div class="wrapper">
   <header>
 
     <div class="container top-line">
 
-<div class="top-nav-wrapp">
+      <div class="top-nav-wrapp">
         <nav class="lang-nav">
-          <?php langtNav(); ?>
+          <?php wpeLangNav(); ?>
           <ul class="">
             <li><a href="#"><img src="<?php echo get_template_directory_uri(); ?>/img/flag-ru.png" alt=""></a></li>
             <li><a href="#"><img src="<?php echo get_template_directory_uri(); ?>/img/flag-uk.png" alt=""></a></li>
@@ -58,7 +60,7 @@
             <li><a href="#">Контакты</a></li>
           </ul>
         </nav>
-</div>
+      </div>
 
     </div><!-- /.container -->
     <div class="container head-bgi">
@@ -74,41 +76,47 @@
               </a>
             <?php } ?>
 
-          <div class="logo-title">EXCLUSIVE</div>
+          <div class="logo-title"><?php the_field('logo_title', $front__id); ?></div>
 
         </div><!-- /header--logo -->
-        <div class="slogan">Департамент индивидуальных путешествий</div>
+        <div class="slogan"><?php the_field('header_slogan', $front__id); ?></div>
 
         <div class="phones">
-          <div class="main-tel"><img src="<?php echo get_template_directory_uri(); ?>/img/flag-ru.png" alt="" class="tel-flag"><a href="#">+7 (999) 999-00-00</a></div>
-          <i class="tel-btn fa fa-chevron-down"></i>
-          <div class="sub-phones-wrap">
-            <ul class="sub-phones">
-            <li><img src="<?php echo get_template_directory_uri(); ?>/img/flag-ru.png" alt="" class="tel-flag"><a href="#">+7 (999) 999-00-00</a><span class="tel-city">Москва</span><a href="" class="tel-link">www</a></li>
-            <li><img src="<?php echo get_template_directory_uri(); ?>/img/flag-ru.png" alt="" class="tel-flag"><a href="#">+7 (999) 999-00-00</a><span class="tel-city">Москва</span><a href="" class="tel-link">www</a></li>
-            <li><img src="<?php echo get_template_directory_uri(); ?>/img/flag-ru.png" alt="" class="tel-flag"><a href="#">+7 (999) 999-00-00</a><span class="tel-city">Москва</span><a href="" class="tel-link">www</a></li>
-            <li><img src="<?php echo get_template_directory_uri(); ?>/img/flag-ru.png" alt="" class="tel-flag"><a href="#">+7 (999) 999-00-00</a><span class="tel-city">Москва</span><a href="" class="tel-link">www</a></li>
-            <li><img src="<?php echo get_template_directory_uri(); ?>/img/flag-ru.png" alt="" class="tel-flag"><a href="#">+7 (999) 999-00-00</a><span class="tel-city">Москва</span><a href="" class="tel-link">www</a></li>
-            <li><img src="<?php echo get_template_directory_uri(); ?>/img/flag-ru.png" alt="" class="tel-flag"><a href="#">+7 (999) 999-00-00</a><span class="tel-city">Москва</span><a href="" class="tel-link">www</a></li>
-            <li><img src="<?php echo get_template_directory_uri(); ?>/img/flag-ru.png" alt="" class="tel-flag"><a href="#">+7 (999) 999-00-00</a><span class="tel-city">Москва</span><a href="" class="tel-link">www</a></li>
-            <li><img src="<?php echo get_template_directory_uri(); ?>/img/flag-ru.png" alt="" class="tel-flag"><a href="#">+7 (999) 999-00-00</a><span class="tel-city">Москва</span><a href="" class="tel-link">www</a></li>
-            <li><img src="<?php echo get_template_directory_uri(); ?>/img/flag-ru.png" alt="" class="tel-flag"><a href="#">+7 (999) 999-00-00</a><span class="tel-city">Москва</span><a href="" class="tel-link">www</a></li>
-          </ul>
-            <ul class="sub-phones">
-            <li><img src="<?php echo get_template_directory_uri(); ?>/img/flag-ru.png" alt="" class="tel-flag"><a href="#">+7 (999) 999-00-00</a><span class="tel-city">Москва</span><a href="" class="tel-link">www</a></li>
-            <li><img src="<?php echo get_template_directory_uri(); ?>/img/flag-ru.png" alt="" class="tel-flag"><a href="#">+7 (999) 999-00-00</a><span class="tel-city">Москва</span><a href="" class="tel-link">www</a></li>
-            <li><img src="<?php echo get_template_directory_uri(); ?>/img/flag-ru.png" alt="" class="tel-flag"><a href="#">+7 (999) 999-00-00</a><span class="tel-city">Москва</span><a href="" class="tel-link">www</a></li>
-            <li><img src="<?php echo get_template_directory_uri(); ?>/img/flag-ru.png" alt="" class="tel-flag"><a href="#">+7 (999) 999-00-00</a><span class="tel-city">Москва</span><a href="" class="tel-link">www</a></li>
-            <li><img src="<?php echo get_template_directory_uri(); ?>/img/flag-ru.png" alt="" class="tel-flag"><a href="#">+7 (999) 999-00-00</a><span class="tel-city">Москва</span><a href="" class="tel-link">www</a></li>
-            <li><img src="<?php echo get_template_directory_uri(); ?>/img/flag-ru.png" alt="" class="tel-flag"><a href="#">+7 (999) 999-00-00</a><span class="tel-city">Москва</span><a href="" class="tel-link">www</a></li>
-            <li><img src="<?php echo get_template_directory_uri(); ?>/img/flag-ru.png" alt="" class="tel-flag"><a href="#">+7 (999) 999-00-00</a><span class="tel-city">Москва</span><a href="" class="tel-link">www</a></li>
-            <li><img src="<?php echo get_template_directory_uri(); ?>/img/flag-ru.png" alt="" class="tel-flag"><a href="#">+7 (999) 999-00-00</a><span class="tel-city">Москва</span><a href="" class="tel-link">www</a></li>
-            <li><img src="<?php echo get_template_directory_uri(); ?>/img/flag-ru.png" alt="" class="tel-flag"><a href="#">+7 (999) 999-00-00</a><span class="tel-city">Москва</span><a href="" class="tel-link">www</a></li>
-          </ul>
+
+          <div class="main-tel">
+            <?php $telFlag = get_field('head_main_tel_flag', $front__id); ?>
+            <?php if($telFlag) { ?>
+              <img src="<?php echo $telFlag['url']; ?>" alt="" class="tel-flag">
+            <?php } ?>
+            <a href="tel:<?php the_field('head_main_tel'); ?>"><?php the_field('head_main_tel', $front__id); ?></a>
           </div>
 
-        </div>
+          <?php if( have_rows('head_tel_list', $front__id) ): ?>
+            <i class="tel-btn fa fa-chevron-down"></i>
+            <div class="sub-phones-wrap">
+              <?php while ( have_rows('head_tel_list', $front__id) ) : the_row(); ?>
+                <ul class="sub-phones">
+                  <?php if( get_sub_field('tel_group') ): ?>
+                    <?php while ( have_rows('tel_group') ) : the_row(); ?>
+                      <?php $image = get_sub_field('flag'); ?>
+                      <li>
+                        <?php if ( !empty($image)) { ?>
+                          <img src="<?php echo $image['url']; ?>" alt="" class="tel-flag">
+                        <?php } ?>
+                        <a href="tel:<?php the_sub_field('sub_tel'); ?>"><?php the_sub_field('sub_tel'); ?></a>
+                        <span class="tel-city"><?php the_sub_field('city'); ?></span>
+                        <?php if ( get_sub_field('link')) { ?>
+                          <a href="<?php the_sub_field('link'); ?>" class="tel-link">www</a>
+                        <?php } ?>
+                      </li>
+                    <?php  endwhile; ?>
+                  <?php endif; ?>
+                </ul>
+              <?php  endwhile; ?>
+          </div>
+        <?php endif; ?>
 
+        </div>
       </div><!-- /.row -->
     </div><!-- /.container -->
 

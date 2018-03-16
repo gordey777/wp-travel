@@ -117,14 +117,15 @@ function wpeHeadNav() {
     'after'           => '',
     'link_before'     => '',
     'link_after'      => '',
-    'items_wrap'      => '<ul class="headnav">%3$s</ul>',
+    'items_wrap'      => '%3$s',
     'depth'           => 0,
     'walker'          => ''
     )
   );
 }
+
 // WPE head navigation
-function langtNav() {
+function wpeLangNav() {
   wp_nav_menu(
   array(
     'theme_location'  => 'lang-menu',
@@ -146,6 +147,7 @@ function langtNav() {
     )
   );
 }
+
 // WPE head navigation
 function wpeTopLeftNav() {
   wp_nav_menu(
@@ -169,6 +171,7 @@ function wpeTopLeftNav() {
     )
   );
 }
+
 // WPE head navigation
 function wpeTopRightNav() {
   wp_nav_menu(
@@ -192,6 +195,7 @@ function wpeTopRightNav() {
     )
   );
 }
+
 // WPE footer navigation
 function wpeFootNav() {
   wp_nav_menu(
@@ -215,6 +219,7 @@ function wpeFootNav() {
     )
   );
 }
+
 // WPE sidebar navigation
 function wpeSideNav() {
   wp_nav_menu(
