@@ -2000,6 +2000,7 @@ jQuery(document).ready(function($) {
 
   });
 
+
   $('.tours-slider').each(function() {
 
     var slideH = $(this).height(),
@@ -2030,11 +2031,10 @@ jQuery(document).ready(function($) {
         }
       }
     });
-
   });
 
-  $('.tours-slider').each(function() {
 
+  $('.tours-slider').each(function() {
     var slideH = $(this).height(),
       childSlide = $(this).children('.owl-item');
 
@@ -2059,16 +2059,18 @@ jQuery(document).ready(function($) {
     animateOut: 'fadeOut'
   });
 
+
   subMenuAlign();
   autoRatio();
-
+  searchResH();
 
 
   jQuery(window).resize(function(event) {
     subMenuAlign();
     autoRatio();
-
+    searchResH();
   });
+
 
   jQuery(window).scroll(function(event) {
     sidebarScroll();
@@ -2077,51 +2079,74 @@ jQuery(document).ready(function($) {
   });
 
 
+  $('.select__js').each(function(index, el) {
 
-
-  var dataList = $('#input-direction').data('list').split(','),
-    dataSelect = $('#input-direction').data('select').split(',');
-  if (dataList) {
-    var mySellect = sellect("#input-direction", {
-      originList: dataList, //['fdyj', 'rthy', 'drty'],//
-      destinationList: dataSelect, //['fdyj', 'rthy'],//
-      onInsert: updateDemoLists,
-      onRemove: updateDemoLists
-    });
-
-    mySellect.init();
-
-    // demo code to return lists
-    function updateDemoLists(event, item) {
-      var selectedList = document.getElementById('selected-list');
-      var unselectedList = document.getElementById('unselected-list');
-      var selectedArr;
-      var unselectedArr;
-
-      while (selectedList.firstChild) {
-        selectedList.removeChild(selectedList.firstChild);
-      }
-
-      while (unselectedList.firstChild) {
-        unselectedList.removeChild(unselectedList.firstChild);
-      }
-
-      selectedArr = mySellect.getSelected();
-      unselectedArr = mySellect.getUnselected();
-
-      selectedArr.forEach(function(item, index, arr) {
-        var span = document.createElement('span');
-        span.innerText = item;
-        selectedList.appendChild(span);
+    var dataList = $(this).data('list').split(','),
+      dataSelect = $(this).data('select').split(',');
+    mySellectId = "#" + $(this).attr('id');
+    if (dataList) {
+      var mySellect = sellect(mySellectId, {
+        originList: dataList, //['fdyj', 'rthy', 'drty'],//
+        destinationList: dataSelect, //['fdyj', 'rthy'],//
+        onInsert: updateDemoLists,
+        onRemove: updateDemoLists
       });
 
-      unselectedArr.forEach(function(item, index, arr) {
-        var span = document.createElement('span');
-        span.innerText = item;
-        unselectedList.appendChild(span);
+      mySellect.init();
+
+      // demo code to return lists
+      function updateDemoLists(event, item) {
+        var selectedList = document.getElementById('selected-list');
+        var unselectedList = document.getElementById('unselected-list');
+        var selectedArr;
+        var unselectedArr;
+
+        while (selectedList.firstChild) {
+          selectedList.removeChild(selectedList.firstChild);
+        }
+
+        while (unselectedList.firstChild) {
+          unselectedList.removeChild(unselectedList.firstChild);
+        }
+
+        selectedArr = mySellect.getSelected();
+        unselectedArr = mySellect.getUnselected();
+
+        selectedArr.forEach(function(item, index, arr) {
+          var span = document.createElement('span');
+          span.innerText = item;
+          selectedList.appendChild(span);
+        });
+
+        unselectedArr.forEach(function(item, index, arr) {
+          var span = document.createElement('span');
+          span.innerText = item;
+          unselectedList.appendChild(span);
+        });
+      }
+    }
+  });
+
+
+
+  function searchResH() {
+
+    if ($(window).width() > 992 && $('.searh-resolt-wrap > div').length > 4) {
+
+      var totalSearhH = 0;
+      $('.searh-resolt-wrap > div').each(function(i) {
+        totalSearhH += $(this).outerHeight();
       });
+
+      var searhWrapH = (totalSearhH + (50 * $('.searh-resolt-wrap > div').length)) * .52;
+
+      $('.searh-resolt-wrap').addClass('flex-column').css('height', searhWrapH);
+
+    } else {
+      $('.searh-resolt-wrap').removeClass('flex-column').removeAttr('style');
     }
   }
+
 
   $('.tel-btn').click(function(event) {
     $(this).siblings('.sub-phones-wrap').toggleClass('open');
@@ -2135,7 +2160,7 @@ jQuery(document).ready(function($) {
 
 
   function autoRatio() {
-    jQuery('.item .ratio').each(function() {
+    jQuery('.ratio').each(function() {
       var ratW = $(this).width(),
         ratCoef = $(this).data('hkoef'),
         ratH = ratW * ratCoef;
@@ -2156,27 +2181,25 @@ jQuery(document).ready(function($) {
 
 
   if ($('.fixed_nav').length) {
-
     var fixMenuPos = $('.fixed_nav').offset().top,
       fixMenuLeft = $('.fixed_nav').offset().left,
       fixMenuW = $('.fixed_nav').width(),
       fixMenuH = $('.fixed_nav').height(),
       fixMenuParent = $('.tour-content').height() + $('.tour-content').offset().top - fixMenuH - 10;
+  }
 
-    jQuery(window).resize(function(event) {
-
+  jQuery(window).resize(function(event) {
+    if ($('.fixed_nav').length) {
       fixMenuPos = $('.fixed_nav').offset().top;
       fixMenuLeft = $('.fixed_nav').offset().left;
       fixMenuW = $('.fixed_nav').width();
       fixMenuH = $('.fixed_nav').height();
       fixMenuParent = $('.tour-content').height() + $('.tour-content').offset().top - fixMenuH - 10;
-    });
+    }
+  });
 
-
-  }
 
   function sidebarScroll() {
-
     if ($('.fixed_nav').length) {
       if ($(window).scrollTop() > fixMenuPos) {
         $('.fixed_nav').addClass('fixed').css({
@@ -2188,12 +2211,10 @@ jQuery(document).ready(function($) {
       }
       if ($(window).scrollTop() > (fixMenuParent)) {
         $('.fixed_nav').fadeOut('400');
-
       } else {
         $('.fixed_nav').fadeIn('400');
       }
     }
-
   }
 
 
@@ -2202,31 +2223,20 @@ jQuery(document).ready(function($) {
     var headnavPos = $('.headnav').offset().left,
       headnavW = $('.headnav').width();
 
-
-
     $('.sub-menu').each(function(index, el) {
-
       if (!$(this).parents('.tours-list').length) {
-
         var subPos = $(this).offset().left,
           subW = $(this).width(),
           subParentW = $(this).closest('li').width(),
           subParentPos = $(this).closest('li').offset().left - headnavPos,
           totW = subParentPos + subParentW + subW;
 
-
-
         if (totW > headnavW) {
-
           $(this).addClass('left');
         }
       }
-
-
     });
   }
-
-
 
 
 
@@ -2280,7 +2290,7 @@ jQuery(document).ready(function($) {
 
         if (jQuery(arrMenu[i]).offset().top <= windscroll + 50 || jQuery(arrMenu[i]).offset().bottom <= windscroll - 20) {
           jQuery('.scroll-side-nav li.active').removeClass('active');
-          //alert(arrMenu[i]);
+
           var activeIthem = jQuery('.scroll-side-nav a[ href = "' + arrMenu[i] + '"]');
 
           activeIthem.parent('li').addClass('active');
