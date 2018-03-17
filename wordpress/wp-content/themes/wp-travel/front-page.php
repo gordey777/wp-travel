@@ -39,21 +39,28 @@
     </div>
   <?php endif; ?>
 
-
+<?php $front_tags = get_field('front_tags'); ?>
+<?php $front_tags_search = get_field('front_tags_search'); ?>
+<?php if($front_tags) { ?>
   <section class="search-tags">
     <div class="container">
-      <div class="tags-line"> <a href="#" class="tag tag1">На выходные?</a>
-        <a href="#" class="tag tag2">С детьми?</a>
-        <a href="#" class="tag tag3">Вдвоем или с кампанией?</a></div>
-      <div class="tags-line"> <a href="#" class="tag tag4">Увидеть северное сияние или понаблюдать за голубыми китами?</a>
-        <a href="#" class="btn tag-search">Удобный поиск<i class="fa fa-search"></i></a>
-        <a href="#" class="tag tag5">Полежать на мальдивах или покорить Эверест?</a></div>
-      <div class="tags-line"> <a href="#" class="tag tag6">VIP</a>
-        <a href="#" class="tag tag7">Романтично?</a></div>
+      <div class="tags-line">
+        <a href="<?php echo $front_tags[0]['link']; ?>" class="tag tag1"><?php echo $front_tags[0]['title']; ?></a>
+        <a href="<?php echo $front_tags[1]['link']; ?>" class="tag tag2"><?php echo $front_tags[1]['title']; ?></a>
+        <a href="<?php echo $front_tags[2]['link']; ?>" class="tag tag3"><?php echo $front_tags[2]['title']; ?></a>
+      </div>
+      <div class="tags-line">
+        <a href="<?php echo $front_tags[3]['link']; ?>" class="tag tag4"><?php echo $front_tags[3]['title']; ?></a>
+        <a href="<?php echo $front_tags_search[0]['link']; ?>" class="btn tag-search"><?php echo $front_tags_search[0]['title']; ?><i class="fa fa-search"></i></a>
+        <a href="<?php echo $front_tags[4]['link']; ?>" class="tag tag5"><?php echo $front_tags[4]['title']; ?></a>
+      </div>
+      <div class="tags-line">
+        <a href="<?php echo $front_tags[5]['link']; ?>" class="tag tag6"><?php echo $front_tags[5]['title']; ?></a>
+        <a href="<?php echo $front_tags[6]['link']; ?>" class="tag tag7"><?php echo $front_tags[6]['title']; ?></a>
+      </div>
     </div><!-- /.container -->
   </section>
-
-
+<?php } ?>
 
   <?php $tour_sliders = get_field('tour_sliders'); ?>
 
@@ -103,8 +110,23 @@
                     <h3><?php the_title(); ?></h3>
                     <div class="tours-subcont">
                       <div class="tour-tags">
-                        Габон, Гамбия, Гана, Гвинея, Гвинея-Бисау, Джибути, Замбия, Зимбабве
-                        Габон, Гамбия, Гана, Гвинея, Гвинея-Бисау, Джибути, Замбия, Зимбабве
+                        <?php
+                        $posttags = get_the_tags();
+
+                        if ($posttags) {
+                          $tag_langth = count($posttags);
+                          $i = 0;
+                          $sep = ', ';
+
+                          foreach($posttags as $tag) {
+                            $i++;
+                            if($i >= $tag_langth){
+                              $sep = '';
+                            }
+                            echo $tag->name . $sep;
+
+                          }
+                        } ?>
                       </div>
                       <div class="tour-price">230 000 руб.</div>
                       <div class="tour-time">7 дней</div>
@@ -136,8 +158,12 @@
                     <h3>Дикая Африка</h3>
                     <div class="tours-subcont">
                       <div class="tour-tags">
-                        Габон, Гамбия, Гана, Гвинея, Гвинея-Бисау, Джибути, Замбия, Зимбабве
-                        Габон, Гамбия, Гана, Гвинея, Гвинея-Бисау, Джибути, Замбия, Зимбабве
+                        <?php $posttags = get_the_tags();
+                        if ($posttags) {
+                          foreach($posttags as $tag) {
+                          echo $tag->name . ', ';
+                          }
+                        } ?>
                       </div>
                       <div class="tour-price">230 000 руб.</div>
                       <div class="tour-time">7 дней</div>
