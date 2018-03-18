@@ -1,0 +1,159 @@
+# Translation of Plugins - Categories to Tags Converter - Stable (latest release) in Ukrainian
+# This file is distributed under the same license as the Plugins - Categories to Tags Converter - Stable (latest release) package.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2017-03-04 10:52:43+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: GlotPress/2.4.0-alpha\n"
+"Language: uk_UA\n"
+"Project-Id-Version: Plugins - Categories to Tags Converter - Stable (latest release)\n"
+
+#. Author URI of the plugin/theme
+msgid "http://wordpress.org/"
+msgstr "http://uk.wordpress.org/"
+
+#. Author of the plugin/theme
+msgid "wordpressdotorg"
+msgstr "wordpressdotorg"
+
+#. Plugin URI of the plugin/theme
+msgid "http://wordpress.org/extend/plugins/wpcat2tag-importer/"
+msgstr "http://uk.wordpress.org/plugins/wpcat2tag-importer/"
+
+#: wpcat2tag-importer.php:359 wpcat2tag-importer.php:448
+msgid "We&#8217;re all done here, but you can always <a href=\"%s\">convert more</a>."
+msgstr "На цьому ми і закінчимо, але ви завжди можете <a href=\"%s\">запустити перетворення знову</a>."
+
+#: wpcat2tag-importer.php:297 wpcat2tag-importer.php:340
+#: wpcat2tag-importer.php:426
+msgid "Converted successfully."
+msgstr "Конвертація успішно завершена."
+
+#: wpcat2tag-importer.php:269
+msgid "Converting category <strong>%s</strong> ... "
+msgstr "Конвертуємо категорію <strong>%s</strong> ..."
+
+#: wpcat2tag-importer.php:247 wpcat2tag-importer.php:367
+msgid "Uh, oh. Something didn&#8217;t work. Please <a href=\"%s\">try again</a>."
+msgstr "Ой-ой-ой. Щось не спрацювало. Будь ласка, <a href=\"%s\">спробуйте ще раз</a>."
+
+#: wpcat2tag-importer.php:161
+msgid "The newly created categories will still be associated with the same posts."
+msgstr "Створені категорії будуть відноситися до тих же записів."
+
+#: wpcat2tag-importer.php:89
+msgid "You have no categories to convert!"
+msgstr "Немає категорій для конвертації!"
+
+#: wpcat2tag-importer.php:85
+msgid "Keep in mind that if you convert a category with child categories, the children become top-level orphans."
+msgstr "Врахуйте, що якщо ви конвертуєте категорію з дочірніми категоріями, вони всі стануть кореневими."
+
+#: wpcat2tag-importer.php:42
+msgid "Cheatin&#8217; uh?"
+msgstr "Хакер, чи що?"
+
+#: wpcat2tag-importer.php:113 wpcat2tag-importer.php:120
+#: wpcat2tag-importer.php:189 wpcat2tag-importer.php:196
+msgid "Check All"
+msgstr "Виділити все"
+
+#: wpcat2tag-importer.php:106 wpcat2tag-importer.php:182
+msgid "Uncheck All"
+msgstr "Зняти всі виділення"
+
+#: wpcat2tag-importer.php:266
+msgid "Category %s doesn&#8217;t exist!"
+msgstr "Категорія %s не існує!"
+
+#: wpcat2tag-importer.php:408
+msgid "All posts were added to the category with the same name."
+msgstr "Всі записи були додані в категорію з такою ж назвою."
+
+#. Plugin Name of the plugin/theme
+msgid "Categories to Tags Converter Importer"
+msgstr "Конвертер категорій в позначки"
+
+#. #-#-#-#-#  tmp-wpcat2tag-importer.pot (Categories to Tags Converter Importer
+#. 0.5)  #-#-#-#-#
+#. Description of the plugin/theme
+#: wpcat2tag-importer.php:490
+msgid "Convert existing categories to tags or tags to categories, selectively."
+msgstr "Вибіркове перетворення категорій в позначки або позначок в категорії."
+
+#: wpcat2tag-importer.php:490
+msgid "Categories and Tags Converter"
+msgstr "Конвертер категорій та позначок"
+
+#: wpcat2tag-importer.php:384
+msgid "Converting tag <strong>%s</strong> ... "
+msgstr "Конвертуємо позначку <strong>%s</strong> ..."
+
+#: wpcat2tag-importer.php:207
+msgid "* This tag is also a category. When converted, all posts associated with the tag will also be in the category."
+msgstr "* Ця позначка також є категорією. Після перетворення всі записи з цією позначкою будуть поміщені в однойменну категорію."
+
+#: wpcat2tag-importer.php:165
+msgid "You have no tags to convert!"
+msgstr "Немає позначок для конвертації!"
+
+#: wpcat2tag-importer.php:160
+msgid "Here you can selectively convert existing tags to categories. To get started, check the tags you wish to be converted, then click the Convert button."
+msgstr "Тут ви можете вибірково перетворити існуючі позначки в категорії. Виберіть позначки для конвертації і натисніть кнопку &laquo;Перетворити&raquo;."
+
+#: wpcat2tag-importer.php:143
+msgid "* This category is also a tag. Converting it will add that tag to all posts that are currently in the category."
+msgstr "* Ця категорія також є позначкою. Її перетворення додасть до всіх записів з цієї категорії однойменну позначку."
+
+#: wpcat2tag-importer.php:84
+msgid "Hey there. Here you can selectively convert existing categories to tags. To get started, check the categories you wish to be converted, then click the Convert button."
+msgstr "Привіт! Цей скрипт дозволяє вибірково перетворити існуючі категорії в позначки. Виберіть категорії для конвертації і натисніть кнопку &laquo;Перетворити&raquo;."
+
+#: wpcat2tag-importer.php:45
+msgid "Categories to Tags"
+msgstr "Категорії в Позначки"
+
+#: wpcat2tag-importer.php:46
+msgid "Tags to Categories"
+msgstr "Позначки в Категорії"
+
+#: wpcat2tag-importer.php:82
+msgid "Convert Category to Tag."
+msgid_plural "Convert Categories (%d) to Tags."
+msgstr[0] "Перетворити категорію в позначку."
+msgstr[1] "Перетворити %d категорії в позначки."
+msgstr[2] "Перетворити %d категорій в позначки."
+
+#: wpcat2tag-importer.php:145
+msgid "Convert Categories to Tags"
+msgstr "Конвертувати категорії в позначки"
+
+#: wpcat2tag-importer.php:209
+msgid "Convert Tags to Categories"
+msgstr "Конвертер позначок в категорії"
+
+#: wpcat2tag-importer.php:316
+msgid "Tag added to all posts in this category."
+msgstr "Позначка додана до всіх записів цієї категорії."
+
+#: wpcat2tag-importer.php:358
+msgid "* This category is also a tag. The converter has added that tag to all posts currently in the category. If you want to remove it, please confirm that all tags were added successfully, then delete it from the <a href=\"%s\">Manage Categories</a> page."
+msgstr "* Ця категорія також є позначкою. Конвертер позначив всі записи з цієї рубрики відповідним тегом. Якщо ви хочете скасувати це, будь ласка, перевірте, що всі теги були успішно додані, після чого видаліть їх через сторінку <a href=\"%s\">налаштування категорій</a>."
+
+#: wpcat2tag-importer.php:429
+msgid "Tag #%s doesn&#8217;t exist!"
+msgstr "Позначка #%s не існує!"
+
+#: wpcat2tag-importer.php:447
+msgid "* This tag is also a category. The converter has added all posts from it to the category. If you want to remove it, please confirm that all posts were added successfully, then delete it from the <a href=\"%s\">Manage Tags</a> page."
+msgstr "* Ця позначка також є категорією. Конвертер додав всі записи з цієї позначки до відповідної категорії. Якщо ви хочете скасувати це, будь ласка, перевірте, що всі записи були успішно додані, після чого видаліть їх через сторінку <a href=\"%s\">налаштування позначок</a>."
+
+#: wpcat2tag-importer.php:158
+msgid "Convert Tag to Category."
+msgid_plural "Convert Tags (%d) to Categories."
+msgstr[0] "Перетворити позначку в категорію."
+msgstr[1] "Перетворити %d позначки в категорії."
+msgstr[2] "Перетворити %d позначок в категорії."

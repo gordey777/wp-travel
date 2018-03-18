@@ -5,10 +5,10 @@
     <?php //post_class(); ?>
 
       <?php //the_title(); ?>
-      <?php //the_content(); ?>
+
       <?php //edit_post_link(); ?>
 
-  <?php endwhile; endif; ?>
+
 
 
   <?php if( have_rows('main_slider') ): ?>
@@ -103,7 +103,7 @@
 
 
                 <div id="tour-<?php the_ID(); ?>" <?php post_class('tour item'); ?>>
-                  <div class="img-wrap ratio" data-hkoef="0.85" style="background-image: url('<?php the_post_thumbnail_url( 'medium'); echo $thumb_link; ?>');">
+                  <div class="img-wrap ratio" data-hkoef="0.85" style="background-image: url('<?php the_post_thumbnail_url( 'medium'); //echo $thumb_link; ?>');">
                     <a href="<?php the_permalink(); ?>"><span>Подробнее</span></a>
                   </div>
                   <div class="tours-cont">
@@ -192,86 +192,34 @@
     <div class="container">
       <div class="row">
         <div class="col-md-10 col-md-offset-1 content">
-          <p>ООО Туристическая компания «Вита трэвел» была основана летом 2004 года путем полной сменой собственников, персонала и названия туристического агентства «Спорт-тур». Компания начала продавать туры по массовым направлениям за рубеж, экскурсионные туры по России и путевки на базы отдыха и санатории Челябинской области.</p>
-            <p> С февраля 2007 года и по настоящее время компанией руководит <a href="#">Ципордей Алексей Владимирович.</a></p>
-            <p> С января 2008 года наша компания начала принимать первые заявки по оформлению виз без тура от жителей Челябинска. Также летом 2008 года начали поступать первые заявки на помощь в оформлении приглашений для иностранных граждан в Россию. Работа по визам и приглашениям велась параллельно стандартной турагентской деятельностью и наращиванию базы постоянных клиентов. Также одной из специализаций нашей компании стала организация индивидуальных туров за рубеж и по России.</p>
+          <?php the_content(); ?>
         </div>
       </div><!-- /.row -->
     </div><!-- /.container -->
   </section>
 
 
+
+
+
+
+
+<?php if (get_field('home_cont_form')) { ?>
   <section class="section-form">
     <div class="container dark-cont">
       <div class="row">
-        <div class="col-md-10 col-md-offset-1">
-          <h2>Расскажите нам о вашем идеальном путешествии, а наша команда воплотит его в жизнь</h2>
-        </div>
-        <div class="clearfix"></div>
-        <div class="col-md-5 col-md-offset-1 col-sm-6">
-          <h3>Информация о путешествии</h3>
-          <div class="input-wrapp">
-            <label for="input-direction">Направления</label>
-            <input type="text" class="select__js" id="input-direction" placeholder="Например “Мальдивы”" data-list="Габон, Гамбия, Гана, Гвинея, Гвинея-Бисау, Джибути, Замбия, Зимбабве" data-select="Ганна, Замбия">
-          </div>
-          <div class="input-wrapp">
-            <label for="">Количество людей</label>
-            <input type="number">
-          </div>
-          <div class="input-wrapp">
-            <label for="">Когда вы хотите поехать?</label>
-            <input type="date">
-            <span class="sublabel">(Не обязательно)</span>
-          </div>
-          <h3>Ваше путешествие</h3>
-          <div class="input-wrapp">
-            <textarea name="" id="" cols="30" rows="10" placeholder="Расскажите о вашем идеальном путешествии..."></textarea>
-          </div>
-          <div class="input-wrapp">
-            <label>
-              <input type="checkbox"><img src="<?php echo get_template_directory_uri(); ?>/img/icon-gift-light.png" alt="">Хочу преподнести в подарок</label>
-          </div>
-        </div>
-        <div class="col-md-5 col-md-offset-1 col-sm-6">
-          <h3>Бюджет</h3>
-          <div class="input-wrapp">
-            <div class="select-title">Валюта</div>
-            <label class="custom-select" for=" ">
-              <select name="" id="">
-                <option value="">$</option>
-                <option value="">руб.</option>
-              </select>
-            </label>
-          </div>
-          <div class="input-wrapp">
-            <div class="select-title">Ваш максимальный бюджет на человека</div>
-            <label class="custom-select" for=" ">
-              <select name=" " id=" ">
-                <option value="1">100500руб.</option>
-                <option value="2">руб.</option>
-              </select>
-            </label>
-          </div>
-          <h3>Контактная информация</h3>
-          <div class="input-wrapp">
-            <label for="">Имя</label>
-            <input type="text" text="">
-          </div>
-          <div class="input-wrapp">
-            <label for="">Номер телефона</label>
-            <input type="text" text="">
-          </div>
-          <div class="input-wrapp">
-            <label for="">E-mail</label>
-            <input type="text" text="">
-          </div>
-          <input type="submit" value="Отправить заявку" class="formsubmit btn red-btn">
-        </div>
+                <?php $form__code = get_field('home_cont_form'); ?>
+                <?php echo do_shortcode($form__code); ?>
+
       </div><!-- /.row -->
 
     </div><!-- /.container -->
   </section>
+<?php } ?>
 
+
+
+  <?php endwhile; endif; ?>
 
 
 <?php get_footer(); ?>

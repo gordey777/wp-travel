@@ -214,7 +214,7 @@ function wpeFootNav() {
     'link_before'     => '',
     'link_after'      => '',
     'items_wrap'      => '<ul class="footernav">%3$s</ul>',
-    'depth'           => 0,
+    'depth'           => 1,
     'walker'          => ''
     )
   );

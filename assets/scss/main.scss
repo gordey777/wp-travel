@@ -195,7 +195,10 @@ picture {
 }
 
 .tab-content-wrap {
+  display: inline-block;
+
   box-sizing: border-box;
+  width: 100%;
   padding-top: 40px;
   padding-bottom: 40px;
 
@@ -2293,6 +2296,9 @@ article {
     margin-bottom: 10px;
 
     border-radius: 3px 0 0 3px;
+  }
+  .ui-slider {
+    max-width: 200px;
   }
 }
 
