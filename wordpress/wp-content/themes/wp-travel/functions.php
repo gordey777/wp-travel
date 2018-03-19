@@ -760,4 +760,277 @@ function disable_emojicons_tinymce( $plugins ) {
   }
 }
 
+
+
+
+
+//FILTER
+//
+//
+
+// array of filters (field key => field name)
+$GLOBALS['my_query_filters'] = array(
+  'field_1' => 'type',
+  'field_2' => 'design',
+  //'field_3' => 'design',
+);
+
+// action
+add_action('pre_get_posts', 'my_pre_get_posts', 10, 1);
+
+function my_pre_get_posts( $query ) {
+
+  // bail early if is in admin
+  if( is_admin() ) return;
+
+  // bail early if not main query
+  // - allows custom code / plugins to continue working
+  if( !$query->is_main_query() ) return;
+
+  // get meta query
+
+
+  $meta_query = $query->get('meta_query');
+
+  // loop over filters
+  foreach( $GLOBALS['my_query_filters'] as $key => $name ) {
+
+    // continue if not found in url
+    if( empty($_GET[ $name ]) ) {
+
+      continue;
+
+    }
+
+    // get the value for this filter
+    // eg: http://www.website.com/events?city=melbourne,sydney
+    $value = explode(',', $_GET[ $name ]);
+
+    // append meta query
+      $meta_query[] = array(
+            'key'   => $name,
+            'value'   => $value,
+            'compare' => 'IN',
+        );
+
+  }
+
+  // update meta query
+  $query->set('meta_query', $meta_query);
+
+}
+
+
+
+
+
+function misha_filter_function(){
+  $args = array(
+    'orderby' => 'date', // we will sort posts by date
+    'order' => $_POST['date'] // ASC или DESC
+  );
+
+
+
+/*    if( isset( $_POST['regionfilter']) || isset( $_POST['countryfilter']) || isset( $_POST['tour_typefilter']) ) {
+    if( isset( $_POST['regionfilter']) && isset( $_POST['countryfilter']) && isset( $_POST['tour_typefilter']) ) {
+      $args['tax_query'] = array(
+        array(
+          'taxonomy' => 'category',
+          'field' => 'id',
+          'terms' => $_POST['countryfilter'], $_POST['tour_typefilter']
+        );
+      );
+    }
+
+*/
+
+
+//chek region and country
+  if( isset( $_POST['regionfilter']) || isset( $_POST['countryfilter']) ){
+    $catRegion = $_POST['regionfilter'];
+
+    $catCountry = $_POST['countryfilter'];
+
+    $catRegsArray = explode(',', $catRegion);
+
+    $catRersIds ='';
+
+    foreach ($catRegsArray as $catReg){
+
+        $catRersIds = $catRersIds . get_cat_ID($catReg) .',';
+
+    }
+
+    $catCounsArray = explode(',', $catCountry);
+
+    $catCounsIds ='';
+
+    foreach ($catCounsArray as $catCoun ){
+
+        $catCounsIds = $catCounsIds . get_cat_ID($catCoun) .',';
+
+    }
+
+    $catRegionArray = array_map('intval', explode(',', $catRersIds));
+    $catCountryArray = array_map('intval', explode(',', $catCounsIds));
+
+
+    if(($catRegionArray[0] != 0) && ($catCountryArray[0] != 0) ){
+      $args['cat'] = $catCountryArray;
+      //$variant = 1;
+    } else if(($catRegionArray[0] != 0) && ($catCountryArray[0] == 0) ){
+      $args['cat'] = $catRegionArray;
+      //$variant = 2;
+    } else if(($catRegionArray[0] == 0) && ($catCountryArray[0] != 0) ){
+      $args['cat'] =  $catCountryArray;
+      //$variant = 3;
+    }
+
+  }
+
+
+
+//chek tour typ
+
+  if( isset( $_POST['tourtypefilter']) ){
+    $catTourType = $_POST['tourtypefilter'];
+    $catTourTypeArray = array_map('intval', explode(', ', $catTourType) );
+
+
+  }
+
+
+
+
+
+  // create $args['meta_query'] array if one of the following fields is filled
+  if( isset( $_POST['price_min'] ) && $_POST['price_min'] || isset( $_POST['price_max'] ) && $_POST['price_max'] || isset( $_POST['featured_image'] ) && $_POST['featured_image'] == 'on' )
+    $args['meta_query'] = array( 'relation'=>'AND' ); // AND means that all conditions of meta_query should be true
+
+  // if both minimum price and maximum price are specified we will use BETWEEN comparison
+  if( isset( $_POST['price_min'] ) && $_POST['price_min'] && isset( $_POST['price_max'] ) && $_POST['price_max'] ) {
+    $args['meta_query'][] = array(
+      'key' => 'tour_price',
+      'value' => array( $_POST['price_min'], $_POST['price_max'] ),
+      'type' => 'numeric',
+      'compare' => 'between'
+    );
+  } else {
+    // if only min price is set
+    if( isset( $_POST['price_min'] ) && $_POST['price_min'] )
+      $args['meta_query'][] = array(
+        'key' => 'tour_price',
+        'value' => $_POST['price_min'],
+        'type' => 'numeric',
+        'compare' => '>'
+      );
+
+    // if only max price is set
+    if( isset( $_POST['price_max'] ) && $_POST['price_max'] )
+      $args['meta_query'][] = array(
+        'key' => 'tour_price',
+        'value' => $_POST['price_max'],
+        'type' => 'numeric',
+        'compare' => '<'
+      );
+  }
+
+
+  // if post thumbnail is set
+  if( isset( $_POST['featured_image'] ) && $_POST['featured_image'] == 'on' )
+    $args['meta_query'][] = array(
+      'key' => '_thumbnail_id',
+      'compare' => 'EXISTS'
+    );
+
+  $args['meta_value'] =  'single-tour.php';
+
+  $query = new WP_Query( $args );
+
+  if( $query->have_posts() ) :
+    while( $query->have_posts() ): $query->the_post();
+
+    if( ($catTourTypeArray[0] != 0) ){
+      if(in_category($catTourTypeArray) ){
+        echo '<h2>' . $query->post->post_title . '</h2>';
+      }
+    }else{
+      echo '<h2>' . $query->post->post_title . '</h2>';
+    }
+
+    endwhile;
+    wp_reset_postdata();
+  else :
+    //echo 'No posts found';
+  endif;
+
+  die();
+}
+
+
+add_action('wp_ajax_myfilter', 'misha_filter_function');
+add_action('wp_ajax_nopriv_myfilter', 'misha_filter_function');
+
+
+
+//update country list
+function regionfilter_ajax() {
+
+  $value = $_POST['data'];
+
+
+
+
+  if( $value ){
+
+    $valuesArray = explode(', ', $value);
+
+    echo '<option value="">Выбирите страну...</option>';
+
+    foreach ( $valuesArray as $valueArray ) :
+
+        $argsCountry = array(
+          'type'         => 'post',
+          'parent'       => $valueArray,
+          'orderby'      => 'name',
+          'order'        => 'ASC',
+          //'hide_empty'   => false,
+        );
+
+
+      $query = new WP_Query( $argsCountry );
+
+        if( $categories = get_categories( $argsCountry ) ) :
+
+          foreach ( $categories as $cat ) :
+              $cat__ID = $cat->cat_ID;
+              $field_term = 'category_' . $cat__ID;
+              $cat__type = get_field('cat_type', $field_term);
+              if($cat__type === 'country') {
+                      echo '<option value="' . $cat->term_id . '">' . $cat->name . '</option>';
+              }
+          endforeach;
+
+      else :
+        //echo '<option>error' . $value . '</option>';
+      endif;
+    endforeach;
+  }
+  wp_die();
+
+}
+
+add_action( 'wp_ajax_regionfilter_ajax', __NAMESPACE__ . '\\regionfilter_ajax' );
+add_action( 'wp_ajax_nopriv_regionfilter_ajax', __NAMESPACE__ . '\\regionfilter_ajax' );
+
+
+
+
+
+
+
+
+
+
 ?>
