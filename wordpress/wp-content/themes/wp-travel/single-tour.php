@@ -14,8 +14,8 @@ get_header(); ?>
       <div class="page-title">
         <h1><?php the_title(); ?></h1>
         <div class="subtitle">
-          <div class="days"><?php the_field('tour_days'); ?></div>
-          <div class="prise"><?php the_field('tour_price'); ?></div>
+          <div class="days"><?php the_field('tour_days'); ?> <?php the_field('tour_days_after'); ?></div>
+          <div class="prise"><span class="price"><?php the_field('tour_price'); ?></span> <span class="currency">$</span></div>
         </div>
       </div>
     </div>

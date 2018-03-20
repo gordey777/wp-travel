@@ -71,12 +71,16 @@
 
 
       <div class="row">
-        <div class="col-md-10 col-md-offset-1">
+
+        <div class="col-sm-10 col-sm-offset-1">
           <div class="tours-title">
             <h2><?php echo get_the_title($slider__id); ?></h2>
             <a href="" class="more-tours btn red-btn">Смотреть все</a>
             <div class="clearfix"></div>
           </div>
+        </div>
+        <div class="col-xs-10 col-xs-offset-1">
+
 
           <div class="tours-slider owl-carousel">
 
@@ -110,26 +114,28 @@
                     <h3><?php the_title(); ?></h3>
                     <div class="tours-subcont">
                       <div class="tour-tags">
-                        <?php
-                        $posttags = get_the_tags();
+                        <?php  if( $categories = get_the_category( ) ) :
 
-                        if ($posttags) {
-                          $tag_langth = count($posttags);
-                          $i = 0;
-                          $sep = ', ';
+                              $catLangth = count($categories);
+                              $i = 0;
+                              $sep = ', ';
 
-                          foreach($posttags as $tag) {
-                            $i++;
-                            if($i >= $tag_langth){
-                              $sep = '';
-                            }
-                            echo $tag->name . $sep;
-
-                          }
-                        } ?>
+                           foreach ( $categories as $cat ) :
+                                $i++;
+                                if($i >= $catLangth || $i == 1){
+                                  $sep = '';
+                                }
+                               $cat__ID = $cat->cat_ID;
+                               $field_term = 'category_' . $cat__ID;
+                               $cat__type = get_field('cat_type', $field_term);
+                               if($cat__type === 'country') {
+                                 echo $cat->name . $sep;
+                               }
+                           endforeach;
+                         endif; ?>
                       </div>
-                      <div class="tour-price">230 000 руб.</div>
-                      <div class="tour-time">7 дней</div>
+                      <div class="tour-price"><?php the_field('tour_price'); ?> <span class="currency">$</span></div>
+                      <div class="tour-time"><?php the_field('tour_days'); ?> <?php the_field('tour_days_after'); ?></div>
                     </div>
                   </div>
                 </div><!-- .item -->

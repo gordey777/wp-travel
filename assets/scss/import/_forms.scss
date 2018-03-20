@@ -43,19 +43,17 @@ input[type='url'],
 input[type='week'],
 textarea,
 select,
-select[multiple=multiple],
 .custom-select {
   font-family: $base-font-family;
   font-size: $base-font-size;
-  line-height: 36px;
+  //line-height: 36px;
 
   box-sizing: border-box;
   width: 100%;
-  width: 100%;
-  max-width: 275px;
+  //max-width: 275px;
   height: 36px;
   margin-bottom: $small-spacing;
-  padding: 0 10px;
+  padding: 7px 10px;
 
   transition: $base-transition;
   vertical-align: middle;
@@ -86,7 +84,8 @@ select[multiple=multiple],
 textarea {
   line-height: normal;
 
-  max-width: 325px;
+  width: 100%;
+  //max-width: 325px;
   height: auto;
   padding: 8px 10px;
 
@@ -142,7 +141,7 @@ input[type='file'] {
 
   border-radius: 3px;
   background: #fff;
-  select {
+  select:not(.myltisel) {
     font-size: 14px;
 
     display: block;

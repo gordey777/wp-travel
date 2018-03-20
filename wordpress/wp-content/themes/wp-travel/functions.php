@@ -769,7 +769,7 @@ function disable_emojicons_tinymce( $plugins ) {
 //
 
 // array of filters (field key => field name)
-$GLOBALS['my_query_filters'] = array(
+/*$GLOBALS['my_query_filters'] = array(
   'field_1' => 'type',
   'field_2' => 'design',
   //'field_3' => 'design',
@@ -818,7 +818,7 @@ function my_pre_get_posts( $query ) {
   // update meta query
   $query->set('meta_query', $meta_query);
 
-}
+}*/
 
 
 
@@ -826,8 +826,13 @@ function my_pre_get_posts( $query ) {
 
 function misha_filter_function(){
   $args = array(
-    'orderby' => 'date', // we will sort posts by date
-    'order' => $_POST['date'] // ASC или DESC
+    //'meta_key'      => 'tour_price',
+    //'orderby'     => 'meta_value',
+    'order'       => 'DESC',
+    'posts_per_page' => -1,
+    //'meta_value' => 'single-tour.php',
+    //'meta_key' => '_wp_page_template',
+    //'meta_value' => 'page-special.php'
   );
 
 
@@ -852,28 +857,13 @@ function misha_filter_function(){
 
     $catCountry = $_POST['countryfilter'];
 
-    $catRegsArray = explode(',', $catRegion);
-
-    $catRersIds ='';
-
-    foreach ($catRegsArray as $catReg){
-
-        $catRersIds = $catRersIds . get_cat_ID($catReg) .',';
-
+    foreach ($catRegion as $key => $var) {
+        $catRegionArray[$key] = get_cat_ID($var);
     }
 
-    $catCounsArray = explode(',', $catCountry);
-
-    $catCounsIds ='';
-
-    foreach ($catCounsArray as $catCoun ){
-
-        $catCounsIds = $catCounsIds . get_cat_ID($catCoun) .',';
-
+    foreach ($catCountry as $key => $var) {
+        $catCountryArray[$key] = get_cat_ID($var);
     }
-
-    $catRegionArray = array_map('intval', explode(',', $catRersIds));
-    $catCountryArray = array_map('intval', explode(',', $catCounsIds));
 
 
     if(($catRegionArray[0] != 0) && ($catCountryArray[0] != 0) ){
@@ -895,8 +885,9 @@ function misha_filter_function(){
 
   if( isset( $_POST['tourtypefilter']) ){
     $catTourType = $_POST['tourtypefilter'];
-    $catTourTypeArray = array_map('intval', explode(', ', $catTourType) );
-
+    foreach ($catTourType as $key => $var) {
+        $catTourTypeArray[$key] = (int)$var;
+    }
 
   }
 
@@ -911,7 +902,7 @@ function misha_filter_function(){
   // if both minimum price and maximum price are specified we will use BETWEEN comparison
   if( isset( $_POST['price_min'] ) && $_POST['price_min'] && isset( $_POST['price_max'] ) && $_POST['price_max'] ) {
     $args['meta_query'][] = array(
-      'key' => 'tour_price',
+      'key' => 'tour_days',
       'value' => array( $_POST['price_min'], $_POST['price_max'] ),
       'type' => 'numeric',
       'compare' => 'between'
@@ -920,7 +911,7 @@ function misha_filter_function(){
     // if only min price is set
     if( isset( $_POST['price_min'] ) && $_POST['price_min'] )
       $args['meta_query'][] = array(
-        'key' => 'tour_price',
+        'key' => 'tour_days',
         'value' => $_POST['price_min'],
         'type' => 'numeric',
         'compare' => '>'
@@ -929,7 +920,7 @@ function misha_filter_function(){
     // if only max price is set
     if( isset( $_POST['price_max'] ) && $_POST['price_max'] )
       $args['meta_query'][] = array(
-        'key' => 'tour_price',
+        'key' => 'tour_days',
         'value' => $_POST['price_max'],
         'type' => 'numeric',
         'compare' => '<'
@@ -938,27 +929,41 @@ function misha_filter_function(){
 
 
   // if post thumbnail is set
-  if( isset( $_POST['featured_image'] ) && $_POST['featured_image'] == 'on' )
+/*  if( isset( $_POST['featured_image'] ) && $_POST['featured_image'] == 'on' )
     $args['meta_query'][] = array(
       'key' => '_thumbnail_id',
       'compare' => 'EXISTS'
-    );
+    );*/
 
-  $args['meta_value'] =  'single-tour.php';
+
+
+/*  $args = array(
+    'meta_key'      => 'tour_price',
+    'orderby'     => 'meta_value',
+    'order'       => 'DESC',
+    'posts_per_page' => -1,
+    'meta_value' => 'single-tour.php',
+  );*/
+
+
+  $args['meta_key'] =  'tour_price';
+  $args['orderby'] =  'meta_value';
+  //$args['meta_value'] =  'single-tour.php';
 
   $query = new WP_Query( $args );
 
   if( $query->have_posts() ) :
+
     while( $query->have_posts() ): $query->the_post();
-
-    if( ($catTourTypeArray[0] != 0) ){
-      if(in_category($catTourTypeArray) ){
-        echo '<h2>' . $query->post->post_title . '</h2>';
+      if(get_page_template_slug() === 'single-tour.php'){
+          if( ($catTourTypeArray[0] != 0) ){
+            if(in_category($catTourTypeArray) ){
+              echo get_template_part('search-loop');
+            }
+          }else{
+            echo get_template_part('search-loop');
+          }
       }
-    }else{
-      echo '<h2>' . $query->post->post_title . '</h2>';
-    }
-
     endwhile;
     wp_reset_postdata();
   else :
@@ -984,11 +989,17 @@ function regionfilter_ajax() {
 
   if( $value ){
 
-    $valuesArray = explode(', ', $value);
 
-    echo '<option value="">Выбирите страну...</option>';
+    foreach ($value as $key => $var) {
+        $value[$key] = get_cat_ID($var);
+    }
 
-    foreach ( $valuesArray as $valueArray ) :
+
+    //echo '<option value="">Выбирите страну...</option>';
+
+    foreach ( $value as $valueArray ) :
+
+if($valueArray == 0){ $valueArray = '';}
 
         $argsCountry = array(
           'type'         => 'post',
@@ -1008,7 +1019,7 @@ function regionfilter_ajax() {
               $field_term = 'category_' . $cat__ID;
               $cat__type = get_field('cat_type', $field_term);
               if($cat__type === 'country') {
-                      echo '<option value="' . $cat->term_id . '">' . $cat->name . '</option>';
+                      echo '<option value="' . $cat->name . '">' . $cat->name . '</option>';
               }
           endforeach;
 

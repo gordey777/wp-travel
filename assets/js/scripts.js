@@ -23,374 +23,997 @@ if (typeof jQuery === 'undefined') {
 // Place any jQuery/helper plugins in here.
 
 
+
+
+
 /**
- * @file sellect.js is micro-library.
- * Scaffolded with generator-microjs
- * @author Lidia Freitas <lidiafreitas.me@gmail.com>
+ * jQuery TagCloud plugin
+ *
+ * @version 1.2.2 (12-MAY-2009)
+ * @author Nurul Ferdous <nurul_ferdous@yahoo.com>
+ * @requires jQuery v1.4.3 or later Examples and documentation at:
+ * http://dynamicguy.com/ Dual licensed under the MIT and GPL
+ * licenses: http://www.opensource.org/licenses/mit-license.php
+ * http://www.gnu.org/licenses/gpl.html
+ *
+ * Revision: $Id$
  */
 
-(function() {
+;
+(function($) {
+  var tags;
+  var mathAssets = {
+    halfHeight: null,
+    halfWidth: null,
+    hwratio: null,
+    dtr: null,
+    diameter: null,
+    speedX: null,
+    speedY: null,
+    tLength: null
+  }
+  var settings = {
+    //height of sphere container
+    height: 400,
+    //width of sphere container
+    width: 400,
+    //radius of sphere
+    radius: 150,
+    //rotation speed
+    speed: 3,
+    //sphere rotations slower
+    slower: 0.9,
+    //delay between update position
+    timer: 5,
+    //dependence of a font size on axis Z
+    fontMultiplier: 15,
+    //tag css stylies on mouse over
+    hoverStyle: {
+      border: '1px solid #935C26',
+      color: '#935C26'
+    },
+    //tag css stylies on mouse out
+    mouseOutStyle: {
+      border: 'none',
+      color: 'red'
+    }
+  }
 
-  this.sellect = function(selector, options) {
-    /*jslint newcap:true */
-    return new _Sellect(selector, options);
+  var curState = {
+    mouseOver: null,
+    lastFy: null,
+    lastFx: null,
+    sy: null,
+    cy: null,
+    sx: null,
+    cx: null,
+    mouseX: null,
+    mouseY: null
+  }
+  var options = {};
+  jQuery.fn.tagoSphere = function(opt) {
+    options = jQuery.extend(settings, opt);
+    initContainer(this);
+    initTags(this);
+    initMaths();
+    deployTags();
+    setInterval(updateTags, options.timer);
+    return this;
   };
 
-  this._Sellect = function(selector, options) {
-    this.container = document.createElement('div');
-    this.originListHTML = document.createElement('div');
-    this.destinationListHTML = document.createElement('div');
-    this.arrow = document.createElement('i');
-
-    var defaults = {
-      element: typeof(selector) === 'object' ? selector : document.querySelector(selector),
-      originList: [],
-      destinationList: []
-    };
-
-    if (arguments[0] && typeof arguments[1] === 'object') {
-      this.options = extendDefaults(defaults, arguments[1]);
-    }
-  };
-
-  function createHTML() {
-    var self = this;
-
-    if (self.options) {
-      self.options.originList.forEach(function(item) {
-        createListsHTML(self.originListHTML, item);
-      });
-
-      self.options.destinationList.forEach(function(item) {
-        createListsHTML(self.destinationListHTML, item);
-      });
-
-      self.options.element.parentNode.insertBefore(self.container, self.options.element);
-
-
-      self.container.appendChild(self.options.element);
-      self.container.appendChild(self.arrow);
-      self.container.appendChild(self.originListHTML);
-      self.container.appendChild(self.destinationListHTML);
-    }
+  function initMaths() {
+    mathAssets.halfHeight = options.height / 2;
+    mathAssets.halfWidth = options.width / 2;
+    mathAssets.speedX = options.speed / mathAssets.halfWidth;
+    mathAssets.speedY = options.speed / mathAssets.halfHeight;
+    mathAssets.dtr = Math.PI / 180;
+    mathAssets.diameter = options.radius * 2;
+    mathAssets.hwratio = options.height / options.width;
+    mathAssets.whratio = options.width / options.height;
+    mathAssets.tLength = tags.length - 1;
+    curState.mouseOver = false;
+    curState.lastFx = options.speed;
+    curState.lastFy = options.speed;
   }
 
-  function createListsHTML(list, item) {
-    var listItem = document.createElement('span');
-    var listIcon = document.createElement('i');
-    listItem.classList.add('sellect-trigger', 'sellect-item');
-    listIcon.classList.add('fa', 'fa-times', 'sellect-close-icon');
-
-    listItem.innerHTML = item;
-    listItem.appendChild(listIcon);
-    list.appendChild(listItem);
-  }
-
-  function initializeEvents() {
-    var self = this;
-
-    if (self.options) {
-      self.originListHTML.addEventListener('click', function() {
-        swapItemDOM.call(self, event.target, self.destinationListHTML);
-      }, false);
-
-      self.destinationListHTML.addEventListener('click', function() {
-        swapItemDOM.call(self, event.target, self.originListHTML);
-      }, false);
-
-      self.container.addEventListener('click', function() {
-        openOriginList.call(self);
-      }, false);
-
-      self.arrow.addEventListener('click', function() {
-        toggleOriginList.call(self);
-      }, false);
-
-      self.options.element.addEventListener('keyup', function() {
-        var key = event.keyCode || event.charCode;
-
-        switch (key) {
-          case 40:
-            if (self.originListHTML.childNodes.length > 0) {
-              selectionDown.call(self);
-              scrollTop.call(self);
-            }
-            break;
-
-          case 38:
-            if (self.originListHTML.childNodes.length > 0) {
-              selectionUp.call(self);
-              scrollBottom.call(self);
-            }
-            break;
-
-          case 13:
-            selectItemOriginList.call(self);
-            break;
-
-          default:
-            filterOriginList.call(self);
-            break;
-        }
-
-      }, false);
-
-      self.options.element.addEventListener('keydown', function() {
-        captureEmpty.call(self);
-      }, false);
-
-      self.options.element.addEventListener('focus', function() {
-        openOriginList.call(self);
-      }, false);
-
-      window.addEventListener('click', function() {
-        closeOriginList.call(self);
-      }, false);
-    }
-  }
-
-  function swapItemDOM(trigger, list) {
-    var self = this;
-    var item;
-    if (!trigger) return;
-
-    item = trigger.classList.contains('sellect-trigger') ? trigger : trigger.parentNode;
-
-    event.stopPropagation();
-
-    if (!item || item.className.indexOf('sellected-list') > -1 || item.className.indexOf('sellect-list') > -1) {
-      return;
-    }
-
-    item.parentNode.removeChild(item);
-    list.appendChild(item);
-    item.classList.remove('active');
-
-    self.options.element.value = '';
-    self.options.element.focus();
-    createEventListener.call(self, 'keyup');
-
-    self.options.originList = [];
-    self.options.destinationList = [];
-
-    self.options.originList = self.getUnselected();
-    self.options.destinationList = self.getSelected();
-
-    if (self.options.onInsert)
-      self.options.onInsert(event, item);
-
-    if (self.options.onRemove)
-      self.options.onRemove(event, item);
-  }
-
-  function filterOriginList() {
-    var self = this;
-    var string = event.target.value;
-    var items = self.originListHTML.childNodes;
-
-    items.forEach(function(item) {
-      if (item.innerText.indexOf(string) !== -1) {
-        item.style.display = 'inherit';
-      } else {
-        item.style.display = 'none';
-      }
+  function initContainer(tagContainer) {
+    tagContainer.height(options.height);
+    tagContainer.width(options.width);
+    tagContainer.css({
+      'overflow': 'hidden',
+      'position': 'relative'
+    });
+    tagContainer.mousemove(function(e) {
+      curState.mouseX = e.pageX - this.offsetLeft;
+      curState.mouseY = e.pageY - this.offsetTop;
+    });
+    tagContainer.hover(function() {
+      curState.mouseOver = true;
+    }, function() {
+      curState.mouseOver = false;
     });
   }
 
-  function captureEmpty() {
-    var self = this;
-    var key = event.keyCode || event.charCode;
-    var string = event.target.value;
-
-    if (key === 8 && string === '' && self.destinationListHTML.childNodes.length > 0) {
-      var lastItem = self.destinationListHTML.lastElementChild;
-      lastItem.click();
+  function initTags(tagContainer) {
+    tags = tagContainer.children('ul').children();
+    tags.css({
+      'position': 'absolute',
+      'list-style-type': 'none',
+      'list-style-position': 'outside',
+      'list-style-image': 'none'
+    });
+    for (var i = 0; i < tags.length; i++) {
+      var jTag = jQuery(tags[i]);
+      var link = jQuery(jTag.children()[0]);
+      tags[i] = jTag;
+      jTag.hover(function() {
+        jQuery(this).css(options.hoverStyle);
+      }, function() {
+        jQuery(this).css(options.mouseOutStyle);
+      })
     }
   }
 
-  function selectionUp() {
-    var self = this;
-    var selectedItem = self.originListHTML.getElementsByClassName('active')[0];
-    var prevItem;
-
-    if (!selectedItem || !selectedItem.previousElementSibling) {
-      return;
-    }
-
-    prevItem = getOriginListVisibleItem(selectedItem.previousElementSibling);
-
-    if (prevItem) {
-      prevItem.classList.add('active');
-      selectedItem.classList.remove('active');
-    }
-  }
-
-  function selectionDown() {
-    var self = this;
-    var selectedItem = self.originListHTML.getElementsByClassName('active')[0];
-    var nextItem;
-
-    if (!selectedItem) {
-      nextItem = getOriginListVisibleItem(self.originListHTML.childNodes[0], 'down');
-
-      if (nextItem) {
-        nextItem.classList.add('active');
-      }
-
-      return;
-    }
-
-    if (!selectedItem.nextElementSibling) return;
-
-    nextItem = getOriginListVisibleItem(selectedItem.nextElementSibling, 'down');
-
-    if (nextItem) {
-      nextItem.classList.add('active');
-      selectedItem.classList.remove('active');
+  function deployTags() {
+    var phi = 0;
+    var theta = 0;
+    var max = mathAssets.tLength + 1;
+    var i = 0;
+    while (i++ < max) {
+      phi = Math.acos(-1 + (2 * i - 1) / max);
+      theta = Math.sqrt(max * Math.PI) * phi;
+      tags[i - 1].cx = options.radius * Math.cos(theta) * Math.sin(phi);
+      tags[i - 1].cy = options.radius * Math.sin(theta) * Math.sin(phi);
+      tags[i - 1].cz = options.radius * Math.cos(phi);
+      tags[i - 1].h = jQuery(tags[i - 1]).height() / 4;
+      tags[i - 1].w = jQuery(tags[i - 1]).width() / 4;
     }
   }
 
-  function scrollTop() {
-    var self = this;
-    var selectedItem = self.originListHTML.getElementsByClassName('active')[0];
-
-    if (!selectedItem) return;
-
-    var itemPositionTop = selectedItem.offsetTop;
-
-    if (itemPositionTop >= self.originListHTML.clientHeight + selectedItem.clientHeight) {
-      self.originListHTML.scrollTop = self.originListHTML.scrollTop + selectedItem.clientHeight;
-      return true;
-    }
+  function calcRotation(fy, fx) {
+    curState.sy = Math.sin(fy * mathAssets.dtr);
+    curState.cy = Math.cos(fy * mathAssets.dtr);
+    curState.sx = Math.sin(fx * mathAssets.dtr);
+    curState.cx = Math.cos(fx * mathAssets.dtr);
   }
 
-  function scrollBottom() {
-    var self = this;
-    var selectedItem = self.originListHTML.getElementsByClassName('active')[0];
-
-    if (!selectedItem) return;
-
-    var itemPositionTop = selectedItem.offsetTop;
-
-    if (itemPositionTop <= (self.originListHTML.scrollHeight - self.originListHTML.clientHeight) + selectedItem.clientHeight) {
-      self.originListHTML.scrollTop = self.originListHTML.scrollTop - selectedItem.clientHeight;
-      return true;
-    }
-  }
-
-  function getOriginListVisibleItem(selectCandidate, direction) {
-    if (direction === 'down') {
-      while (selectCandidate.offsetParent === null && selectCandidate.nextElementSibling) {
-        selectCandidate = selectCandidate.nextElementSibling;
-      }
+  function updateTags() {
+    var fy;
+    var fx;
+    if (curState.mouseOver) {
+      fy = options.speed - mathAssets.speedY * curState.mouseY;
+      fx = mathAssets.speedX * curState.mouseX - options.speed;
     } else {
-      while (selectCandidate.offsetParent === null && selectCandidate.previousElementSibling) {
-        selectCandidate = selectCandidate.previousElementSibling;
+      fy = curState.lastFy * options.slower;
+      fx = curState.lastFx * options.slower;
+    }
+    if (curState.lastFy != fy || curState.lastFx != fx) {
+      calcRotation(fy, fx);
+      curState.lastFy = fy;
+      curState.lastFx = fx;
+    }
+    if (Math.abs(fy) > 0.01 || Math.abs(fx) > 0.01) {
+      j = -1;
+      while (j++ < mathAssets.tLength) {
+        rx1 = tags[j].cx;
+        ry1 = tags[j].cy * curState.cy + tags[j].cz * -curState.sy;
+        rz1 = tags[j].cy * curState.sy + tags[j].cz * curState.cy;
+        tags[j].cx = rx1 * curState.cx + rz1 * curState.sx;
+        tags[j].cy = tags[j].cy * curState.cy + tags[j].cz * -curState.sy;
+        tags[j].cz = rx1 * -curState.sx + rz1 * curState.cx;
+        var per = mathAssets.diameter / (mathAssets.diameter + tags[j].cz);
+        tags[j].x = tags[j].cx * per;
+        tags[j].y = tags[j].cy * per;
+        tags[j].alpha = per / 2;
+        tags[j]
+          .css({
+            'left': mathAssets.whratio * (tags[j].x - tags[j].w * per) + mathAssets.halfWidth,
+            'top': mathAssets.hwratio * (tags[j].y - tags[j].h * per) + mathAssets.halfHeight,
+            'opacity': tags[j].alpha,
+            'font-size': options.fontMultiplier * tags[j].alpha + 'px',
+            'z-index': Math.round(-tags[j].cz)
+          });
       }
     }
-
-    return selectCandidate.offsetParent !== null ? selectCandidate : false;
-
   }
+})(jQuery);
 
-  function selectItemOriginList() {
-    var self = this;
 
-    var selectedItem = self.originListHTML.getElementsByClassName('active')[0];
 
-    swapItemDOM.call(self, selectedItem, self.destinationListHTML);
-  }
 
-  function createEventListener(eventType) {
-    var self = this;
-    var customEvent = document.createEvent('Event');
-    customEvent.initEvent(eventType);
-    self.options.element.dispatchEvent(customEvent);
-  }
 
-  function openOriginList() {
-    var self = this;
-    event.stopPropagation();
 
-    if (!self.originListHTML.classList.contains('open')) {
-      self.options.element.focus();
-      self.originListHTML.classList.add('open');
-    }
-  }
 
-  function closeOriginList() {
-    var self = this;
-    event.stopPropagation();
 
-    if (self.originListHTML.classList.contains('open')) {
-      self.originListHTML.classList.remove('open');
-    }
-  }
 
-  function toggleOriginList() {
-    var self = this;
-    event.stopPropagation();
 
-    if (!self.originListHTML.classList.contains('open')) {
-      self.originListHTML.classList.add('open');
-    } else {
-      self.originListHTML.classList.remove('open');
-    }
-  }
 
-  function extendDefaults(source, properties) {
-    var property;
-    for (property in properties) {
-      if (properties.hasOwnProperty(property)) {
-        source[property] = properties[property];
+
+
+
+
+
+
+
+////////////////////////////////////////////
+///SELECT
+(function($, window, document, undefined) {
+  $.fn.quicksearch = function(target, opt) {
+
+    var timeout, cache, rowcache, jq_results, val = '',
+      e = this,
+      options = $.extend({
+        delay: 100,
+        selector: null,
+        stripeRows: null,
+        loader: null,
+        noResults: '',
+        matchedResultsCount: 0,
+        bind: 'keyup',
+        onBefore: function() {
+          return;
+        },
+        onAfter: function() {
+          return;
+        },
+        show: function() {
+          this.style.display = "";
+        },
+        hide: function() {
+          this.style.display = "none";
+        },
+        prepareQuery: function(val) {
+          return val.toLowerCase().split(' ');
+        },
+        testQuery: function(query, txt, _row) {
+          for (var i = 0; i < query.length; i += 1) {
+            if (txt.indexOf(query[i]) === -1) {
+              return false;
+            }
+          }
+          return true;
+        }
+      }, opt);
+
+    this.go = function() {
+
+      var i = 0,
+        numMatchedRows = 0,
+        noresults = true,
+        query = options.prepareQuery(val),
+        val_empty = (val.replace(' ', '').length === 0);
+
+      for (var i = 0, len = rowcache.length; i < len; i++) {
+        if (val_empty || options.testQuery(query, cache[i], rowcache[i])) {
+          options.show.apply(rowcache[i]);
+          noresults = false;
+          numMatchedRows++;
+        } else {
+          options.hide.apply(rowcache[i]);
+        }
       }
-    }
-    return source;
-  }
 
-  _Sellect.prototype.init = function() {
-    var self = this;
+      if (noresults) {
+        this.results(false);
+      } else {
+        this.results(true);
+        this.stripe();
+      }
 
-    if (self.options) {
-      self.options.destinationList.forEach(function(itemOuter) {
-        self.options.originList = self.options.originList.filter(function(itemInner) {
-          return itemInner !== itemOuter;
+      this.matchedResultsCount = numMatchedRows;
+      this.loader(false);
+      options.onAfter();
+
+      return this;
+    };
+
+    /*
+     * External API so that users can perform search programatically.
+     * */
+    this.search = function(submittedVal) {
+      val = submittedVal;
+      e.trigger();
+    };
+
+    /*
+     * External API to get the number of matched results as seen in
+     * https://github.com/ruiz107/quicksearch/commit/f78dc440b42d95ce9caed1d087174dd4359982d6
+     * */
+    this.currentMatchedResults = function() {
+      return this.matchedResultsCount;
+    };
+
+    this.stripe = function() {
+
+      if (typeof options.stripeRows === "object" && options.stripeRows !== null) {
+        var joined = options.stripeRows.join(' ');
+        var stripeRows_length = options.stripeRows.length;
+
+        jq_results.not(':hidden').each(function(i) {
+          $(this).removeClass(joined).addClass(options.stripeRows[i % stripeRows_length]);
         });
+      }
+
+      return this;
+    };
+
+    this.strip_html = function(input) {
+      var output = input.replace(new RegExp('<[^<]+\>', 'g'), "");
+      output = $.trim(output.toLowerCase());
+      return output;
+    };
+
+    this.results = function(bool) {
+      if (typeof options.noResults === "string" && options.noResults !== "") {
+        if (bool) {
+          $(options.noResults).hide();
+        } else {
+          $(options.noResults).show();
+        }
+      }
+      return this;
+    };
+
+    this.loader = function(bool) {
+      if (typeof options.loader === "string" && options.loader !== "") {
+        (bool) ? $(options.loader).show(): $(options.loader).hide();
+      }
+      return this;
+    };
+
+    this.cache = function() {
+
+      jq_results = $(target);
+
+      if (typeof options.noResults === "string" && options.noResults !== "") {
+        jq_results = jq_results.not(options.noResults);
+      }
+
+      var t = (typeof options.selector === "string") ? jq_results.find(options.selector) : $(target).not(options.noResults);
+      cache = t.map(function() {
+        return e.strip_html(this.innerHTML);
       });
 
-      self.options.element.setAttribute('class', 'sellect-element');
-      self.container.setAttribute('class', 'sellect-container');
-      self.originListHTML.setAttribute('class', 'sellect-origin-list');
-      self.destinationListHTML.setAttribute('class', 'sellect-destination-list');
-      self.arrow.setAttribute('class', 'fa fa-plus sellect-arrow-icon');
-    }
+      rowcache = jq_results.map(function() {
+        return this;
+      });
 
-    createHTML.call(self);
-    initializeEvents.call(self);
+      /*
+       * Modified fix for sync-ing "val".
+       * Original fix https://github.com/michaellwest/quicksearch/commit/4ace4008d079298a01f97f885ba8fa956a9703d1
+       * */
+      val = val || this.val() || "";
+
+      return this.go();
+    };
+
+    this.trigger = function() {
+      this.loader(true);
+      options.onBefore();
+
+      window.clearTimeout(timeout);
+      timeout = window.setTimeout(function() {
+        e.go();
+      }, options.delay);
+
+      return this;
+    };
+
+    this.cache();
+    this.results(true);
+    this.stripe();
+    this.loader(false);
+
+    return this.each(function() {
+
+      /*
+       * Changed from .bind to .on.
+       * */
+      $(this).on(options.bind, function() {
+
+        val = $(this).val();
+        e.trigger();
+      });
+    });
+
   };
 
-  _Sellect.prototype.getSelected = function() {
-    var self = this;
-    self.options.destinationList = [];
+}(jQuery, this, document));
 
-    for (var i = 0; i < self.destinationListHTML.childNodes.length; i++) {
-      self.options.destinationList.push(self.destinationListHTML.childNodes[i].textContent);
-    }
 
-    return self.options.destinationList;
+
+
+
+
+
+
+
+/*
+ * MultiSelect v0.9.12
+ * Copyright (c) 2012 Louis Cuny
+ *
+ * This program is free software. It comes without any warranty, to
+ * the extent permitted by applicable law. You can redistribute it
+ * and/or modify it under the terms of the Do What The Fuck You Want
+ * To Public License, Version 2, as published by Sam Hocevar. See
+ * http://sam.zoy.org/wtfpl/COPYING for more details.
+ */
+
+! function($) {
+
+  "use strict";
+
+
+  /* MULTISELECT CLASS DEFINITION
+   * ====================== */
+
+  var MultiSelect = function(element, options) {
+    this.options = options;
+    this.$element = $(element);
+    this.$container = $('<div/>', {
+      'class': "ms-container"
+    });
+    this.$selectableContainer = $('<div/>', {
+      'class': 'ms-selectable'
+    });
+    this.$selectionContainer = $('<div/>', {
+      'class': 'ms-selection'
+    });
+    this.$selectableUl = $('<ul/>', {
+      'class': "ms-list",
+      'tabindex': '-1'
+    });
+    this.$selectionUl = $('<ul/>', {
+      'class': "ms-list",
+      'tabindex': '-1'
+    });
+    this.scrollTo = 0;
+    this.elemsSelector = 'li:visible:not(.ms-optgroup-label,.ms-optgroup-container,.' + options.disabledClass + ')';
   };
 
-  _Sellect.prototype.getUnselected = function() {
-    var self = this;
-    self.options.originList = [];
+  MultiSelect.prototype = {
+    constructor: MultiSelect,
 
-    for (var i = 0; i < self.originListHTML.childNodes.length; i++) {
-      self.options.originList.push(self.originListHTML.childNodes[i].textContent);
+    init: function() {
+      var that = this,
+        ms = this.$element;
+
+      if (ms.next('.ms-container').length === 0) {
+        ms.css({
+          position: 'absolute',
+          left: '-9999px'
+        });
+        ms.attr('id', ms.attr('id') ? ms.attr('id') : Math.ceil(Math.random() * 1000) + 'multiselect');
+        this.$container.attr('id', 'ms-' + ms.attr('id'));
+        this.$container.addClass(that.options.cssClass);
+        ms.find('option').each(function() {
+          that.generateLisFromOption(this);
+        });
+
+        this.$selectionUl.find('.ms-optgroup-label').hide();
+
+        if (that.options.selectableHeader) {
+          that.$selectableContainer.append(that.options.selectableHeader);
+        }
+        that.$selectableContainer.append(that.$selectableUl);
+        if (that.options.selectableFooter) {
+          that.$selectableContainer.append(that.options.selectableFooter);
+        }
+
+        if (that.options.selectionHeader) {
+          that.$selectionContainer.append(that.options.selectionHeader);
+        }
+        that.$selectionContainer.append(that.$selectionUl);
+        if (that.options.selectionFooter) {
+          that.$selectionContainer.append(that.options.selectionFooter);
+        }
+
+        that.$container.append(that.$selectableContainer);
+        that.$container.append(that.$selectionContainer);
+        ms.after(that.$container);
+
+        that.activeMouse(that.$selectableUl);
+        that.activeKeyboard(that.$selectableUl);
+
+        var action = that.options.dblClick ? 'dblclick' : 'click';
+
+        that.$selectableUl.on(action, '.ms-elem-selectable', function() {
+          that.select($(this).data('ms-value'));
+        });
+        that.$selectionUl.on(action, '.ms-elem-selection', function() {
+          that.deselect($(this).data('ms-value'));
+        });
+
+        that.activeMouse(that.$selectionUl);
+        that.activeKeyboard(that.$selectionUl);
+
+        ms.on('focus', function() {
+          that.$selectableUl.focus();
+        });
+      }
+
+      var selectedValues = ms.find('option:selected').map(function() {
+        return $(this).val();
+      }).get();
+      that.select(selectedValues, 'init');
+
+      if (typeof that.options.afterInit === 'function') {
+        that.options.afterInit.call(this, this.$container);
+      }
+    },
+
+    'generateLisFromOption': function(option, index, $container) {
+      var that = this,
+        ms = that.$element,
+        attributes = "",
+        $option = $(option);
+
+      for (var cpt = 0; cpt < option.attributes.length; cpt++) {
+        var attr = option.attributes[cpt];
+
+        if (attr.name !== 'value' && attr.name !== 'disabled') {
+          attributes += attr.name + '="' + attr.value + '" ';
+        }
+      }
+      var selectableLi = $('<li ' + attributes + '><span>' + that.escapeHTML($option.text()) + '</span></li>'),
+        selectedLi = selectableLi.clone(),
+        value = $option.val(),
+        elementId = that.sanitize(value);
+
+      selectableLi
+        .data('ms-value', value)
+        .addClass('ms-elem-selectable')
+        .attr('id', elementId + '-selectable');
+
+      selectedLi
+        .data('ms-value', value)
+        .addClass('ms-elem-selection')
+        .attr('id', elementId + '-selection')
+        .hide();
+
+      if ($option.prop('disabled') || ms.prop('disabled')) {
+        selectedLi.addClass(that.options.disabledClass);
+        selectableLi.addClass(that.options.disabledClass);
+      }
+
+      var $optgroup = $option.parent('optgroup');
+
+      if ($optgroup.length > 0) {
+        var optgroupLabel = $optgroup.attr('label'),
+          optgroupId = that.sanitize(optgroupLabel),
+          $selectableOptgroup = that.$selectableUl.find('#optgroup-selectable-' + optgroupId),
+          $selectionOptgroup = that.$selectionUl.find('#optgroup-selection-' + optgroupId);
+
+        if ($selectableOptgroup.length === 0) {
+          var optgroupContainerTpl = '<li class="ms-optgroup-container"></li>',
+            optgroupTpl = '<ul class="ms-optgroup"><li class="ms-optgroup-label"><span>' + optgroupLabel + '</span></li></ul>';
+
+          $selectableOptgroup = $(optgroupContainerTpl);
+          $selectionOptgroup = $(optgroupContainerTpl);
+          $selectableOptgroup.attr('id', 'optgroup-selectable-' + optgroupId);
+          $selectionOptgroup.attr('id', 'optgroup-selection-' + optgroupId);
+          $selectableOptgroup.append($(optgroupTpl));
+          $selectionOptgroup.append($(optgroupTpl));
+          if (that.options.selectableOptgroup) {
+            $selectableOptgroup.find('.ms-optgroup-label').on('click', function() {
+              var values = $optgroup.children(':not(:selected, :disabled)').map(function() {
+                return $(this).val();
+              }).get();
+              that.select(values);
+            });
+            $selectionOptgroup.find('.ms-optgroup-label').on('click', function() {
+              var values = $optgroup.children(':selected:not(:disabled)').map(function() {
+                return $(this).val();
+              }).get();
+              that.deselect(values);
+            });
+          }
+          that.$selectableUl.append($selectableOptgroup);
+          that.$selectionUl.append($selectionOptgroup);
+        }
+        index = index === undefined ? $selectableOptgroup.find('ul').children().length : index + 1;
+        selectableLi.insertAt(index, $selectableOptgroup.children());
+        selectedLi.insertAt(index, $selectionOptgroup.children());
+      } else {
+        index = index === undefined ? that.$selectableUl.children().length : index;
+
+        selectableLi.insertAt(index, that.$selectableUl);
+        selectedLi.insertAt(index, that.$selectionUl);
+      }
+    },
+
+    'addOption': function(options) {
+      var that = this;
+
+      if (options.value !== undefined && options.value !== null) {
+        options = [options];
+      }
+      $.each(options, function(index, option) {
+        if (option.value !== undefined && option.value !== null &&
+          that.$element.find("option[value='" + option.value + "']").length === 0) {
+          var $option = $('<option value="' + option.value + '">' + option.text + '</option>'),
+            $container = option.nested === undefined ? that.$element : $("optgroup[label='" + option.nested + "']"),
+            index = parseInt((typeof option.index === 'undefined' ? $container.children().length : option.index));
+
+          if (option.optionClass) {
+            $option.addClass(option.optionClass);
+          }
+
+          if (option.disabled) {
+            $option.prop('disabled', true);
+          }
+
+          $option.insertAt(index, $container);
+          that.generateLisFromOption($option.get(0), index, option.nested);
+        }
+      });
+    },
+
+    'escapeHTML': function(text) {
+      return $("<div>").text(text).html();
+    },
+
+    'activeKeyboard': function($list) {
+      var that = this;
+
+      $list.on('focus', function() {
+          $(this).addClass('ms-focus');
+        })
+        .on('blur', function() {
+          $(this).removeClass('ms-focus');
+        })
+        .on('keydown', function(e) {
+          switch (e.which) {
+            case 40:
+            case 38:
+              e.preventDefault();
+              e.stopPropagation();
+              that.moveHighlight($(this), (e.which === 38) ? -1 : 1);
+              return;
+            case 37:
+            case 39:
+              e.preventDefault();
+              e.stopPropagation();
+              that.switchList($list);
+              return;
+            case 9:
+              if (that.$element.is('[tabindex]')) {
+                e.preventDefault();
+                var tabindex = parseInt(that.$element.attr('tabindex'), 10);
+                tabindex = (e.shiftKey) ? tabindex - 1 : tabindex + 1;
+                $('[tabindex="' + (tabindex) + '"]').focus();
+                return;
+              } else {
+                if (e.shiftKey) {
+                  that.$element.trigger('focus');
+                }
+              }
+          }
+          if ($.inArray(e.which, that.options.keySelect) > -1) {
+            e.preventDefault();
+            e.stopPropagation();
+            that.selectHighlighted($list);
+            return;
+          }
+        });
+    },
+
+    'moveHighlight': function($list, direction) {
+      var $elems = $list.find(this.elemsSelector),
+        $currElem = $elems.filter('.ms-hover'),
+        $nextElem = null,
+        elemHeight = $elems.first().outerHeight(),
+        containerHeight = $list.height(),
+        containerSelector = '#' + this.$container.prop('id');
+
+      $elems.removeClass('ms-hover');
+      if (direction === 1) { // DOWN
+
+        $nextElem = $currElem.nextAll(this.elemsSelector).first();
+        if ($nextElem.length === 0) {
+          var $optgroupUl = $currElem.parent();
+
+          if ($optgroupUl.hasClass('ms-optgroup')) {
+            var $optgroupLi = $optgroupUl.parent(),
+              $nextOptgroupLi = $optgroupLi.next(':visible');
+
+            if ($nextOptgroupLi.length > 0) {
+              $nextElem = $nextOptgroupLi.find(this.elemsSelector).first();
+            } else {
+              $nextElem = $elems.first();
+            }
+          } else {
+            $nextElem = $elems.first();
+          }
+        }
+      } else if (direction === -1) { // UP
+
+        $nextElem = $currElem.prevAll(this.elemsSelector).first();
+        if ($nextElem.length === 0) {
+          var $optgroupUl = $currElem.parent();
+
+          if ($optgroupUl.hasClass('ms-optgroup')) {
+            var $optgroupLi = $optgroupUl.parent(),
+              $prevOptgroupLi = $optgroupLi.prev(':visible');
+
+            if ($prevOptgroupLi.length > 0) {
+              $nextElem = $prevOptgroupLi.find(this.elemsSelector).last();
+            } else {
+              $nextElem = $elems.last();
+            }
+          } else {
+            $nextElem = $elems.last();
+          }
+        }
+      }
+      if ($nextElem.length > 0) {
+        $nextElem.addClass('ms-hover');
+        var scrollTo = $list.scrollTop() + $nextElem.position().top -
+          containerHeight / 2 + elemHeight / 2;
+
+        $list.scrollTop(scrollTo);
+      }
+    },
+
+    'selectHighlighted': function($list) {
+      var $elems = $list.find(this.elemsSelector),
+        $highlightedElem = $elems.filter('.ms-hover').first();
+
+      if ($highlightedElem.length > 0) {
+        if ($list.parent().hasClass('ms-selectable')) {
+          this.select($highlightedElem.data('ms-value'));
+        } else {
+          this.deselect($highlightedElem.data('ms-value'));
+        }
+        $elems.removeClass('ms-hover');
+      }
+    },
+
+    'switchList': function($list) {
+      $list.blur();
+      this.$container.find(this.elemsSelector).removeClass('ms-hover');
+      if ($list.parent().hasClass('ms-selectable')) {
+        this.$selectionUl.focus();
+      } else {
+        this.$selectableUl.focus();
+      }
+    },
+
+    'activeMouse': function($list) {
+      var that = this;
+
+      this.$container.on('mouseenter', that.elemsSelector, function() {
+        $(this).parents('.ms-container').find(that.elemsSelector).removeClass('ms-hover');
+        $(this).addClass('ms-hover');
+      });
+
+      this.$container.on('mouseleave', that.elemsSelector, function() {
+        $(this).parents('.ms-container').find(that.elemsSelector).removeClass('ms-hover');
+      });
+    },
+
+    'refresh': function() {
+      this.destroy();
+      this.$element.multiSelect(this.options);
+    },
+
+    'destroy': function() {
+      $("#ms-" + this.$element.attr("id")).remove();
+      this.$element.off('focus');
+      this.$element.css('position', '').css('left', '');
+      this.$element.removeData('multiselect');
+    },
+
+    'select': function(value, method) {
+      if (typeof value === 'string') {
+        value = [value];
+      }
+
+      var that = this,
+        ms = this.$element,
+        msIds = $.map(value, function(val) {
+          return (that.sanitize(val));
+        }),
+        selectables = this.$selectableUl.find('#' + msIds.join('-selectable, #') + '-selectable').filter(':not(.' + that.options.disabledClass + ')'),
+        selections = this.$selectionUl.find('#' + msIds.join('-selection, #') + '-selection').filter(':not(.' + that.options.disabledClass + ')'),
+        options = ms.find('option:not(:disabled)').filter(function() {
+          return ($.inArray(this.value, value) > -1);
+        });
+
+      if (method === 'init') {
+        selectables = this.$selectableUl.find('#' + msIds.join('-selectable, #') + '-selectable'),
+          selections = this.$selectionUl.find('#' + msIds.join('-selection, #') + '-selection');
+      }
+
+      if (selectables.length > 0) {
+        selectables.addClass('ms-selected').hide();
+        selections.addClass('ms-selected').show();
+
+        options.prop('selected', true);
+
+        that.$container.find(that.elemsSelector).removeClass('ms-hover');
+
+        var selectableOptgroups = that.$selectableUl.children('.ms-optgroup-container');
+        if (selectableOptgroups.length > 0) {
+          selectableOptgroups.each(function() {
+            var selectablesLi = $(this).find('.ms-elem-selectable');
+            if (selectablesLi.length === selectablesLi.filter('.ms-selected').length) {
+              $(this).find('.ms-optgroup-label').hide();
+            }
+          });
+
+          var selectionOptgroups = that.$selectionUl.children('.ms-optgroup-container');
+          selectionOptgroups.each(function() {
+            var selectionsLi = $(this).find('.ms-elem-selection');
+            if (selectionsLi.filter('.ms-selected').length > 0) {
+              $(this).find('.ms-optgroup-label').show();
+            }
+          });
+        } else {
+          if (that.options.keepOrder && method !== 'init') {
+            var selectionLiLast = that.$selectionUl.find('.ms-selected');
+            if ((selectionLiLast.length > 1) && (selectionLiLast.last().get(0) != selections.get(0))) {
+              selections.insertAfter(selectionLiLast.last());
+            }
+          }
+        }
+        if (method !== 'init') {
+          ms.trigger('change');
+          if (typeof that.options.afterSelect === 'function') {
+            that.options.afterSelect.call(this, value);
+          }
+        }
+      }
+    },
+
+    'deselect': function(value) {
+      if (typeof value === 'string') {
+        value = [value];
+      }
+
+      var that = this,
+        ms = this.$element,
+        msIds = $.map(value, function(val) {
+          return (that.sanitize(val));
+        }),
+        selectables = this.$selectableUl.find('#' + msIds.join('-selectable, #') + '-selectable'),
+        selections = this.$selectionUl.find('#' + msIds.join('-selection, #') + '-selection').filter('.ms-selected').filter(':not(.' + that.options.disabledClass + ')'),
+        options = ms.find('option').filter(function() {
+          return ($.inArray(this.value, value) > -1);
+        });
+
+      if (selections.length > 0) {
+        selectables.removeClass('ms-selected').show();
+        selections.removeClass('ms-selected').hide();
+        options.prop('selected', false);
+
+        that.$container.find(that.elemsSelector).removeClass('ms-hover');
+
+        var selectableOptgroups = that.$selectableUl.children('.ms-optgroup-container');
+        if (selectableOptgroups.length > 0) {
+          selectableOptgroups.each(function() {
+            var selectablesLi = $(this).find('.ms-elem-selectable');
+            if (selectablesLi.filter(':not(.ms-selected)').length > 0) {
+              $(this).find('.ms-optgroup-label').show();
+            }
+          });
+
+          var selectionOptgroups = that.$selectionUl.children('.ms-optgroup-container');
+          selectionOptgroups.each(function() {
+            var selectionsLi = $(this).find('.ms-elem-selection');
+            if (selectionsLi.filter('.ms-selected').length === 0) {
+              $(this).find('.ms-optgroup-label').hide();
+            }
+          });
+        }
+        ms.trigger('change');
+        if (typeof that.options.afterDeselect === 'function') {
+          that.options.afterDeselect.call(this, value);
+        }
+      }
+    },
+
+    'select_all': function() {
+      var ms = this.$element,
+        values = ms.val();
+
+      ms.find('option:not(":disabled")').prop('selected', true);
+      this.$selectableUl.find('.ms-elem-selectable').filter(':not(.' + this.options.disabledClass + ')').addClass('ms-selected').hide();
+      this.$selectionUl.find('.ms-optgroup-label').show();
+      this.$selectableUl.find('.ms-optgroup-label').hide();
+      this.$selectionUl.find('.ms-elem-selection').filter(':not(.' + this.options.disabledClass + ')').addClass('ms-selected').show();
+      this.$selectionUl.focus();
+      ms.trigger('change');
+      if (typeof this.options.afterSelect === 'function') {
+        var selectedValues = $.grep(ms.val(), function(item) {
+          return $.inArray(item, values) < 0;
+        });
+        this.options.afterSelect.call(this, selectedValues);
+      }
+    },
+
+    'deselect_all': function() {
+      var ms = this.$element,
+        values = ms.val();
+
+      ms.find('option').prop('selected', false);
+      this.$selectableUl.find('.ms-elem-selectable').removeClass('ms-selected').show();
+      this.$selectionUl.find('.ms-optgroup-label').hide();
+      this.$selectableUl.find('.ms-optgroup-label').show();
+      this.$selectionUl.find('.ms-elem-selection').removeClass('ms-selected').hide();
+      this.$selectableUl.focus();
+      ms.trigger('change');
+      if (typeof this.options.afterDeselect === 'function') {
+        this.options.afterDeselect.call(this, values);
+      }
+    },
+
+    sanitize: function(value) {
+      var hash = 0,
+        i, character;
+      if (value.length == 0) return hash;
+      var ls = 0;
+      for (i = 0, ls = value.length; i < ls; i++) {
+        character = value.charCodeAt(i);
+        hash = ((hash << 5) - hash) + character;
+        hash |= 0; // Convert to 32bit integer
+      }
+      return hash;
     }
-
-    return self.options.originList;
   };
-})();
+
+  /* MULTISELECT PLUGIN DEFINITION
+   * ======================= */
+
+  $.fn.multiSelect = function() {
+    var option = arguments[0],
+      args = arguments;
+
+    return this.each(function() {
+      var $this = $(this),
+        data = $this.data('multiselect'),
+        options = $.extend({}, $.fn.multiSelect.defaults, $this.data(), typeof option === 'object' && option);
+
+      if (!data) {
+        $this.data('multiselect', (data = new MultiSelect(this, options)));
+      }
+
+      if (typeof option === 'string') {
+        data[option](args[1]);
+      } else {
+        data.init();
+      }
+    });
+  };
+
+  $.fn.multiSelect.defaults = {
+    keySelect: [32],
+    selectableOptgroup: false,
+    disabledClass: 'disabled',
+    dblClick: false,
+    keepOrder: false,
+    cssClass: ''
+  };
+
+  $.fn.multiSelect.Constructor = MultiSelect;
+
+  $.fn.insertAt = function(index, $parent) {
+    return this.each(function() {
+      if (index === 0) {
+        $parent.prepend(this);
+      } else {
+        $parent.children().eq(index - 1).after(this);
+      }
+    });
+  };
+
+}(window.jQuery);
+
+
+
+
+
+
 
 /*!
  * Bootstrap v3.3.7 (http://getbootstrap.com)
@@ -2080,54 +2703,50 @@ jQuery(document).ready(function($) {
 
   });
 
+  $('.multisel').each(function(index, el) {
+    var inp_placeholder = $(this).data('placeholder');
+    $(this).multiSelect({
+      selectableHeader: "<input type='text' class='search-input' autocomplete='off' placeholder='" + inp_placeholder + "'>",
+      //selectionHeader: "<i class='fa fa-plus sellect-arrow-icon'></i><input type='text' class='search-input' autocomplete='off' placeholder='try \"4\"'>",
+      afterInit: function(ms) {
+        var that = this,
+          $selectableSearch = that.$selectableUl.prev(),
+          /*$selectionSearch = that.$selectionUl.prev(),*/
+          selectableSearchString = '#' + that.$container.attr('id') + ' .ms-elem-selectable:not(.ms-selected)';
+        //selectionSearchString = '#'+that.$container.attr('id')+' .ms-elem-selection.ms-selected';
 
-  $('.select__js').each(function(index, el) {
+        that.qs1 = $selectableSearch.quicksearch(selectableSearchString)
+          .on('keydown', function(e) {
+            if (e.which === 40) {
+              that.$selectableUl.focus();
+              return false;
+            }
+          });
 
-    var dataList = $(this).data('list').split(','),
-      dataSelect = $(this).data('select').split(',');
-    mySellectId = "#" + $(this).attr('id');
-    if (dataList) {
-      var mySellect = sellect(mySellectId, {
-        originList: dataList, //['fdyj', 'rthy', 'drty'],//
-        destinationList: dataSelect, //['fdyj', 'rthy'],//
-        onInsert: updateDemoLists,
-        onRemove: updateDemoLists
-      });
-
-      mySellect.init();
-
-      // demo code to return lists
-      function updateDemoLists(event, item) {
-        var selectedList = document.getElementById('selected-list');
-        var unselectedList = document.getElementById('unselected-list');
-        var selectedArr;
-        var unselectedArr;
-
-        while (selectedList.firstChild) {
-          selectedList.removeChild(selectedList.firstChild);
-        }
-
-        while (unselectedList.firstChild) {
-          unselectedList.removeChild(unselectedList.firstChild);
-        }
-
-        selectedArr = mySellect.getSelected();
-        unselectedArr = mySellect.getUnselected();
-
-        selectedArr.forEach(function(item, index, arr) {
-          var span = document.createElement('span');
-          span.innerText = item;
-          selectedList.appendChild(span);
-        });
-
-        unselectedArr.forEach(function(item, index, arr) {
-          var span = document.createElement('span');
-          span.innerText = item;
-          unselectedList.appendChild(span);
-        });
+        /*    that.qs2 = $selectionSearch.quicksearch(selectionSearchString)
+            .on('keydown', function(e){
+              if (e.which == 40){
+                that.$selectionUl.focus();
+                return false;
+              }
+            });*/
+      },
+      afterSelect: function() {
+        this.qs1.cache();
+        //this.qs2.cache();
+      },
+      afterDeselect: function() {
+        this.qs1.cache();
+        //this.qs2.cache();
       }
-    }
+    });
+
+
+
+
   });
+
+
 
 
 
@@ -2257,6 +2876,30 @@ jQuery(document).ready(function($) {
 
   })
 
+  if ($(window).width() < 992) {
+
+
+
+
+    $('#humburger').on('click', function() {
+      $(this).toggleClass('active');
+      if ($(this).hasClass('active')) {
+        $('.top-nav-wrapp').addClass('active');
+      } else {
+        $('.top-nav-wrapp').removeClass('active');
+      }
+
+    })
+    $(document).mouseup(function(e) {
+      var container = $('.top-nav-wrapp');
+      if (container.has(e.target).length === 0 && $('#humburger').has(e.target).length ) {
+        container.removeClass('active');
+        $('#humburger').removeClass('active');
+      }
+    });
+
+
+  }
 
   /*SCROLL TO*/
   /*  jQuery('a.scroll__to').on('click', function() {
@@ -2301,5 +2944,142 @@ jQuery(document).ready(function($) {
       }
     }
   }
+
+
+
+
+  //jQuery(function($) {
+  $('#regionfilter').change(function(event) {
+
+    var po_select = $(this).val();
+    var data = {
+      'action': 'regionfilter_ajax',
+      'data': po_select
+    };
+
+    var filter = $('#filter');
+    $.ajax({
+
+      url: filter.attr('action'),
+      data: data,
+      type: filter.attr('method'), // POST
+      beforeSend: function(xhr) {
+        $('#countryfilter').text('Processing...'); // changing the button label
+      },
+      success: function(data) {
+        $('#countryfilter').html(data); // insert data
+        $('#countryfilter').multiSelect('refresh');
+      }
+    });
+    return false;
+
+
+  });
+  //});
+
+
+
+
+  /*jQuery(function($){
+    $( '#countryfilter' ).on( 'change', function() {
+
+
+      var po_select = $(this).val();
+      var data = {
+         'action': 'countryfilter_ajax',
+         'data': po_select
+      };
+
+      var filter = $('#filter');
+      $.ajax({
+
+        url:filter.attr('action'),
+        data: data,
+        type:filter.attr('method'), // POST
+        beforeSend:function(xhr){
+          //$('#countryfilter').text('Processing...'); // changing the button label
+        },
+        success:function(data){
+          //$('#countryfilter').html(data); // insert data
+        }
+      });
+      return false;
+
+
+    });
+
+
+  });*/
+
+
+  //jQuery(function($) {
+  $('#filter').submit(function() {
+    var filter = $('#filter'),
+      buttontext = filter.find('button').text();
+    $.ajax({
+      url: filter.attr('action'),
+      data: filter.serialize(), // form data
+      type: filter.attr('method'), // POST
+      beforeSend: function(xhr) {
+        filter.find('button').text('Processing...'); // changing the button label
+      },
+      success: function(data) {
+        filter.find('button').text(buttontext); // changing the button label back
+        $('#response').html(data); // insert data
+        console.log(filter.serialize());
+        autoRatio();
+        setTimeout(
+          function() {
+            searchResH();
+          }, 100);
+
+      }
+    });
+
+    return false;
+  });
+  //});
+
+
+
+
+
+  var settings = {
+    //height of sphere container
+    height: 300,
+    //width of sphere container
+    width: 1000,
+    //radius of sphere
+    radius: 150,
+    //rotation speed
+    speed: .1,
+    //sphere rotations slower
+    slower: 0.9,
+    //delay between up<a href="https://www.jqueryscript.net/time-clock/">date</a> position
+    timer: 5,
+    //dependence of a font size on axis Z
+    fontMultiplier: 15,
+    //tag css stylies on mouse over
+    hoverStyle: {
+      border: 'none',
+      color: '#0b2e6f'
+    },
+    //tag css stylies on mouse out
+    mouseOutStyle: {
+      border: '',
+      color: ''
+    }
+  };
+
+  $(document).ready(function() {
+    $('#tags').tagoSphere(settings);
+  });
+
+
+
+
+
+
+
 
 });

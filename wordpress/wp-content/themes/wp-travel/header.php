@@ -30,8 +30,9 @@
   <header>
 
     <div class="container top-line">
-
+      <div id="humburger" class="fa"></div>
       <div class="top-nav-wrapp">
+
         <nav class="lang-nav">
           <?php //wpeLangNav(); ?>
           <ul class="">
@@ -44,21 +45,11 @@
 
         <nav class="nav-top-left col-sm-6">
           <?php wpeTopLeftNav(); ?>
-          <ul class="">
-            <li><a href="#">Турагенствам</a></li>
-            <li><a href="#">Корпоративным клиентам</a></li>
-            <li><a href="#">Франшиза</a></li>
-          </ul>
+
         </nav>
         <nav class="nav-top-right col-sm-6">
           <?php wpeTopRightNav(); ?>
-          <ul class="">
-            <li><a href="#">Отзывы онас</a></li>
-            <li><a href="#">Вакансии</a></li>
-            <li><a href="#">О компании</a></li>
-            <li><a href="#">Как оплатить</a></li>
-            <li><a href="#">Контакты</a></li>
-          </ul>
+
         </nav>
       </div>
 

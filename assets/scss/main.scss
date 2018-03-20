@@ -2,7 +2,8 @@
 @import 'import/variables';
 //@import 'fonts/font_fontawesome';
 @import 'import/buttons';
-@import 'sellect';
+//@import 'sellect';
+@import 'multi-select';
 @import 'import/forms';
 @import 'import/lists';
 @import 'import/tables';
@@ -858,7 +859,7 @@ header {
 
       min-height: 360px;
 
-      flex-flow: row nowrap;
+      flex-flow: row wrap;
       align-items: center;
       justify-content: space-between;
     }
@@ -1784,63 +1785,80 @@ article {
 
     color: #0f1920;
   }
-  .form-wrap {
-    display: flex;
+}
+.form-wrap {
+  display: flex;
+  //display: inline-block;
 
-    align-items: flex-start;
-    flex-flow: row nowrap;
-    .select-title,
-    label {
-      font-family: Open Sans;
-      font-size: 14px;
-      font-weight: 400;
+  width: 100%;
 
-      display: inline-block;
+  align-items: flex-start;
+  flex-flow: row nowrap;
+  .select-title,
+  label {
+    font-family: Open Sans;
+    font-size: 14px;
+    font-weight: 400;
 
-      width: 100%;
-      margin-bottom: 8px;
+    display: inline-block;
 
-      color: #4f5860;
+    width: 100%;
+    margin-bottom: 8px;
+
+    color: #4f5860;
+  }
+  .input-wrapp {
+    display: inline-block;
+    float: left;
+
+    width: auto;
+    min-width: 0;
+    max-width: 220px;
+    margin: 0 40px 0 0;
+    padding: 0;
+    select {
+      width: auto;
+      min-width: 0;
+      max-width: 100%;
     }
-    .sellect-container {
-      .sellect-arrow-icon {
-        font-size: 14px;
-        font-weight: 400;
-
-        background: linear-gradient(180deg, #313e47 0%, #16242e 100%);
-        &:before {
-          //content: '\f078';
-          content: '';
-
-          color: #fff;
-        }
-      }
-      .sellect-destination-list {
-        display: inline-block;
-
-        width: 100%;
-        max-width: 200px;
-      }
+    input {
+      width: auto;
+      min-width: 0;
+      max-width: 100%;
     }
-    .input-wrapp {
-      display: inline-block;
-
-      padding: 0 20px;
-      input {
-        max-width: calc(100% - 37px);
-      }
-      &.button-wrapp {
-        padding-top: 21px;
-      }
-      &:first-child {
-        padding-left: 0;
-      }
-      &:last-child {
-        padding-right: 0;
-      }
+    &.btn-wrap {
+      padding-top: 22px;
+    }
+    &.big {
+      max-width: 220px;
+    }
+    &.med {
+      max-width: 170px;
+    }
+    &.med-s {
+      max-width: 140px;
+    }
+    &.small {
+      max-width: 95px;
+    }
+    &:first-child {
+      margin-left: 0;
+    }
+    &:last-child {
+      margin-right: 0;
     }
   }
+  .ms-container {
+    width: auto;
+    min-width: 0;
+    max-width: 100%;
+    margin-bottom: 20px;
+  }
 }
+
+
+
+
 
 .tour-day {
   .days-title {
@@ -2272,6 +2290,45 @@ article {
     + h3 {
       padding-top: 40px;
     }
+    &.multiselect-wrap {
+      label {
+        display: inline-block;
+
+        width: auto;
+        max-width: 275px;
+        margin: 0;
+        input {
+          width: 100%;
+        }
+      }
+    }
+  }
+  .checkbox-gift {
+    .wpcf7-list-item {
+      .wpcf7-list-item-label {
+        position: relative;
+
+        display: inline-block;
+
+        padding-left: 50px;
+        &:before {
+          position: absolute;
+          top: 50%;
+          left: 5px;
+
+          display: inline-block;
+
+          width: 40px;
+          height: 50px;
+          margin: -25px 0;
+
+          content: '';
+
+          background: url('../img/icon-gift-light.png') no-repeat center center;
+          background-size: contain;
+        }
+      }
+    }
   }
   .sublabel {
     font-family: Open Sans;
@@ -2587,6 +2644,60 @@ footer {
     }
   }
 }
+#humburger {
+  line-height: 47px;
+
+  position: absolute;
+  z-index: 300;
+  top: 0;
+  right: 0;
+
+  display: none;
+
+  width: 47px;
+  height: 47px;
+
+  cursor: pointer;
+  text-align: center;
+  vertical-align: middle;
+  &:before {
+    content: '\f0c9';
+
+    color: #fff;
+  }
+  &:after {
+    position: absolute;
+    top: 2px;
+    bottom: 2px;
+    left: 0;
+
+    display: inline-block;
+
+    width: 1px;
+
+    content: '';
+
+    background: #fff;
+  }
+  &.active {
+    &:before {
+      content: '\f00d';
+    }
+    &:after {
+      display: none;
+    }
+  }
+}
+@media (max-width: 1300px) {
+  .form-wrap {
+    display: flex;
+
+    width: 100%;
+
+    align-items: flex-start;
+    flex-flow: row wrap;
+  }
+}
 
 @media (max-width: 992px) {
   header {
@@ -2607,6 +2718,9 @@ footer {
       //margin: 0;
       padding: 0;
     }
+    #humburger {
+      display: inline-block;
+    }
     .top-nav-wrapp {
       position: absolute;
       z-index: 200;
@@ -2620,8 +2734,17 @@ footer {
       max-width: 100%;
       padding: 0;
 
+      transition: all .3s;
+
       background: #283037;
       box-shadow: 0 0 10px rgba(0, 0, 0, .25);
+      &:not(.active) {
+        z-index: -1;
+
+        pointer-events: none;
+
+        opacity: 0;
+      }
     }
     .lang-nav {
       position: relative;
@@ -2770,10 +2893,10 @@ footer {
     }
   }
   .tours-slider {
-    width: 365px;
-    max-width: 90%;
-    margin-right: auto;
-    margin-left: auto;
+    //width: 365px;
+    //max-width: 90%;
+    //margin-right: auto;
+    //margin-left: auto;
     .owl-nav {
       //top: auto;
       //bottom: -5px;
@@ -2782,6 +2905,209 @@ footer {
       }
       .owl-prev {
         left: -65px;
+      }
+    }
+  }
+  .tours-sliders {
+    //
+  }
+}
+
+@media (max-width: 600px) {
+  .header--nav {
+    ul,
+    .headnav {
+      .tours-list {
+        position: relative;
+
+        display: inline-block;
+
+        width: 100%;
+
+        cursor: pointer;
+        > .sub-menu {
+          z-index: 112;
+
+          padding: 0;
+          > li {
+            width: auto;
+            > a {
+              float: left;
+
+              padding: 10px 15px;
+            }
+            &:hover {
+              a {
+                background: rgba(#fff,.3);
+              }
+            }
+            &.active {
+              a {
+                background: $red;
+              }
+            }
+            > .sub-menu {
+              //padding-left: 320px;
+              top: 100%;
+              right: 0;
+              bottom: auto;
+              left: 0;
+
+              width: 100%;
+
+              background: #1d262e;
+
+              flex-flow: row wrap;
+            }
+          }
+        }
+      }
+    }
+  }
+  #main-slider {
+    .slide {
+      .slider-cont-wrap {
+        flex-flow: row wrap;
+        align-content: center;
+      }
+      .slider-cont {
+        width: 100%;
+      }
+    }
+  }
+  .tours-slider {
+    //width: 365px;
+    //max-width: 90%;
+    //margin-right: auto;
+    //margin-left: auto;
+    .owl-nav {
+      //top: auto;
+      //bottom: -5px;
+      .owl-next {
+        right: -35px;
+
+        width: 30px;
+
+        border: 0;
+        border-radius: 0;
+      }
+      .owl-prev {
+        left: -35px;
+
+        width: 30px;
+
+        border: 0;
+        border-radius: 0;
+      }
+    }
+  }
+  .tours-sliders {
+    //
+  }
+}
+
+@media (max-width: 480px) {
+  .header--nav {
+    position: relative;
+
+    padding: 0;
+
+    text-align: center;
+    ul,
+    .headnav {
+      display: inline-block;
+
+      width: 100%;
+      padding: 0;
+      > li {
+        > a {
+          padding-right: 35px;
+        }
+      }
+      > li.menu-item-has-children {
+        > a {
+          pointer-events: none;
+        }
+      }
+      > li.menu-item-has-children:not(.tours-list), > li:not(.tours-list) {
+        display: inline-block;
+
+        width: 100%;
+        .sub-menu,
+        .sub-menu.left {
+          position: absolute;
+          top: 100%;
+          right: 0;
+          left: 0;
+
+          display: inline-block;
+          li {
+            position: relative;
+
+            display: inline-block;
+
+            width: 100%;
+          }
+        }
+      }
+      .tours-list {
+        position: relative;
+
+        display: inline-block;
+
+        width: 100%;
+
+        cursor: pointer;
+        > .sub-menu {
+          z-index: 112;
+          > li {
+            > .sub-menu {
+              bottom: auto;
+              //padding-left: 320px;
+
+              background: #1d262e;
+
+              flex-flow: row wrap;
+            }
+          }
+        }
+      }
+    }
+  }
+  #main-slider {
+    .slide {
+      .slider-cont-wrap {
+        flex-flow: row wrap;
+        align-content: center;
+      }
+      .slider-cont {
+        width: 100%;
+      }
+    }
+  }
+  .tours-slider {
+    //width: 365px;
+    //max-width: 90%;
+    //margin-right: auto;
+    //margin-left: auto;
+    .owl-nav {
+      //top: auto;
+      //bottom: -5px;
+      .owl-next {
+        right: -35px;
+
+        width: 30px;
+
+        border: 0;
+        border-radius: 0;
+      }
+      .owl-prev {
+        left: -35px;
+
+        width: 30px;
+
+        border: 0;
+        border-radius: 0;
       }
     }
   }
