@@ -81,11 +81,7 @@
           <button class="search-submit" type="submit" role="button"><i class="fa fa-search" aria-hidden="true"></i></button>
         </form><!-- /search -->
       </div>
-<?php /*$monthNum  = 3;
-$dateObj   = DateTime::createFromFormat('!m', $monthNum);
-$monthName = $dateObj->format('F');
-echo $monthName;
-echo date_i18n( 'F', strtotime( '04' ) );*/ ?>
+
     </div>
   </div>
 

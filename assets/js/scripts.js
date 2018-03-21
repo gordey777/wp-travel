@@ -2705,8 +2705,14 @@ jQuery(document).ready(function($) {
 
   $('.multisel').each(function(index, el) {
     var inp_placeholder = $(this).data('placeholder');
+
+
+    if ($(this).data('placeholder')) {
+      inp_placeholder = "placeholder='" + $(this).data('placeholder') + "'";
+    }
+
     $(this).multiSelect({
-      selectableHeader: "<input type='text' class='search-input' autocomplete='off' placeholder='" + inp_placeholder + "'>",
+      selectableHeader: "<input type='text' class='search-input' autocomplete='off' " + inp_placeholder + ">",
       //selectionHeader: "<i class='fa fa-plus sellect-arrow-icon'></i><input type='text' class='search-input' autocomplete='off' placeholder='try \"4\"'>",
       afterInit: function(ms) {
         var that = this,
@@ -2892,7 +2898,7 @@ jQuery(document).ready(function($) {
     })
     $(document).mouseup(function(e) {
       var container = $('.top-nav-wrapp');
-      if (container.has(e.target).length === 0 && $('#humburger').has(e.target).length ) {
+      if (container.has(e.target).length === 0 && $('#humburger').has(e.target).length) {
         container.removeClass('active');
         $('#humburger').removeClass('active');
       }

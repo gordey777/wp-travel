@@ -116,15 +116,22 @@ $args = array(
 
                 <div class="input-wrapp med-s">
                   <div class="select-title">Когда</div>
-                  <label class="custom-select" for=" ">
-                    <select name=" " id=" ">
+                  <!-- <label class="custom-select"> -->
+                    <select class="multisel" id="monthfilter" name="monthfilter[]" multiple="multiple" data-placeholder="Выберите...">
 
-                      <option value="01">Январь</option>
-                      <option value="02">Февраль</option>
-                      <option value="03">Март</option>
-                      <option value="04">Апрель</option>
+                      <?php
+                      $i = 1;
+                      while ($i <= 12){
+                      $monthPre = strftime("%B", mktime(0, 0, 0, $i, 1, 1999) );
+                        $month =  __( $monthPre );
+
+                        echo '<option value="' . $i . '" >' . $month . '</option>';
+                        $i++;
+                      }
+                      ?>
+
                     </select>
-                  </label>
+                  <!-- </label> -->
                 </div>
 
                 <div class="input-wrapp med">
@@ -142,7 +149,9 @@ $args = array(
                               } ?>
                           <?php endforeach; ?>
                         </select>
-                      <?php endif; ?>
+                      <?php endif;
+
+                       ?>
 
                 </div>
 
@@ -207,6 +216,8 @@ $args = array(
 
             while( $query->have_posts() ): $query->the_post();
               if(get_page_template_slug() === 'single-tour.php'){
+
+
                 get_template_part('search-loop');
               }
             endwhile;
@@ -224,6 +235,13 @@ $args = array(
 
 
 
+<?php if (get_field('home_cont_form')) { ?>
+
+                <?php $form__code = get_field('home_cont_form'); ?>
+                <?php echo do_shortcode($form__code); ?>
+
+
+<?php } ?>
 
 
 

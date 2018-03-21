@@ -134,52 +134,34 @@
                            endforeach;
                          endif; ?>
                       </div>
-                      <div class="tour-price"><?php the_field('tour_price'); ?> <span class="currency">$</span></div>
+                      <div class="tour-price">
+                        <span class="price"><?php echo number_format(get_field('tour_price', $slide_product),0,'',' '); ?></span>
+                        <span class="currency"><?php the_field('tour_currency'); ?></span>
+                      </div>
                       <div class="tour-time"><?php the_field('tour_days'); ?> <?php the_field('tour_days_after'); ?></div>
                     </div>
                   </div>
                 </div><!-- .item -->
           <?php endforeach; ?>
 
-
           <?php wp_reset_postdata(); ?>
 
-
-              <?php if( have_rows('prods_delivery', $lending__id) ): ?>
-
-                  <?php while ( have_rows('prods_delivery', $lending__id) ) : the_row(); ?>
-                    <?php $image = get_sub_field('icon'); ?>
+            <?php if( have_rows('last_tours_slide', $slider__id) ): ?>
+                <?php while ( have_rows('last_tours_slide', $slider__id) ) : the_row(); ?>
+                  <?php $image = get_sub_field('img'); ?>
+                  <div class="tour item last-slide">
+                    <div class="img-wrap">
                       <?php if ( !empty($image)) { ?>
-                        <img src="<?php echo $image['url']; ?>" alt="" />
+                        <img src="<?php echo $image['url']; ?>" alt="<?php the_sub_field('tile'); ?>">
                       <?php } ?>
-                    <?php the_sub_field('delivery_title'); ?>
-                  <?php  endwhile; ?>
-
-
-                <div class="tour item">
-                  <div class="img-wrap ratio" data-hkoef="0.85" style="background-image: url('<?php echo get_template_directory_uri(); ?>/img/tour-slide-1.jpg');">
-                    <a href="#"><span>Подробнее</span></a>
-                  </div>
-                  <div class="tours-cont">
-                    <h3>Дикая Африка</h3>
-                    <div class="tours-subcont">
-                      <div class="tour-tags">
-                        <?php $posttags = get_the_tags();
-                        if ($posttags) {
-                          foreach($posttags as $tag) {
-                          echo $tag->name . ', ';
-                          }
-                        } ?>
-                      </div>
-                      <div class="tour-price">230 000 руб.</div>
-                      <div class="tour-time">7 дней</div>
                     </div>
-                  </div>
-                </div><!-- .item -->
-
-
-
-              <?php endif; ?>
+                    <div class="content">
+                      <h3><?php the_sub_field('tile'); ?></h3>
+                      <a href="<?php the_sub_field('link'); ?>" class="btn gray-btn"><?php the_sub_field('button_label'); ?> <i class="fa fa-chevron-right"></i></a>
+                    </div>
+                  </div><!-- .item -->
+                <?php  endwhile; ?>
+            <?php endif; ?>
 
           </div>
         </div>
@@ -211,16 +193,11 @@
 
 
 <?php if (get_field('home_cont_form')) { ?>
-  <section class="section-form">
-    <div class="container dark-cont">
-      <div class="row">
+
                 <?php $form__code = get_field('home_cont_form'); ?>
                 <?php echo do_shortcode($form__code); ?>
 
-      </div><!-- /.row -->
 
-    </div><!-- /.container -->
-  </section>
 <?php } ?>
 
 

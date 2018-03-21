@@ -769,7 +769,7 @@ function disable_emojicons_tinymce( $plugins ) {
 //
 
 // array of filters (field key => field name)
-/*$GLOBALS['my_query_filters'] = array(
+$GLOBALS['my_query_filters'] = array(
   'field_1' => 'type',
   'field_2' => 'design',
   //'field_3' => 'design',
@@ -818,7 +818,7 @@ function my_pre_get_posts( $query ) {
   // update meta query
   $query->set('meta_query', $meta_query);
 
-}*/
+}
 
 
 
@@ -893,6 +893,16 @@ function misha_filter_function(){
 
 
 
+/*    if ( isset( $_POST['monthfilter'] )) {
+
+      $args['meta_query'][] = array(
+            'key'   => 'tour_months_chekbox',
+            'value'   => $_POST['monthfilter'],
+            'compare' => 'IN',
+
+        );
+
+  }*/
 
 
   // create $args['meta_query'] array if one of the following fields is filled
@@ -946,28 +956,55 @@ function misha_filter_function(){
   );*/
 
 
+
+  if( isset( $_POST['monthfilter']) ){
+    $monthArr = $_POST['monthfilter'];
+  }
+
+
+
+
   $args['meta_key'] =  'tour_price';
   $args['orderby'] =  'meta_value';
   //$args['meta_value'] =  'single-tour.php';
 
   $query = new WP_Query( $args );
-
+//var_dump($query);
   if( $query->have_posts() ) :
 
+
     while( $query->have_posts() ): $query->the_post();
-      if(get_page_template_slug() === 'single-tour.php'){
+
+
+      $monthCompare = true;
+
+      if( $monthArr ){
+        //$monthArr = $_POST['monthfilter'];
+        $monthCompare = false;
+        $monthPost = get_field('tour_months_chekbox');
+
+        if( !empty(array_intersect($monthPost,  $monthArr))){
+
+            $monthCompare = true;
+          }
+
+      }
+
+
+      if(get_page_template_slug() === 'single-tour.php' && $monthCompare){
           if( ($catTourTypeArray[0] != 0) ){
             if(in_category($catTourTypeArray) ){
               echo get_template_part('search-loop');
             }
           }else{
             echo get_template_part('search-loop');
+
           }
       }
     endwhile;
     wp_reset_postdata();
   else :
-    //echo 'No posts found';
+
   endif;
 
   die();

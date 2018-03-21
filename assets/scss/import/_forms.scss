@@ -141,15 +141,18 @@ input[type='file'] {
 
   border-radius: 3px;
   background: #fff;
-  select:not(.myltisel) {
+  select {
     font-size: 14px;
 
-    display: block;
+    display: inline-block;
 
+    width: 100%;
     max-width: none;
     height: 36px;
     margin: 0;
-    padding-right: 55px;
+    padding-right: 20px;
+
+    pointer-events: auto;
 
     border: none;
     border-radius: 0;

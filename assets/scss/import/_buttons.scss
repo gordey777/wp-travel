@@ -47,4 +47,14 @@ button {
 
     opacity: .5;
   }
+  &.gray-btn {
+    background: #4f5860;
+    &:hover,
+    &:focus {
+      background: darken(#4f5860, 15%);
+    }
+    &:active {
+      background: lighten(#4f5860, 15%);
+    }
+  }
 }

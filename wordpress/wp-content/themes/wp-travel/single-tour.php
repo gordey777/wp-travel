@@ -15,7 +15,10 @@ get_header(); ?>
         <h1><?php the_title(); ?></h1>
         <div class="subtitle">
           <div class="days"><?php the_field('tour_days'); ?> <?php the_field('tour_days_after'); ?></div>
-          <div class="prise"><span class="price"><?php the_field('tour_price'); ?></span> <span class="currency">$</span></div>
+          <div class="prise">
+            <span class="price"><?php echo number_format(get_field('tour_price', $slide_product),0,'',' '); ?></span>
+            <span class="currency"><?php the_field('tour_currency'); ?></span>
+          </div>
         </div>
       </div>
     </div>
