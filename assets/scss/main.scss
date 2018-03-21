@@ -119,6 +119,8 @@ picture {
   align-items: flex-start;
 }
 
+
+
 .flex-center {
   display: block;
   display: flex;
@@ -1763,6 +1765,10 @@ article {
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
+    img {
+      width: 100%;
+      height: auto;
+    }
     &:before {
       position: absolute;
       top: 0;
@@ -1956,7 +1962,7 @@ article {
       position: absolute;
       z-index: 1;
       top: 50%;
-      left: -45px;
+      left: -40px;
 
       display: inline-block;
 
@@ -1974,7 +1980,7 @@ article {
       top: 0;
       right: 100%;
       bottom: 0;
-      left: -45px;
+      left: -40px;
 
       display: inline-block;
 
@@ -2380,6 +2386,26 @@ article {
         }
       }
     }
+    &.input-gruop {
+      input {
+        width: 100px;
+      }
+    }
+    &.input-currency {
+      select {
+        width: 100px;
+      }
+    }
+    &.input-suma {
+      select {
+        width: 180px;
+      }
+    }
+    &.input-gift {
+      input {
+        width: auto;
+      }
+    }
   }
   .checkbox-gift {
     .wpcf7-list-item {
@@ -2710,21 +2736,13 @@ footer {
 //@import 'fonts/font_roboto';
 @import 'import/base64';
 @import 'import/print';
-@media (max-width: 1200px) {
-  header {
-    .nav-top-left,
-    .nav-top-right {
-      ul {
-        li {
-          padding: 0 10px;
-          a {
-            font-size: 13px;
-          }
-        }
-      }
-    }
-  }
+
+
+#sidebar_btn {
+  display: none;
 }
+
+
 #humburger {
   line-height: 47px;
 
@@ -2769,6 +2787,19 @@ footer {
     }
   }
 }
+
+///MEDIA
+
+@media (min-width: 1500px) {
+  .full-row {
+    margin-right: -40px;
+    margin-left: -40px;
+  }
+  .left_container {
+    //
+  }
+}
+
 @media (max-width: 1300px) {
   .form-wrap {
     display: flex;
@@ -2779,6 +2810,25 @@ footer {
     flex-flow: row wrap;
   }
 }
+
+
+@media (max-width: 1200px) {
+  header {
+    .nav-top-left,
+    .nav-top-right {
+      ul {
+        li {
+          padding: 0 10px;
+          a {
+            font-size: 13px;
+          }
+        }
+      }
+    }
+  }
+}
+
+
 
 @media (max-width: 992px) {
   header {
@@ -2892,6 +2942,20 @@ footer {
       }
     }
   }
+  .hotels-slider {
+    .owl-nav {
+      .owl-prev,
+      .owl-next {
+        //
+      }
+      .owl-prev {
+        left: -65px;
+      }
+      .owl-next {
+        right: -65px;
+      }
+    }
+  }
 }
 
 @media (max-width: 768px) {
@@ -2992,6 +3056,86 @@ footer {
   .tours-sliders {
     //
   }
+
+
+  .programs__wrapp {
+    position: relative;
+    .side-nav___wrap {
+      .side-nav {
+        z-index: 99;
+        right: auto!important;
+        left: calc(100% + 20px)!important;
+
+        width: 250px;
+
+        transition: all .3s;
+        &:hover,
+        &.active {
+          left: calc(100% - 250px)!important;
+          #sidebar_btn {
+            opacity: 1;
+          }
+        }
+        #sidebar_btn {
+          font-family: FontAwesome;
+          font-size: 30px;
+
+          position: absolute;
+          z-index: 99;
+          top: 5px;
+          left: -60px;
+
+          display: inline-block;
+
+          width: 40px;
+          height: 40px;
+          //line-height: 40px;
+          padding: 3px;
+
+          cursor: pointer;
+          transition: all .3s;
+          text-align: center;
+          vertical-align: middle;
+
+          opacity: .7;
+          color: $red;
+          border: 2px solid $red;
+          border-radius: 50%;
+        }
+      }
+    }
+  }
+  .tour-day {
+    .days-title {
+      position: relative;
+      left: 20px;
+
+      width: calc(100% - 20px);
+      padding: 15px 15px 15px 40px;
+      &:before {
+        left: 0;
+      }
+      &:after {
+        display: none;
+      }
+    }
+  }
+  .hotels-slider {
+    width: calc(100% - 120px);
+    margin: 0 auto;
+    .owl-nav {
+      .owl-prev,
+      .owl-next {
+        //
+      }
+      .owl-prev {
+        left: -65px;
+      }
+      .owl-next {
+        right: -65px;
+      }
+    }
+  }
 }
 
 @media (max-width: 600px) {
@@ -3082,8 +3226,49 @@ footer {
       }
     }
   }
-  .tours-sliders {
-    //
+  .page-content {
+    .page-tabs {
+      .nav-tabs {
+        li {
+          display: inline-block;
+          float: left;
+
+          width: 49.9%;
+          margin: 0;
+          a {
+            font-size: 17px;
+          }
+        }
+      }
+    }
+    .title-map {
+      height: 70vw;
+    }
+  }
+  .hotels-slider {
+    width: calc(100% - 80px);
+    margin: 0 auto;
+    .owl-nav {
+      .owl-prev,
+      .owl-next {
+        font-size: 27px;
+
+        width: 20px;
+        margin: 0 -10px;
+        padding: 0;
+
+        transform: scale(1,4);
+
+        border: 0;
+        border-radius: 0;
+      }
+      .owl-prev {
+        left: -20px;
+      }
+      .owl-next {
+        right: -20px;
+      }
+    }
   }
 }
 
@@ -3197,7 +3382,80 @@ footer {
       }
     }
   }
-  .tours-sliders {
-    //
+  .page-content {
+    .page-title-wrap {
+      .page-title {
+        h1 {
+          width: calc(100% - 10px);
+          min-width: 0;
+        }
+      }
+    }
+    .page-tabs {
+      .nav-tabs {
+        li {
+          display: inline-block;
+          float: left;
+
+          width: 49.9%;
+          margin: 0;
+          a {
+            font-size: 14px;
+          }
+        }
+      }
+    }
+  }
+  .hotels-slider {
+    width: 250px;
+    margin: 0 auto;
+    .owl-nav {
+      .owl-prev,
+      .owl-next {
+        font-size: 27px;
+
+        width: 20px;
+        margin: 0 -10px;
+        padding: 0;
+
+        transform: scale(1,4);
+
+        border: 0;
+        border-radius: 0;
+      }
+      .owl-prev {
+        left: calc(  -25vw + 63px);
+      }
+      .owl-next {
+        right: calc(  -25vw + 63px);
+      }
+    }
+  }
+}
+
+@media (max-width: 375px) {
+  .page-content {
+    .page-title-wrap {
+      .page-title {
+        h1 {
+          width: 100%;
+          min-width: 0;
+        }
+      }
+    }
+    .page-tabs {
+      .nav-tabs {
+        li {
+          width: 50%;
+        }
+      }
+      .tab-content-wrap {
+        .tab-content {
+          .tab-pane {
+            //
+          }
+        }
+      }
+    }
   }
 }

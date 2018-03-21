@@ -764,61 +764,39 @@ function disable_emojicons_tinymce( $plugins ) {
 
 
 
-//FILTER
-//
-//
 
-// array of filters (field key => field name)
-$GLOBALS['my_query_filters'] = array(
-  'field_1' => 'type',
-  'field_2' => 'design',
-  //'field_3' => 'design',
-);
+function filter_ptags_on_images($content){
 
-// action
-add_action('pre_get_posts', 'my_pre_get_posts', 10, 1);
-
-function my_pre_get_posts( $query ) {
-
-  // bail early if is in admin
-  if( is_admin() ) return;
-
-  // bail early if not main query
-  // - allows custom code / plugins to continue working
-  if( !$query->is_main_query() ) return;
-
-  // get meta query
-
-
-  $meta_query = $query->get('meta_query');
-
-  // loop over filters
-  foreach( $GLOBALS['my_query_filters'] as $key => $name ) {
-
-    // continue if not found in url
-    if( empty($_GET[ $name ]) ) {
-
-      continue;
-
-    }
-
-    // get the value for this filter
-    // eg: http://www.website.com/events?city=melbourne,sydney
-    $value = explode(',', $_GET[ $name ]);
-
-    // append meta query
-      $meta_query[] = array(
-            'key'   => $name,
-            'value'   => $value,
-            'compare' => 'IN',
-        );
-
-  }
-
-  // update meta query
-  $query->set('meta_query', $meta_query);
-
+    return preg_replace('/<p>\s*(<a .*>)?\s*(<img .* \/>)\s*(<\/a>)?\s*<\/p>/iU', '\1\2\3', $content);
 }
+add_filter('the_content', 'filter_ptags_on_images');
+
+//
+//
+//shortcode slider
+function insert_slider() {
+if( have_rows("page_slider" ) ){
+  $html = '<div class="page_slider_wrap">';
+
+  while ( have_rows("page_slider" ) ) : the_row();
+    $img = get_sub_field('img');
+    $html = $html . '<div class="page_slider_item item">';
+        $html = $html . '<div class="img_wrapp"><a href="' . $img['url'] . '" rel="lightbox"><img src="' . $img['sizes']['medium'] . '"/></div></a>';
+    $html = $html . '</div>';
+  endwhile;
+}
+$html = $html . '</div>';
+return $html;
+}
+add_shortcode( 'insert_slider', 'insert_slider' );
+//[insert_slider]
+
+
+
+
+
+
+//FILTER
 
 
 
@@ -826,29 +804,12 @@ function my_pre_get_posts( $query ) {
 
 function misha_filter_function(){
   $args = array(
-    //'meta_key'      => 'tour_price',
-    //'orderby'     => 'meta_value',
+
     'order'       => 'DESC',
     'posts_per_page' => -1,
-    //'meta_value' => 'single-tour.php',
-    //'meta_key' => '_wp_page_template',
-    //'meta_value' => 'page-special.php'
+
   );
 
-
-
-/*    if( isset( $_POST['regionfilter']) || isset( $_POST['countryfilter']) || isset( $_POST['tour_typefilter']) ) {
-    if( isset( $_POST['regionfilter']) && isset( $_POST['countryfilter']) && isset( $_POST['tour_typefilter']) ) {
-      $args['tax_query'] = array(
-        array(
-          'taxonomy' => 'category',
-          'field' => 'id',
-          'terms' => $_POST['countryfilter'], $_POST['tour_typefilter']
-        );
-      );
-    }
-
-*/
 
 
 //chek region and country
@@ -938,25 +899,6 @@ function misha_filter_function(){
   }
 
 
-  // if post thumbnail is set
-/*  if( isset( $_POST['featured_image'] ) && $_POST['featured_image'] == 'on' )
-    $args['meta_query'][] = array(
-      'key' => '_thumbnail_id',
-      'compare' => 'EXISTS'
-    );*/
-
-
-
-/*  $args = array(
-    'meta_key'      => 'tour_price',
-    'orderby'     => 'meta_value',
-    'order'       => 'DESC',
-    'posts_per_page' => -1,
-    'meta_value' => 'single-tour.php',
-  );*/
-
-
-
   if( isset( $_POST['monthfilter']) ){
     $monthArr = $_POST['monthfilter'];
   }
@@ -969,7 +911,7 @@ function misha_filter_function(){
   //$args['meta_value'] =  'single-tour.php';
 
   $query = new WP_Query( $args );
-//var_dump($query);
+
   if( $query->have_posts() ) :
 
 
@@ -979,15 +921,11 @@ function misha_filter_function(){
       $monthCompare = true;
 
       if( $monthArr ){
-        //$monthArr = $_POST['monthfilter'];
         $monthCompare = false;
         $monthPost = get_field('tour_months_chekbox');
-
         if( !empty(array_intersect($monthPost,  $monthArr))){
-
             $monthCompare = true;
           }
-
       }
 
 
@@ -1018,26 +956,13 @@ add_action('wp_ajax_nopriv_myfilter', 'misha_filter_function');
 
 //update country list
 function regionfilter_ajax() {
-
   $value = $_POST['data'];
-
-
-
-
   if( $value ){
-
-
     foreach ($value as $key => $var) {
         $value[$key] = get_cat_ID($var);
     }
-
-
-    //echo '<option value="">Выбирите страну...</option>';
-
     foreach ( $value as $valueArray ) :
-
-if($valueArray == 0){ $valueArray = '';}
-
+      if($valueArray == 0){ $valueArray = '';}
         $argsCountry = array(
           'type'         => 'post',
           'parent'       => $valueArray,
@@ -1046,11 +971,8 @@ if($valueArray == 0){ $valueArray = '';}
           //'hide_empty'   => false,
         );
 
-
       $query = new WP_Query( $argsCountry );
-
         if( $categories = get_categories( $argsCountry ) ) :
-
           foreach ( $categories as $cat ) :
               $cat__ID = $cat->cat_ID;
               $field_term = 'category_' . $cat__ID;
@@ -1059,14 +981,10 @@ if($valueArray == 0){ $valueArray = '';}
                       echo '<option value="' . $cat->name . '">' . $cat->name . '</option>';
               }
           endforeach;
-
-      else :
-        //echo '<option>error' . $value . '</option>';
       endif;
     endforeach;
   }
   wp_die();
-
 }
 
 add_action( 'wp_ajax_regionfilter_ajax', __NAMESPACE__ . '\\regionfilter_ajax' );

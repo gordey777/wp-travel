@@ -117,13 +117,14 @@
                         <?php  if( $categories = get_the_category( ) ) :
 
                               $catLangth = count($categories);
-                              $i = 0;
-                              $sep = ', ';
+                              $i = 1;
 
                            foreach ( $categories as $cat ) :
                                 $i++;
-                                if($i >= $catLangth || $i == 1){
+                                if($i >= $catLangth || $catLangth == 1){
                                   $sep = '';
+                                }else{
+                                  $sep = ', ';
                                 }
                                $cat__ID = $cat->cat_ID;
                                $field_term = 'category_' . $cat__ID;

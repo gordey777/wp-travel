@@ -2639,7 +2639,7 @@ jQuery(document).ready(function($) {
     $(this).owlCarousel({
       lazyLoad: true,
       loop: true,
-      margin: 30,
+
       nav: true,
       dots: false,
       navText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
@@ -2648,8 +2648,9 @@ jQuery(document).ready(function($) {
         0: {
           items: 1
         },
-        768: {
-          items: 2
+        480: {
+          items: 2,
+          margin: 20,
         },
         992: {
           items: 2
@@ -2704,11 +2705,11 @@ jQuery(document).ready(function($) {
   });
 
   $('.multisel').each(function(index, el) {
-    var inp_placeholder = $(this).data('placeholder');
+    var inp_placeholder = '';
 
 
-    if ($(this).data('placeholder')) {
-      inp_placeholder = "placeholder='" + $(this).data('placeholder') + "'";
+    if ($(this).closest('.input-wrapp').data('placeholder')) {
+      inp_placeholder = "placeholder='" + $(this).closest('.input-wrapp').data('placeholder') + "'";
     }
 
     $(this).multiSelect({

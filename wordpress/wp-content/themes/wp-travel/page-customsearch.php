@@ -1,4 +1,4 @@
-<?php get_header(); ?>
+<?php /* Template Name: Search Page */ get_header(); ?>
 
   <?php
 
@@ -19,68 +19,22 @@ $args = array(
 
 );  ?>
 
-   <?php   /*if( $categories = get_categories( $args ) ) :
-   $regionList = '';
-   foreach ( $categories as $cat ) :
-       $cat__ID = $cat->cat_ID;
-       $field_term = 'category_' . $cat__ID;
-       $cat__type = get_field('cat_type', $field_term);
-       if($cat__type === 'region') {
-         $regionList = $regionList . $cat->name . ',';
-       }
-   endforeach;
- endif;
 
- if( $categories = get_categories( $args ) ) :
-   $countryList = '';
-   foreach ( $categories as $cat ) :
-       $cat__ID = $cat->cat_ID;
-       $field_term = 'category_' . $cat__ID;
-       $cat__type = get_field('cat_type', $field_term);
-       if($cat__type === 'country') {
-         $countryList = $regionList . $cat->name . ',';
-       }
-   endforeach;
- endif;
-
-   if( $categories = get_the_category( ) ) :
-    $countryList = '';
-      $catLangth = count($categories);
-      $i = 0;
-      $sep = ', ';
-
-    foreach ( $categories as $cat ) :
-        $i++;
-        if($i >= $catLangth || $i == 1){
-          $sep = '';
-        }
-       $cat__ID = $cat->cat_ID;
-       $field_term = 'category_' . $cat__ID;
-       $cat__type = get_field('cat_type', $field_term);
-       if($cat__type === 'country') {
-         $countryList = $countryList . $cat->name . $sep;
-       }
-    endforeach;
-
-
-  */
-
-?>
 
 
   <section class="section-search-form">
     <div class="container">
       <div class="row">
         <div class="col-md-12">
-          <h1>Туры в кению</h1>
+          <h1>Туры в кению <?php wpfp_link() ?></h1>
             <form action="<?php echo site_url() ?>/wp-admin/admin-ajax.php" method="POST" id="filter">
               <div class="form-wrap">
 
-                <div class="input-wrapp big">
+                <div class="input-wrapp big" data-placeholder="Выберите...">
                   <div class="select-title">Регионы</div>
 
                     <?php if( $categories = get_categories( $args ) ) : ?>
-                        <select class="multisel" id="regionfilter" name="regionfilter[]" multiple="multiple" data-placeholder="Выберите...">
+                        <select class="multisel" id="regionfilter" name="regionfilter[]" multiple="multiple">
 
                           <?php foreach ( $categories as $cat ) :
                               $cat__ID = $cat->cat_ID;
@@ -95,11 +49,11 @@ $args = array(
 
                 </div>
 
-                <div class="input-wrapp big">
+                <div class="input-wrapp big" data-placeholder="Выберите...">
                   <div class="select-title">Страны</div>
 
                     <?php if( $categories = get_categories( $args ) ) : ?>
-                        <select class="multisel" id="countryfilter" name="countryfilter[]" multiple="multiple" data-placeholder="Выберите...">
+                        <select class="multisel" id="countryfilter" name="countryfilter[]" multiple="multiple">
 
                           <?php foreach ( $categories as $cat ) :
                               $cat__ID = $cat->cat_ID;
@@ -114,10 +68,10 @@ $args = array(
 
                 </div>
 
-                <div class="input-wrapp med-s">
+                <div class="input-wrapp med-s" data-placeholder="Выберите...">
                   <div class="select-title">Когда</div>
                   <!-- <label class="custom-select"> -->
-                    <select class="multisel" id="monthfilter" name="monthfilter[]" multiple="multiple" data-placeholder="Выберите...">
+                    <select class="multisel" id="monthfilter" name="monthfilter[]" multiple="multiple">
 
                       <?php
                       $i = 1;
@@ -134,11 +88,11 @@ $args = array(
                   <!-- </label> -->
                 </div>
 
-                <div class="input-wrapp med">
+                <div class="input-wrapp med" data-placeholder="Выберите...">
                   <div class="select-title">Цель путешествия</div>
 
                     <?php if( $categories = get_categories( $args ) ) : ?>
-                        <select class="multisel" id="tourtypefilter" name="tourtypefilter[]" multiple="multiple" data-placeholder="Выберите...">
+                        <select class="multisel" id="tourtypefilter" name="tourtypefilter[]" multiple="multiple">
 
                           <?php foreach ( $categories as $cat ) :
                               $cat__ID = $cat->cat_ID;
@@ -232,6 +186,16 @@ $args = array(
   </div><!-- /.container -->
 </section>
 
+
+  <section class="content-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-10 col-md-offset-1 content">
+          <?php the_content(); ?>
+        </div>
+      </div><!-- /.row -->
+    </div><!-- /.container -->
+  </section>
 
 
 

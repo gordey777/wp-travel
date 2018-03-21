@@ -10,7 +10,7 @@ get_header(); ?>
       <?php //edit_post_link(); ?>
 
   <article  id="post-<?php the_ID(); ?>" <?php post_class('page-content'); ?>>
-    <div class="container page-title-wrap" style="background-image: url('<?php the_post_thumbnail_url( 'medium'); ?>')" >
+    <div class="container page-title-wrap" style="background-image: url('<?php the_post_thumbnail_url( 'large'); ?>')" >
       <div class="page-title">
         <h1><?php the_title(); ?></h1>
         <div class="subtitle">
@@ -32,13 +32,13 @@ get_header(); ?>
           </ul>
           <div class="tab-content-wrap">
             <div class="tab-content">
-              <div id="tab-1" class="tab-pane fade in active col-md-10 col-md-offset-1 col-xs-6">
+              <div id="tab-1" class="tab-pane fade in active col-md-10 col-md-offset-1">
 
                   <?php the_content(); ?>
 
               </div>
 
-              <div id="tab-2" class="tab-pane fade col-md-10 col-md-offset-1 col-xs-6">
+              <div id="tab-2" class="tab-pane fade col-md-10 col-md-offset-1">
 
                   <?php the_field('tab_include_cont'); ?>
 
@@ -50,7 +50,9 @@ get_header(); ?>
     </div><!-- /.container -->
     <?php $bg_map = get_field('map-holder'); ?>
     <?php if ( $bg_map) { ?>
-      <div class="container title-map" style="background: url(<?php echo $bg_map['url']; ?>);"></div><!-- /.container -->
+      <div class="container title-map" style="background-image: url(<?php echo $bg_map['url']; ?>);">
+
+      </div><!-- /.container -->
     <?php } ?>
     <div class="container green__alert">
       <div class="row">
@@ -69,7 +71,9 @@ get_header(); ?>
           <div class="col-md-12">
             <h3 class="tours-title"><?php the_field('program_title'); ?></h3>
           </div>
-          <div class="col-lg-5 col-lg-offset-2 col-md-6 col-md-offset-1 col-xs-8">
+        </div>
+        <div class="row programs__wrapp">
+          <div class="col-lg-5 col-lg-offset-2 col-md-6 col-md-offset-1 col-xs-12">
 
             <?php $i = 0; ?>
             <?php while ( have_rows('program_item') ) : the_row(); ?>
@@ -78,7 +82,12 @@ get_header(); ?>
 
               <?php if( get_sub_field('program_day') ): ?>
                 <div id="tour-<?php echo $i; ?>" class="tour-day">
-                  <h2 class="days-title"><?php the_sub_field('title'); ?></h2>
+                  <div class="row">
+                    <div class="col-md-12 col-md-offset-0 col-sm-11 col-sm-offset-1">
+                      <h2 class="days-title"><?php the_sub_field('title'); ?></h2>
+                    </div>
+                  </div>
+
                   <?php while ( have_rows('program_day') ) : the_row(); ?>
                     <h3><?php the_sub_field('day_title'); ?></h3>
 
@@ -103,22 +112,24 @@ get_header(); ?>
                       <div class="hotels-slider-wrap">
                         <h3><?php the_sub_field('hotels_title'); ?></h3>
                         <div class="row">
-                          <div class="col-md-11 hotels-slider owl-carousel">
-                            <?php foreach( $hotels_slider as $post): ?>
-                              <?php setup_postdata($post); ?>
+                          <div class="col-md-11 col-md-offset-0 col-sm-10 col-sm-offset-1">
+                            <div class="hotels-slider owl-carousel">
+                              <?php foreach( $hotels_slider as $post): ?>
+                                <?php setup_postdata($post); ?>
 
-                              <?php $thumb_link = ''; ?>
-                              <?php if ( has_post_thumbnail()) { ?>
-                                <?php $thumb_link = get_the_post_thumbnail_url( 'medium'); ?>
-                              <?php } else { ?>
-                                <?php $thumb_link =  catchFirstImage(); ?>
-                              <?php } ?>
+                                <?php $thumb_link = ''; ?>
+                                <?php if ( has_post_thumbnail()) { ?>
+                                  <?php $thumb_link = get_the_post_thumbnail_url( 'medium'); ?>
+                                <?php } else { ?>
+                                  <?php $thumb_link =  catchFirstImage(); ?>
+                                <?php } ?>
 
-                              <div class="item">
-                                <div class="img-wrap ratio" style="background-image: url('<?php the_post_thumbnail_url( 'medium'); ?>'); " data-hkoef="0.85"></div>
-                                <div class="hotel-title"><?php the_title(); ?></div>
-                              </div>
-                            <?php endforeach; ?>
+                                <div class="item">
+                                  <div class="img-wrap ratio" style="background-image: url('<?php the_post_thumbnail_url( 'medium'); ?>'); " data-hkoef="0.85"></div>
+                                  <div class="hotel-title"><?php the_title(); ?></div>
+                                </div>
+                              <?php endforeach; ?>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -153,8 +164,10 @@ get_header(); ?>
             <?php endwhile; ?>
           </div>
 
-          <div class="col-xs-3 col-xs-offset-1" >
+          <div class="col-sm-3 col-sm-offset-1 col-sm-12  side-nav___wrap">
+
             <div class="fixed_nav side-nav" id="sideScrollspy">
+              <div id="sidebar_btn" class="fa fa-arrow-left"></div>
               <ul class="scroll-side-nav nav nav-pills nav-stacked">
                 <?php $j = 0; ?>
                 <?php $menu_class = 'active'; ?>
