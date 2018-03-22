@@ -36,6 +36,16 @@ body {
   box-sizing: border-box;
 }
 
+
+strong{
+  font-weight: bold;
+}
+
+
+em{
+  font-style: italic;
+}
+
 h1,
 h2,
 h3,
@@ -1614,47 +1624,92 @@ article {
       }
     }
     .looper-subcont {
-      display: inline-block;
+      display: flex;
 
       width: 100%;
+      height: 70px;
       padding: 10px 0;
 
       border-top: 1px solid #e8e8e8;
+
+      align-items: stretch;
+      align-content: center;
+      justify-content: space-between;
+      flex-flow: row nowrap;
       .looper-time,
       .looper-group,
       .looper-intent {
         font-family: Open Sans;
         font-size: 16px;
         font-weight: 600;
-        line-height: 50px;
 
         position: relative;
+        //display: inline-block;
 
-        display: inline-block;
-        float: left;
+        display: flex;
 
         box-sizing: border-box;
         width: 33%;
+        //line-height: 50px;
+        //height: 100%;
         margin: 0;
 
-        text-align: center;
         vertical-align: middle;
-        white-space: nowrap;
+        //white-space: nowrap;
 
         color: #0f1920;
         border-left: 4px dotted #e8e8e8;
+
+        flex-flow: column nowrap;
+        justify-content: center;
         &:first-child {
           border: 0;
         }
       }
       .looper-time {
-        //
+        padding-left: 50px;
+
+        text-align: left;
+        &:before {
+          position: absolute;
+          top: 50%;
+          left: 20px;
+
+          display: inline-block;
+
+          width: 25px;
+          height: 36px;
+          margin: -18px 0;
+
+          content: '';
+
+          background: url('../img/icon-day-night.png') no-repeat center center;
+          background-size: contain;
+        }
       }
       .looper-group {
-        //
+        padding-left: 50px;
+
+        text-align: left;
+        &:before {
+          position: absolute;
+          top: 50%;
+          left: 20px;
+
+          display: inline-block;
+
+          width: 25px;
+          height: 36px;
+          margin: -18px 0;
+
+          content: '';
+
+          background: url('../img/icon-group.png') no-repeat center center;
+          background-size: contain;
+        }
       }
       .looper-intent {
-        //
+        text-align: center;
       }
     }
   }
@@ -2788,15 +2843,146 @@ footer {
   }
 }
 
+
+.content-page {
+  padding-top: 40px;
+  padding-bottom: 50px;
+  .container {
+    overflow: hidden;
+  }
+  h1 {
+    font-family: Roboto;
+    font-size: 24px;
+    font-weight: 400;
+
+    display: inline-block;
+
+    width: 100%;
+    margin-bottom: 33px;
+
+    text-align: left;
+    text-transform: uppercase;
+    //color: #0f1920;
+  }
+  h2 {
+    font-family: Roboto;
+    font-size: 18px;
+
+    display: inline-block;
+
+    width: 100%;
+    margin-bottom: 33px;
+
+    text-align: left;
+    text-transform: uppercase;
+    //color: #0f1920;
+  }
+  h3 {
+    font-family: Roboto;
+    font-size: 16px;
+
+    display: inline-block;
+
+    width: 100%;
+    margin-bottom: 20px;
+
+    text-align: left;
+    text-transform: uppercase;
+    //color: #0f1920;
+  }
+  p {
+    font-family: Open Sans;
+    font-size: 14px;
+    line-height: 21px;
+    //color: #283037;
+  }
+  .text-blok {
+    padding: 25px;
+  }
+  img {
+
+    margin: 0;
+  }
+  .bg__img_wrap {
+    display: flex;
+  }
+  .bg__img {
+    width: 100%;
+    min-height: 300px;
+
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+
+    align-self: stretch;
+  }
+  .banner {
+    min-height: 300px;
+
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+  }
+  .row {
+    .dark-cont {
+      display: inline-block;
+    }
+  }
+}
+
+
 ///MEDIA
 
 @media (min-width: 1500px) {
-  .full-row {
-    margin-right: -40px;
+  .full-left {
     margin-left: -40px;
   }
-  .left_container {
-    //
+
+  .row {
+    &.full_w {
+      margin-right: -40px;
+      margin-left: -40px;
+    }
+  }
+}
+
+
+
+
+@media (min-width: 769px) {
+  .dark-cont {
+    &.full-right {
+      position: relative;
+
+      height: 100%;
+      &:before {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: calc(100% - 15px);
+
+        display: inline-block;
+
+        width: 999px;
+
+        content: '';
+
+        background: #4f5860;
+      }
+    }
+  }
+  .flex-row-sm {
+    display: -webkit-flex;
+    display:    -moz-flex;
+    display:     -ms-flex;
+    display:      -o-flex;
+    display:         flex;
+
+    align-items: stretch;
+    flex-flow: row nowrap;
+    > div {
+      align-self: stretch;
+    }
   }
 }
 

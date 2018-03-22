@@ -26,7 +26,7 @@ $args = array(
     <div class="container">
       <div class="row">
         <div class="col-md-12">
-          <h1>Туры в кению <?php wpfp_link() ?></h1>
+          <h1>Туры в кению</h1>
             <form action="<?php echo site_url() ?>/wp-admin/admin-ajax.php" method="POST" id="filter">
               <div class="form-wrap">
 
@@ -109,13 +109,24 @@ $args = array(
 
                 </div>
 
+                <div class="input-wrapp med-s" data-placeholder="Выберите...">
+                  <div class="select-title">Количество ночей</div>
 
-                <div class="input-wrapp med-s">
-                  <label for="input-direction">Количество ночей</label>
-                  <input type="text" name="price_min" placeholder="Min" />
-                  <input type="text" name="price_max" placeholder="Max" />
-                  <!-- <input type="text" class="select__js" id="input-days" placeholder="Например “Мальдивы”" data-list="Габон, Гамбия, Гана, Гвинея, Гвинея-Бисау, Джибути, Замбия, Зимбабве" data-select="Ганна, Замбия"> -->
+                    <select name="daysfilter[]" id="daysfilter" class="multisel" multiple="multiple">
+                      <option value="4;7">4 - 7 дней</option>
+                      <option value="7;14">7 - 14 дней</option>
+                      <option value="14;21">14 - 21 дней</option>
+                      <option value="22;0"> > 22 дней</option>
+                    </select>
+
                 </div>
+
+<!--                 <div class="input-wrapp med-s">
+  <label for="input-direction">Количество ночей</label>
+  <input type="text" name="price_min" placeholder="Min" />
+  <input type="text" name="price_max" placeholder="Max" />
+  <input type="text" class="select__js" id="input-days" placeholder="Например “Мальдивы”" data-list="Габон, Гамбия, Гана, Гвинея, Гвинея-Бисау, Джибути, Замбия, Зимбабве" data-select="Ганна, Замбия">
+</div> -->
 
                 <div class="input-wrapp small">
                   <div class="select-title">Валюта</div>

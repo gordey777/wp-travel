@@ -40,7 +40,6 @@
       </div><!-- /.container -->
       <?php the_content(); ?>
 
-
     </article>
   <?php endwhile; endif; ?>
 

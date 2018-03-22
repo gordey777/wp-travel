@@ -865,8 +865,69 @@ function misha_filter_function(){
 
   }*/
 
+if( isset( $_POST['daysfilter'] ) ){
+  $dayFilters = $_POST['daysfilter'];
+  $dayArrMin = array();
+  $dayArrMax = array();
+$minDay = 0;
+$maxDay = 0;
 
-  // create $args['meta_query'] array if one of the following fields is filled
+  foreach($dayFilters as $key=>$dayFilter){
+    $dayArrs[$key] = explode(";", $dayFilter);
+  }
+
+  foreach($dayArrs as $key=>$dayArr){
+    $dayArrMin[$key] = (int)$dayArr[0];
+    $dayArrMax[$key] = (int)$dayArr[1];
+  }
+
+
+  if(!empty($dayArrMin)){
+    $minDay = min($dayArrMin);
+  }
+
+  if(!empty($dayArrMax) && !in_array(0, $dayArrMax)){
+    $maxDay = max($dayArrMax);
+  }
+
+
+  if( $minDay > 0 && $maxDay > 0 ) {
+    $args['meta_query'][] = array(
+      'key' => 'tour_days',
+      'value' => array( $minDay, $minDay ),
+      'type' => 'numeric',
+      'compare' => 'between'
+    );
+  } else {
+    // if only min price is set
+    if( $minDay > 0 && $maxDay == 0 )
+      $args['meta_query'][] = array(
+        'key' => 'tour_days',
+        'value' => $minDay,
+        'type' => 'numeric',
+        'compare' => '>'
+      );
+
+    // if only max price is set
+    if( $minDay == 0 && $maxDay > 0 )
+      $args['meta_query'][] = array(
+        'key' => 'tour_days',
+        'value' => $maxDay,
+        'type' => 'numeric',
+        'compare' => '<'
+      );
+  }
+
+
+
+
+
+
+
+}
+
+
+/*  // create $args['meta_query'] array if one of the following fields is filled
   if( isset( $_POST['price_min'] ) && $_POST['price_min'] || isset( $_POST['price_max'] ) && $_POST['price_max'] || isset( $_POST['featured_image'] ) && $_POST['featured_image'] == 'on' )
     $args['meta_query'] = array( 'relation'=>'AND' ); // AND means that all conditions of meta_query should be true
 
@@ -896,13 +957,12 @@ function misha_filter_function(){
         'type' => 'numeric',
         'compare' => '<'
       );
-  }
+  }*/
 
 
   if( isset( $_POST['monthfilter']) ){
     $monthArr = $_POST['monthfilter'];
   }
-
 
 
 
@@ -916,7 +976,6 @@ function misha_filter_function(){
 
 
     while( $query->have_posts() ): $query->the_post();
-
 
       $monthCompare = true;
 
@@ -939,6 +998,7 @@ function misha_filter_function(){
 
           }
       }
+
     endwhile;
     wp_reset_postdata();
   else :

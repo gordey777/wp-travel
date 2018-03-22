@@ -48,12 +48,12 @@
           <div class="looper-cont-wrap">
             <div class="looper-cont">
               <h3><?php the_title(); ?></h3>
-              <div class="looper-price" data-price="<?php the_field('tour_price'); ?>"><span class="price"><?php echo number_format(get_field('tour_price', $slide_product),0,'',' '); ?></span> <span class="currency"><?php the_field('tour_currency'); ?></span><?php wpfp_link() ?></div>
+              <div class="looper-price" data-price="<?php the_field('tour_price'); ?>"><span class="price"><?php echo number_format(get_field('tour_price', $slide_product),0,'',' '); ?></span> <span class="currency"><?php the_field('tour_currency'); ?></span></div>
             </div>
             <div class="looper-subcont">
-              <div class="looper-time"><?php the_field('tour_days'); ?> <?php the_field('tour_days_after'); ?></div>
-              <div class="looper-group"><?php the_field('tour_group'); ?></div>
-              <div class="looper-intent"><?php echo $tourTupeList ;?></div>
+              <div class="looper-time"><span><?php the_field('tour_days'); ?> <?php the_field('tour_days_after'); ?></span></div>
+              <div class="looper-group"><span><?php the_field('tour_group'); ?></span></div>
+              <div class="looper-intent"><span><?php echo $tourTupeList ;?></span></div>
             </div>
           </div>
         </div><!-- .looper -->
