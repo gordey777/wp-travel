@@ -869,8 +869,8 @@ if( isset( $_POST['daysfilter'] ) ){
   $dayFilters = $_POST['daysfilter'];
   $dayArrMin = array();
   $dayArrMax = array();
-$minDay = 0;
-$maxDay = 0;
+  $minDay = 0;
+  $maxDay = 0;
 
   foreach($dayFilters as $key=>$dayFilter){
     $dayArrs[$key] = explode(";", $dayFilter);
@@ -889,45 +889,36 @@ $maxDay = 0;
   if(!empty($dayArrMax) && !in_array(0, $dayArrMax)){
     $maxDay = max($dayArrMax);
   }
-
+  //$args['meta_query'] = array( 'relation'=>'AND' ); // AND means that all conditions of meta_query should be true
 
   if( $minDay > 0 && $maxDay > 0 ) {
     $args['meta_query'][] = array(
       'key' => 'tour_days',
-      'value' => array( $minDay, $minDay ),
+      'value' => array( $minDay, $maxDay ),
       'type' => 'numeric',
-      'compare' => 'between'
+      'compare' => 'BETWEEN'
     );
-  } else {
-    // if only min price is set
-    if( $minDay > 0 && $maxDay == 0 )
-      $args['meta_query'][] = array(
-        'key' => 'tour_days',
-        'value' => $minDay,
-        'type' => 'numeric',
-        'compare' => '>'
-      );
-
-    // if only max price is set
-    if( $minDay == 0 && $maxDay > 0 )
-      $args['meta_query'][] = array(
-        'key' => 'tour_days',
-        'value' => $maxDay,
-        'type' => 'numeric',
-        'compare' => '<'
-      );
+  } else if( $minDay > 0 && $maxDay == 0 ){
+    $args['meta_query'][] = array(
+      'key' => 'tour_days',
+      'value' => $minDay,
+      'type' => 'numeric',
+      'compare' => '>='
+    );
+  } else if( $minDay == 0 && $maxDay > 0 ){
+    $args['meta_query'][] = array(
+      'key' => 'tour_days',
+      'value' => $maxDay,
+      'type' => 'numeric',
+      'compare' => '<='
+    );
   }
-
-
-
-
-
 
 
 }
 
-
-/*  // create $args['meta_query'] array if one of the following fields is filled
+/*
+  // create $args['meta_query'] array if one of the following fields is filled
   if( isset( $_POST['price_min'] ) && $_POST['price_min'] || isset( $_POST['price_max'] ) && $_POST['price_max'] || isset( $_POST['featured_image'] ) && $_POST['featured_image'] == 'on' )
     $args['meta_query'] = array( 'relation'=>'AND' ); // AND means that all conditions of meta_query should be true
 
@@ -976,6 +967,7 @@ $maxDay = 0;
 
 
     while( $query->have_posts() ): $query->the_post();
+
 
       $monthCompare = true;
 

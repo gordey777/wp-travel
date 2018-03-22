@@ -125,7 +125,7 @@ $args = array(
   <label for="input-direction">Количество ночей</label>
   <input type="text" name="price_min" placeholder="Min" />
   <input type="text" name="price_max" placeholder="Max" />
-  <input type="text" class="select__js" id="input-days" placeholder="Например “Мальдивы”" data-list="Габон, Гамбия, Гана, Гвинея, Гвинея-Бисау, Джибути, Замбия, Зимбабве" data-select="Ганна, Замбия">
+
 </div> -->
 
                 <div class="input-wrapp small">
