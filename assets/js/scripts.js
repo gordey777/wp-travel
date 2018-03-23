@@ -4975,6 +4975,7 @@ jQuery(document).ready(function($) {
         updateFPLink($($this), link_id, link_post_id);
         updateFPCounter();
         autoRatio();
+        closeEmtyFPList();
       }
     });
 
@@ -5008,7 +5009,7 @@ jQuery(document).ready(function($) {
     } else {
       var countFP = 0;
     }
-    console.log(countFP);
+    //console.log(countFP);
     $('#favorite_open .counter').text(countFP);
     if (countFP == 0 || $('#favoritslist').find('div').length == 0) {
       $('#favorite_open').addClass('hidden');
@@ -5018,5 +5019,10 @@ jQuery(document).ready(function($) {
   }
 
 
+  function closeEmtyFPList() {
+    if ($('#favoritslist').find('div').length == 0) {
+      $('#favoritesTours').modal('toggle');
+    }
+  }
 
 });

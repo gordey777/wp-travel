@@ -36,11 +36,9 @@ body {
   box-sizing: border-box;
 }
 
-
 strong {
   font-weight: bold;
 }
-
 
 em {
   font-style: italic;
@@ -129,7 +127,63 @@ picture {
   align-items: flex-start;
 }
 
+.wpfp-span,
+.to-favorite {
+  //font-size: 0;
+  font-family: FontAwesome;
 
+  display: inline-block;
+
+  cursor: pointer;
+
+  color: #fff;
+  .wpfp-img {
+    position: absolute;
+    //display: none!important;
+  }
+  .fa {
+    font-size: 0;
+
+    display: inline-block;
+
+    color: #fff;
+    &:before {
+      font-size: 24px;
+
+      content: '\f08a';
+    }
+    &:focus,
+    &:active,
+    &:hover {
+      text-decoration: none;
+      &:before {
+        content: '\f004';
+      }
+    }
+    &.remove {
+      text-decoration: none;
+
+      color: $red;
+      &:before {
+        content: '\f004';
+
+        text-shadow: 0 0 15px #ff7670;
+      }
+      &:focus,
+      &:active,
+      &:hover {
+        color: #fff;
+      }
+    }
+  }
+  &:hover {
+    .fa {
+      &:before {
+        content: '\f004';
+      }
+    }
+  }
+}
 
 .flex-center {
   display: block;
@@ -163,6 +217,7 @@ picture {
   text-align: center;
 
   border: 1px dashed $gray-medium;
+  background: rgba(#fff, .5);
   i {
     font-size: 28px;
 
@@ -190,7 +245,6 @@ picture {
     pointer-event: none;
   }
 }
-
 
 .modal-content {
   position: relative;
@@ -223,8 +277,6 @@ picture {
     background: transparent;
   }
 }
-
-
 
 .nav-tabs {
   display: inline-block;
@@ -1649,65 +1701,10 @@ article {
     }
     .wpfp-span,
     .to-favorite {
-      //font-size: 0;
-      font-family: FontAwesome;
-
       position: absolute;
       z-index: 3;
       right: 20px;
       bottom: 20px;
-
-      display: inline-block;
-
-      cursor: pointer;
-
-      color: #fff;
-      .wpfp-img {
-        position: absolute;
-        //display: none!important;
-      }
-      .fa {
-        font-size: 0;
-
-        display: inline-block;
-
-        color: #fff;
-        &:before {
-          font-size: 24px;
-
-          content: '\f08a';
-        }
-        &:focus,
-        &:active,
-        &:hover {
-          text-decoration: none;
-          &:before {
-            content: '\f004';
-          }
-        }
-        &.remove {
-          text-decoration: none;
-
-          color: $red;
-          &:before {
-            content: '\f004';
-
-            text-shadow: 0 0 15px #ff7670;
-          }
-          &:focus,
-          &:active,
-          &:hover {
-            color: #fff;
-          }
-        }
-      }
-      &:hover {
-        .fa {
-          &:before {
-            content: '\f004';
-          }
-        }
-      }
     }
   }
   .looper-cont-wrap {
@@ -2042,6 +2039,7 @@ article {
     color: #0f1920;
   }
 }
+
 .form-wrap {
   display: flex;
   //display: inline-block;
@@ -2111,10 +2109,6 @@ article {
     margin-bottom: 20px;
   }
 }
-
-
-
-
 
 .tour-day {
   .days-title {
@@ -2912,12 +2906,9 @@ footer {
 //@import 'fonts/font_roboto';
 @import 'import/base64';
 @import 'import/print';
-
-
 #sidebar_btn {
   display: none;
 }
-
 
 #humburger {
   line-height: 47px;
@@ -2963,7 +2954,6 @@ footer {
     }
   }
 }
-
 
 .content-page {
   padding-top: 40px;
@@ -3050,14 +3040,11 @@ footer {
   }
 }
 
-
 ///MEDIA
-
 @media (min-width: 1500px) {
   .full-left {
     margin-left: -40px;
   }
-
   .row {
     &.full_w {
       margin-right: -40px;
@@ -3065,9 +3052,6 @@ footer {
     }
   }
 }
-
-
-
 
 @media (min-width: 769px) {
   .dark-cont {
@@ -3117,7 +3101,6 @@ footer {
   }
 }
 
-
 @media (max-width: 1200px) {
   header {
     .nav-top-left,
@@ -3133,8 +3116,6 @@ footer {
     }
   }
 }
-
-
 
 @media (max-width: 992px) {
   header {
@@ -3362,8 +3343,6 @@ footer {
   .tours-sliders {
     //
   }
-
-
   .programs__wrapp {
     position: relative;
     .side-nav___wrap {
@@ -3469,7 +3448,7 @@ footer {
             }
             &:hover {
               a {
-                background: rgba(#fff,.3);
+                background: rgba(#fff, .3);
               }
             }
             &.active {
@@ -3563,7 +3542,7 @@ footer {
         margin: 0 -10px;
         padding: 0;
 
-        transform: scale(1,4);
+        transform: scale(1, 4);
 
         border: 0;
         border-radius: 0;
@@ -3724,16 +3703,16 @@ footer {
         margin: 0 -10px;
         padding: 0;
 
-        transform: scale(1,4);
+        transform: scale(1, 4);
 
         border: 0;
         border-radius: 0;
       }
       .owl-prev {
-        left: calc(  -25vw + 63px);
+        left: calc( -25vw + 63px);
       }
       .owl-next {
-        right: calc(  -25vw + 63px);
+        right: calc( -25vw + 63px);
       }
     }
   }
