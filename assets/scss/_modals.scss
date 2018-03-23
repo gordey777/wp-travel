@@ -329,7 +329,8 @@ $modal-sm: 300px !default;
 // Shell div to position the modal with bottom padding
 .modal-dialog {
   position: relative;
-  width: auto;
+  //width: auto;
+  width: 90%;
   margin: 10px;
 }
 
@@ -424,20 +425,25 @@ $modal-sm: 300px !default;
 @media (min-width: $screen-sm-min) {
   // Automatically set modal's width for larger viewports
   .modal-dialog {
-    width: $modal-md;
-    margin: 30px auto;
+    //width: $modal-md;
+    margin: 50px auto;
   }
   .modal-content {
     @include box-shadow(0 5px 15px rgba(0, 0, 0, .5));
   }
   // Modal sizes
   .modal-sm {
-    width: $modal-sm;
+    //width: $modal-sm;
   }
 }
 
 @media (min-width: $screen-md-min) {
   .modal-lg {
-    width: $modal-lg;
+    //width: $modal-lg;
+  }
+}
+@media (max-width: 400px) {
+  .modal-lg {
+    width: 300px;
   }
 }

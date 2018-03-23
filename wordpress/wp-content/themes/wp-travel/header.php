@@ -23,12 +23,14 @@
 </head>
 
 
+
+
 <body <?php body_class(); ?>>
 <?php $front__id = (int)(get_option( 'page_on_front' )); ?>
 <!-- wrapper -->
 <div class="wrapper">
   <header>
-
+    <a id="favorite_open" href="#favoritesTours" data-toggle="modal" class="favorites link"><i class="fa fa-heart"></i><span class="counter"></span></a>
     <div class="container top-line">
       <div id="humburger" class="fa"></div>
       <div class="top-nav-wrapp">

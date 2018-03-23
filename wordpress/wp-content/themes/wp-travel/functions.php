@@ -889,7 +889,7 @@ if( isset( $_POST['daysfilter'] ) ){
   if(!empty($dayArrMax) && !in_array(0, $dayArrMax)){
     $maxDay = max($dayArrMax);
   }
-  //$args['meta_query'] = array( 'relation'=>'AND' ); // AND means that all conditions of meta_query should be true
+
 
   if( $minDay > 0 && $maxDay > 0 ) {
     $args['meta_query'][] = array(
@@ -913,7 +913,6 @@ if( isset( $_POST['daysfilter'] ) ){
       'compare' => '<='
     );
   }
-
 
 }
 
@@ -983,10 +982,10 @@ if( isset( $_POST['daysfilter'] ) ){
       if(get_page_template_slug() === 'single-tour.php' && $monthCompare){
           if( ($catTourTypeArray[0] != 0) ){
             if(in_category($catTourTypeArray) ){
-              echo get_template_part('search-loop');
+              get_template_part('search-loop');
             }
           }else{
-            echo get_template_part('search-loop');
+            get_template_part('search-loop');
 
           }
       }
@@ -1044,9 +1043,93 @@ add_action( 'wp_ajax_nopriv_regionfilter_ajax', __NAMESPACE__ . '\\regionfilter_
 
 
 
+function update_wpfp_list(){
+
+    $linkPostId = $_POST['user_id'];
+    $linkData = $_POST['linkData'];
+
+    if($linkPostId != 0){
+        $favorite_post_ids = get_user_meta( $linkPostId, WPFP_META_KEY, true);
+    }else{
+        $favorite_post_ids = wpfp_get_users_favorites();
+    }
+
+    $favorite_post_ids = array_reverse($favorite_post_ids);
+    $post_per_page = wpfp_get_option("post_per_page");
+    $page = intval(get_query_var('paged'));
+
+
+    //var_dump($favorite_post_ids);
+    //var_dump($linkData);
+   //var_dump($linkPostId);
+    $fpCount = 0;
+    if ($favorite_post_ids) {
+        $qry = array(
+          'post__in' => $favorite_post_ids,
+          'posts_per_page'=> -1,//$post_per_page,
+          'orderby' => 'post__in',
+          //'paged' => $page
+        );
+      $fpCount = count($favorite_post_ids);
+      $query = new WP_Query( $qry );
+
+      if( $query->have_posts() ) :
+          echo "<div class='favorites-row row' data-fpcount='".$fpCount."'>";
+          while( $query->have_posts() ): $query->the_post();
+              get_template_part('favorite-loop');
+          endwhile;
+          echo "</div>";
+          wp_reset_postdata();
+      endif;
+    }
+    die();
+}
+
+
+add_action('wp_ajax_update_fp', 'update_wpfp_list');
+add_action('wp_ajax_nopriv_update_fp', 'update_wpfp_list');
+
+
+function update_wpfp__link(){
+  $linkPostId = $_POST['post_id'];
+  if($linkPostId){
+    if (wpfp_check_favorited($linkPostId)):
+
+       echo wpfp_loading_img().wpfp_link_html($linkPostId, wpfp_get_option('remove_favorite'), "remove");
+    else:
+       echo wpfp_loading_img().wpfp_link_html($linkPostId, wpfp_get_option('add_favorite'), "add");
+    endif;
+  }
+  die();
+}
+
+
+add_action('wp_ajax_update_fplink', 'update_wpfp__link');
+add_action('wp_ajax_nopriv_update_fplink', 'update_wpfp__link');
 
 
 
+
+/*
+function update_wpfp__post(){
+  $linkPostId = $_POST['post_id'];
+  if($linkPostId){
+
+    if (wpfp_check_favorited($linkPostId)):
+
+        wpfp_remove_favorite($linkPostId);
+
+    else:
+        wpfp_add_favorite($linkPostId);
+    endif;
+  }
+
+  die();
+}
+
+
+add_action('wp_ajax_update_fpost', 'update_wpfp__post');
+add_action('wp_ajax_nopriv_update_fpost', 'update_wpfp__post');*/
 
 
 

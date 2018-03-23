@@ -96,6 +96,35 @@
 
 </footer><!-- /footer -->
 
+
+<div class="modal fade" id="favoritesTours" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+
+        <div class="container-fluid">
+
+          <div id="favoritslist">
+            <?php wpfp_list_favorite_posts(); ?>
+          </div>
+        </div>
+
+    </div>
+  </div>
+</div>
+
+  <script>
+  var ajaxurl = '<?php echo site_url() ?>/wp-admin/admin-ajax.php';
+  //var true_posts = '<?php echo serialize($wp_query->query_vars); ?>';
+  var current_page = <?php echo (get_query_var('paged')) ? get_query_var('paged') : 1; ?>;
+  var max_pages = '<?php echo $wp_query->max_num_pages; ?>';
+  var userid = '<?php echo get_current_user_id(); ?>';
+  </script>
+
+
     <?php wp_footer(); ?>
 
 </body>

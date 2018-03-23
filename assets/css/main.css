@@ -1206,7 +1206,7 @@ div.aligncenter {
 
 .modal-dialog {
   position: relative;
-  width: auto;
+  width: 90%;
   margin: 10px;
 }
 
@@ -1306,21 +1306,17 @@ div.aligncenter {
 
 @media (min-width: 768px) {
   .modal-dialog {
-    width: 768px;
-    margin: 30px auto;
+    margin: 50px auto;
   }
   .modal-content {
     -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
   }
-  .modal-sm {
-    width: 300px;
-  }
 }
 
-@media (min-width: 992px) {
+@media (max-width: 400px) {
   .modal-lg {
-    width: 900px;
+    width: 300px;
   }
 }
 
@@ -3940,6 +3936,67 @@ picture {
   flex-flow: row wrap;
 }
 
+#favorite_open {
+  position: fixed;
+  z-index: 10;
+  top: 20%;
+  right: 0;
+  display: inline-block;
+  width: 70px;
+  padding: 15px 5px;
+  text-align: center;
+  border: 1px dashed #999;
+}
+
+#favorite_open i {
+  font-size: 28px;
+  display: inline-block;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+#favorite_open .counter {
+  font-family: Roboto;
+  font-size: 26px;
+  font-weight: bold;
+  display: inline-block;
+  width: 100%;
+  color: #000;
+}
+
+#favorite_open.hidden {
+  position: 0;
+  z-index: -1;
+  pointer-event: none;
+}
+
+.modal-content {
+  position: relative;
+  padding: 60px;
+  border-radius: 0;
+}
+
+.modal-content .looper {
+  margin-bottom: 30px;
+  border-radius: 3;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.25);
+}
+
+.modal-content .close {
+  font-size: 30px;
+  position: absolute;
+  top: 0;
+  right: -50px;
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  padding: 0 0 2px 2px;
+  color: #fff;
+  border: 1px solid #fff;
+  border-radius: 50%;
+  background: transparent;
+}
+
 .nav-tabs {
   display: inline-block;
   width: 100%;
@@ -5197,7 +5254,7 @@ header .slogan {
   background-size: cover;
 }
 
-.looper .img-wrap a {
+.looper .img-wrap .tour_link {
   position: absolute;
   z-index: 1;
   top: 0;
@@ -5212,7 +5269,7 @@ header .slogan {
   background: rgba(0, 0, 0, 0.4);
 }
 
-.looper .img-wrap a span {
+.looper .img-wrap .tour_link span {
   display: inline-block;
   margin: auto;
   padding: 7px 15px;
@@ -5225,7 +5282,7 @@ header .slogan {
   opacity: 1;
 }
 
-.looper .img-wrap:hover a {
+.looper .img-wrap:hover .tour_link {
   opacity: 1;
 }
 
@@ -5239,8 +5296,9 @@ header .slogan {
   color: #fff;
 }
 
+.looper .img-wrap .wpfp-span,
 .looper .img-wrap .to-favorite {
-  font-size: 24px;
+  font-family: FontAwesome;
   position: absolute;
   z-index: 3;
   right: 20px;
@@ -5250,11 +5308,59 @@ header .slogan {
   color: #fff;
 }
 
-.looper .img-wrap .to-favorite i:before {
+.looper .img-wrap .wpfp-span .wpfp-img,
+.looper .img-wrap .to-favorite .wpfp-img {
+  position: absolute;
+}
+
+.looper .img-wrap .wpfp-span .fa,
+.looper .img-wrap .to-favorite .fa {
+  font-size: 0;
+  display: inline-block;
+  color: #fff;
+}
+
+.looper .img-wrap .wpfp-span .fa:before,
+.looper .img-wrap .to-favorite .fa:before {
+  font-size: 24px;
   content: '\f08a';
 }
 
-.looper .img-wrap .to-favorite:hover i:before {
+.looper .img-wrap .wpfp-span .fa:focus, .looper .img-wrap .wpfp-span .fa:active, .looper .img-wrap .wpfp-span .fa:hover,
+.looper .img-wrap .to-favorite .fa:focus,
+.looper .img-wrap .to-favorite .fa:active,
+.looper .img-wrap .to-favorite .fa:hover {
+  text-decoration: none;
+}
+
+.looper .img-wrap .wpfp-span .fa:focus:before, .looper .img-wrap .wpfp-span .fa:active:before, .looper .img-wrap .wpfp-span .fa:hover:before,
+.looper .img-wrap .to-favorite .fa:focus:before,
+.looper .img-wrap .to-favorite .fa:active:before,
+.looper .img-wrap .to-favorite .fa:hover:before {
+  content: '\f004';
+}
+
+.looper .img-wrap .wpfp-span .fa.remove,
+.looper .img-wrap .to-favorite .fa.remove {
+  text-decoration: none;
+  color: #DA3730;
+}
+
+.looper .img-wrap .wpfp-span .fa.remove:before,
+.looper .img-wrap .to-favorite .fa.remove:before {
+  content: '\f004';
+  text-shadow: 0 0 15px #ff7670;
+}
+
+.looper .img-wrap .wpfp-span .fa.remove:focus, .looper .img-wrap .wpfp-span .fa.remove:active, .looper .img-wrap .wpfp-span .fa.remove:hover,
+.looper .img-wrap .to-favorite .fa.remove:focus,
+.looper .img-wrap .to-favorite .fa.remove:active,
+.looper .img-wrap .to-favorite .fa.remove:hover {
+  color: #fff;
+}
+
+.looper .img-wrap .wpfp-span:hover .fa:before,
+.looper .img-wrap .to-favorite:hover .fa:before {
   content: '\f004';
 }
 

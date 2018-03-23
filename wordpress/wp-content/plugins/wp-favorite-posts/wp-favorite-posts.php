@@ -1,11 +1,11 @@
 <?php
 /*
-Plugin Name: WP Favorite Posts
+Plugin Name: WP Favorite Posts CustomAjax
 Plugin URI: https://github.com/hberberoglu/wp-favorite-posts
 Description: Allows users to add favorite posts. This plugin use cookies for saving data so unregistered users can favorite a post. Put <code>&lt;?php wpfp_link(); ?&gt;</code> where ever you want on a single post. Then create a page which includes that text : <code>[wp-favorite-posts]</code> That's it!
-Version: 1.6.6
+Version: 9999.Custom.1.6.6
 Author: Huseyin Berberoglu
-Author URI: https://github.com/hberberoglu
+AuthorURIhttps://github.com/hberberoglu
 
 */
 
@@ -169,7 +169,7 @@ function wpfp_link( $return = 0, $action = "", $show_span = 1, $args = array() )
 }
 
 function wpfp_link_html($post_id, $opt, $action) {
-    $link = "<a class='wpfp-link' href='?wpfpaction=".$action."&amp;postid=". esc_attr($post_id) . "' title='". $opt ."' rel='nofollow'>". $opt ."</a>";
+    $link = "<a class='wpfp-link fa ".$action."' href='?wpfpaction=".$action."&amp;postid=". esc_attr($post_id) . "' title='". $opt ."' rel='nofollow' data-postid='".esc_attr($post_id)."'></a>";
     $link = apply_filters( 'wpfp_link_html', $link );
     return $link;
 }

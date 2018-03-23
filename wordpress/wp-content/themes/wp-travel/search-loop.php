@@ -37,23 +37,22 @@
     // endforeach;
   endif; ?>
 
-
       <div class="col-md-6 looper-wrap">
         <div id="post-<?php the_ID(); ?>" <?php post_class('looper'); ?>>
           <div class="img-wrap ratio" data-hkoef="0.48" style="background-image: url(' <?php if ( has_post_thumbnail()) {  echo the_post_thumbnail_url('medium');  } else {  echo catchFirstImage(); ?><?php } ?>');">
-            <a href="<?php the_permalink(); ?>"><span>Подробнее</span></a>
+            <a class="tour_link" href="<?php the_permalink(); ?>"><span>Подробнее</span></a>
             <div class="tags"><?php echo $countryList;?></div>
-            <div class="to-favorite"><i class="fa"></i></div>
+            <div class="fav_wrap"><?php wpfp_link();?></div>
           </div>
           <div class="looper-cont-wrap">
             <div class="looper-cont">
-              <h3><?php the_title(); ?></h3>
+              <h3><?php the_title(); ?> </h3>
               <div class="looper-price" data-price="<?php the_field('tour_price'); ?>"><span class="price"><?php echo number_format(get_field('tour_price', $slide_product),0,'',' '); ?></span> <span class="currency"><?php the_field('tour_currency'); ?></span></div>
             </div>
             <div class="looper-subcont">
               <div class="looper-time"><span><?php the_field('tour_days'); ?> <?php the_field('tour_days_after'); ?></span></div>
               <div class="looper-group"><span><?php the_field('tour_group'); ?></span></div>
-              <div class="looper-intent"><span><?php echo $tourTupeList ;?></span></div>
+              <div class="looper-intent"><span><?php echo $tourTupeList ; echo $results;?></span></div>
             </div>
           </div>
         </div><!-- .looper -->
