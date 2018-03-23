@@ -4814,11 +4814,7 @@ jQuery(document).ready(function($) {
   }
 
 
-
-
-  //jQuery(function($) {
   $('#regionfilter').change(function(event) {
-
     var po_select = $(this).val();
     var data = {
       'action': 'regionfilter_ajax',
@@ -4832,7 +4828,7 @@ jQuery(document).ready(function($) {
       data: data,
       type: 'POST', // POST
       beforeSend: function(xhr) {
-        $('#countryfilter').text('Processing...'); // changing the button label
+        //$('#countryfilter').text('Processing...'); // changing the button label
       },
       success: function(data) {
         $('#countryfilter').html(data); // insert data
@@ -4843,41 +4839,6 @@ jQuery(document).ready(function($) {
 
 
   });
-  //});
-
-
-
-
-  /*jQuery(function($){
-    $( '#countryfilter' ).on( 'change', function() {
-
-
-      var po_select = $(this).val();
-      var data = {
-         'action': 'countryfilter_ajax',
-         'data': po_select
-      };
-
-      var filter = $('#filter');
-      $.ajax({
-
-        url:filter.attr('action'),
-        data: data,
-        type:filter.attr('method'), // POST
-        beforeSend:function(xhr){
-          //$('#countryfilter').text('Processing...'); // changing the button label
-        },
-        success:function(data){
-          //$('#countryfilter').html(data); // insert data
-        }
-      });
-      return false;
-
-
-    });
-
-
-  });*/
 
 
   $('#filter').submit(function() {
@@ -4888,10 +4849,10 @@ jQuery(document).ready(function($) {
       data: filter.serialize(), // form data
       type: filter.attr('method'), // POST
       beforeSend: function(xhr) {
-        filter.find('button').text('Processing...'); // changing the button label
+        $('#response').closest('section').addClass('ajax_load'); // changing the button label
       },
       success: function(data) {
-        filter.find('button').text(buttontext); // changing the button label back
+        //filter.find('button').text(buttontext); // changing the button label back
         $('#response').html(data); // insert data
         console.log(filter.serialize());
         autoRatio();
@@ -4899,7 +4860,7 @@ jQuery(document).ready(function($) {
           function() {
             searchResH();
           }, 100);
-
+        $('#response').closest('section').removeClass('ajax_load');
       }
     });
 

@@ -246,6 +246,32 @@ picture {
   }
 }
 
+.ajax_load {
+  position: relative;
+  //display: inline-block;
+
+
+  &:before {
+    position: absolute;
+    z-index: 999;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    display: inline-block;
+
+    content: '';
+    background-color: rgba(#fff, .5);
+
+    background-image: url('../img/ajax_loader_red_128.gif');
+    background-repeat: no-repeat;
+    background-position: center 100px;
+    background-size: 128px 128px;
+  }
+}
+
+
 .modal-content {
   position: relative;
 
