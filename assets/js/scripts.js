@@ -4551,56 +4551,60 @@ jQuery(document).ready(function($) {
 
   });
 
-  $('.multisel').each(function(index, el) {
-    var inp_placeholder = '';
 
 
-    if ($(this).closest('.input-wrapp').data('placeholder')) {
-      inp_placeholder = "placeholder='" + $(this).closest('.input-wrapp').data('placeholder') + "'";
-    }
+  var isMobile = window.matchMedia("only screen and (max-width: 760px)");
 
-    $(this).multiSelect({
-      selectableHeader: "<input type='text' class='search-input' autocomplete='off' " + inp_placeholder + ">",
-      //selectionHeader: "<i class='fa fa-plus sellect-arrow-icon'></i><input type='text' class='search-input' autocomplete='off' placeholder='try \"4\"'>",
-      afterInit: function(ms) {
-        var that = this,
-          $selectableSearch = that.$selectableUl.prev(),
-          /*$selectionSearch = that.$selectionUl.prev(),*/
-          selectableSearchString = '#' + that.$container.attr('id') + ' .ms-elem-selectable:not(.ms-selected)';
-        //selectionSearchString = '#'+that.$container.attr('id')+' .ms-elem-selection.ms-selected';
+  if (!isMobile.matches) {
 
-        that.qs1 = $selectableSearch.quicksearch(selectableSearchString)
-          .on('keydown', function(e) {
-            if (e.which === 40) {
-              that.$selectableUl.focus();
-              return false;
-            }
-          });
+    $('.multisel').each(function(index, el) {
+      var inp_placeholder = '';
 
-        /*    that.qs2 = $selectionSearch.quicksearch(selectionSearchString)
-            .on('keydown', function(e){
-              if (e.which == 40){
-                that.$selectionUl.focus();
+
+      if ($(this).closest('.input-wrapp').data('placeholder')) {
+        inp_placeholder = "placeholder='" + $(this).closest('.input-wrapp').data('placeholder') + "'";
+      }
+
+      $(this).multiSelect({
+        selectableHeader: "<input type='text' class='search-input' autocomplete='off' " + inp_placeholder + ">",
+        //selectionHeader: "<i class='fa fa-plus sellect-arrow-icon'></i><input type='text' class='search-input' autocomplete='off' placeholder='try \"4\"'>",
+        afterInit: function(ms) {
+          var that = this,
+            $selectableSearch = that.$selectableUl.prev(),
+            /*$selectionSearch = that.$selectionUl.prev(),*/
+            selectableSearchString = '#' + that.$container.attr('id') + ' .ms-elem-selectable:not(.ms-selected)';
+          //selectionSearchString = '#'+that.$container.attr('id')+' .ms-elem-selection.ms-selected';
+
+          that.qs1 = $selectableSearch.quicksearch(selectableSearchString)
+            .on('keydown', function(e) {
+              if (e.which === 40) {
+                that.$selectableUl.focus();
                 return false;
               }
-            });*/
-      },
-      afterSelect: function() {
-        this.qs1.cache();
-        //this.qs2.cache();
-      },
-      afterDeselect: function() {
-        this.qs1.cache();
-        //this.qs2.cache();
-      }
+            });
+
+          /*    that.qs2 = $selectionSearch.quicksearch(selectionSearchString)
+              .on('keydown', function(e){
+                if (e.which == 40){
+                  that.$selectionUl.focus();
+                  return false;
+                }
+              });*/
+        },
+        afterSelect: function() {
+          this.qs1.cache();
+          //this.qs2.cache();
+        },
+        afterDeselect: function() {
+          this.qs1.cache();
+          //this.qs2.cache();
+        }
+      });
+
+
     });
 
-
-
-
-  });
-
-
+  }
 
 
   // POSITON SEARC RESULT
@@ -4854,7 +4858,7 @@ jQuery(document).ready(function($) {
       success: function(data) {
         //filter.find('button').text(buttontext); // changing the button label back
         $('#response').html(data); // insert data
-        console.log(filter.serialize());
+        //console.log(filter.serialize());
         autoRatio();
         setTimeout(
           function() {
@@ -4955,6 +4959,7 @@ jQuery(document).ready(function($) {
       type: 'POST',
       beforeSend: function(xhr) {},
       success: function(data) {
+        $this.closest('.wpfp-span').html(data); // insert data
         $('#post-' + postID + ' .wpfp-span').html(data); // insert data
         $('#l-post-' + postID + ' .wpfp-span').html(data); // insert data
         //console.log('link update: #' + thisID + ' .fav_wrap');
