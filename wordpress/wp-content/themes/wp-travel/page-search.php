@@ -19,8 +19,8 @@ $args = array(
 
 );
 
-$fiilter_set = get_field('set_search_filter');
-$months_set = get_field('set_months_filter');
+  $fiilter_set = get_field('set_search_filter');
+  $months_set = get_field('set_months_filter');
 
  ?>
   <section class="section-search-form">
@@ -78,7 +78,6 @@ $months_set = get_field('set_months_filter');
                               $cat__type = get_field('cat_type', $field_term);
                               if($cat__type === 'country') {
                                   echo '<option value="' . $cat->name . '" '.$select.'>' . $cat->name . '</option>';
-                                  var_dump($cat__ID); var_dump($fiilter_set);
                               } ?>
 
                           <?php endforeach; ?>
@@ -95,10 +94,14 @@ $months_set = get_field('set_months_filter');
                       <?php
                       $i = 1;
                       while ($i <= 12){
-                      $monthPre = strftime("%B", mktime(0, 0, 0, $i, 1, 1999) );
+                        if (!empty($months_set) && in_array($i, $months_set)){
+                          $select = 'selected';
+                        }else{
+                          $select = '';
+                        }
+                        $monthPre = strftime("%B", mktime(0, 0, 0, $i, 1, 1999) );
                         $month =  __( $monthPre );
-
-                        echo '<option value="' . $i . '" >' . $month . '</option>';
+                        echo '<option value="' . $i . '" '.$select.'>' . $month . '</option>';
                         $i++;
                       }
                       ?>
