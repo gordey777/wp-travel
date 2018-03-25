@@ -1,31 +1,79 @@
 <?php /* Template Name: Search Page */ get_header(); ?>
 
   <?php
+//categoryec array
+  $args = array(
+    'type'         => 'post',
+    'child_of'     => 0,
+    'parent'       => '',
 
-$args = array(
-  'type'         => 'post',
-  'child_of'     => 0,
-  'parent'       => '',
+    'orderby'     => 'name',
+    'order'       => 'DESC',
+    'hide_empty'   => false,
+    'hierarchical' => 1,
+    'exclude'      => '',
+    'include'      => '',
+    'number'       => 0,
+    'taxonomy'     => 'category',
+    'pad_counts'   => false,
 
-  'orderby'     => 'name',
-  'order'       => 'DESC',
-  'hide_empty'   => false,
-  'hierarchical' => 1,
-  'exclude'      => '',
-  'include'      => '',
-  'number'       => 0,
-  'taxonomy'     => 'category',
-  'pad_counts'   => false,
-
-);
-
+  );
+//get pre settings
   $fiilter_set = get_field('set_search_filter');
   $months_set = get_field('set_months_filter');
+  if(!empty($months_set)){
+    foreach($months_set as $key => $var){
+      $monthArr[$key] = (int)$var;
+    }
+  }
 
+
+
+//args of pre settings
+  $tours_cat = '';
+  if($fiilter_set){
+    foreach($fiilter_set as $key => $var){
+      $field_term = 'category_' . $var;
+      $cat__type = get_field('cat_type', $field_term);
+      if($cat__type === 'region') {
+        $catRegionArray[$key] = $var;
+      } else if($cat__type === 'country') {
+        $catCountryArray[$key] = $var;
+      } else if($cat__type === 'tour_type') {
+        $catTourTypeArray[$key] = (int)$var;
+      }
+    }
+
+    if(($catRegionArray[0] != 0) && ($catCountryArray[0] != 0) ){
+      $tours_cat = $catCountryArray;
+    } else if(($catRegionArray[0] != 0) && ($catCountryArray[0] == 0) ){
+      $tours_cat = $catRegionArray;
+    } else if(($catRegionArray[0] == 0) && ($catCountryArray[0] != 0) ){
+      $tours_cat =  $catCountryArray;
+    }
+  }
+
+//set args to qury post
+  $tours_args = array(
+    'cat' => $tours_cat,
+    //'meta_key'      => 'tour_price',
+    //'orderby'     => 'meta_value',
+    'order'       => 'DESC',
+    'posts_per_page' => -1,
+    //'meta_value' => 'single-tour.php',
+  );
+
+
+
+  $tours_args['meta_key'] =  'tour_price';
+  $tours_args['orderby'] =  'meta_value';
+
+//GET FRONT PAGE ID
+  $front__id = (int)(get_option( 'page_on_front' ));
  ?>
   <section class="section-search-form">
 
-    <?php $front__id = (int)(get_option( 'page_on_front' )); ?>
+
     <div class="container">
       <div class="row">
         <div class="col-md-12">
@@ -178,28 +226,32 @@ $args = array(
           </div>
           <div  id="response" class="row searh-resolt-wrap">
             <?php
-            $tours_args = array(
-              //'meta_key'      => 'tour_price',
-              //'orderby'     => 'meta_value',
-              'order'       => 'DESC',
-              'posts_per_page' => -1,
-              //'meta_value' => 'single-tour.php',
-            );
-            $tours_args['meta_key'] =  'tour_price';
-            $tours_args['orderby'] =  'meta_value';
 
             $query = new WP_Query( $tours_args );
+
             if( $query->have_posts() ) :
               while( $query->have_posts() ): $query->the_post();
-                if(get_page_template_slug() === 'single-tour.php'){
+                $monthCompare = true;
+                if( $monthArr ){ // if set month filter
+                  $monthCompare = false;
+                  $monthPost = get_field('tour_months_chekbox');
+                  if( !empty(array_intersect($monthPost,  $monthArr))){
+                      $monthCompare = true;
+                    }
+                }
 
-
-                  get_template_part('search-loop');
+                if(get_page_template_slug() === 'single-tour.php' && $monthCompare){
+                    if( ($catTourTypeArray[0] != 0) ){
+                      if(in_category($catTourTypeArray) ){
+                        get_template_part('search-loop');
+                      }
+                    }else{
+                      get_template_part('search-loop');
+                    }
                 }
               endwhile;
               wp_reset_postdata();
             endif;?>
-
           </div><!-- /.row -->
         </div>
       </div><!-- /.row -->
