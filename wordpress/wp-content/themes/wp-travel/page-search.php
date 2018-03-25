@@ -178,7 +178,7 @@
                               $field_term = 'category_' . $cat__ID;
                               $cat__type = get_field('cat_type', $field_term);
                               if($cat__type === 'tour_type') {
-                                  echo '<option value="' . $cat->name . '" '.$select.'>' . $cat->name . '</option>';
+                                  echo '<option value="' . $cat->cat_ID . '" '.$select.'>' . $cat->name . '</option>';
                               } ?>
                           <?php endforeach; ?>
                         </select>

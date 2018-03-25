@@ -4549,6 +4549,11 @@ jQuery(document).ready(function($) {
     sidebarScroll();
     scrollActive();
 
+    if ($(document).scrollTop() > $(window).height()) {
+      $('#to_top').fadeIn('slow');
+    } else {
+      $('#to_top').fadeOut('slow');
+    }
   });
 
 
@@ -4775,6 +4780,14 @@ jQuery(document).ready(function($) {
 
     })*/
 
+  $("#to_top").click(function() {
+    $("html, body").animate({
+      scrollTop: 0
+    }, "slow");
+    return false;
+  });
+
+
 
   //TOUR SIDE MENU
   function scrollActive() {
@@ -4805,6 +4818,9 @@ jQuery(document).ready(function($) {
     }
   }
 
+
+
+  ///Filters
 
   $('#regionfilter').change(function(event) {
     var po_select = $(this).val();
@@ -4862,6 +4878,53 @@ jQuery(document).ready(function($) {
   });
 
 
+  noSearchResolt();
+
+
+  function noSearchResolt() {
+    if ($('#response').find('div').length != 0) {
+      $('#nothing_find').hide();
+    } else {
+      $('#nothing_find').show();
+    }
+  }
+
+
+
+  // POSITON SEARC RESULT
+  function searchResH() {
+
+    if ($(window).width() > 992 && $('.searh-resolt-wrap > div').length > 4) {
+
+      var totalSearhH = 0;
+      $('.searh-resolt-wrap > div').each(function(i) {
+        totalSearhH += $(this).outerHeight() + 50;
+
+
+      });
+      divsNum = $('.searh-resolt-wrap > div').length;
+
+      if (divsNum % 2 == 1) {
+        totalH = (totalSearhH / divsNum) * (divsNum + 1);
+      } else {
+        totalH = totalSearhH;
+      }
+
+      var searhWrapH = totalH * .52;
+
+      $('.searh-resolt-wrap').addClass('flex-column').css('height', searhWrapH);
+
+    } else {
+      $('.searh-resolt-wrap').removeClass('flex-column').removeAttr('style');
+    }
+  }
+
+
+
+
+
+
+
 
   ///Favorites list
 
@@ -4888,16 +4951,6 @@ jQuery(document).ready(function($) {
   });
 
 
-  noSearchResolt();
-
-
-  function noSearchResolt() {
-    if ($('#response').find('div').length != 0) {
-      $('#nothing_find').hide();
-    } else {
-      $('#nothing_find').show();
-    }
-  }
 
   updateFPCounter();
 
@@ -5007,36 +5060,6 @@ jQuery(document).ready(function($) {
   function closeEmtyFPList() {
     if ($('#favoritslist').find('div').length == 0) {
       $('#favoritesTours').modal('toggle');
-    }
-  }
-
-
-
-  // POSITON SEARC RESULT
-  function searchResH() {
-
-    if ($(window).width() > 992 && $('.searh-resolt-wrap > div').length > 4) {
-
-      var totalSearhH = 0;
-      $('.searh-resolt-wrap > div').each(function(i) {
-        totalSearhH += $(this).outerHeight() + 50;
-
-
-      });
-      divsNum = $('.searh-resolt-wrap > div').length;
-
-      if (divsNum % 2 == 1) {
-        totalH = (totalSearhH / divsNum) * (divsNum + 1);
-      } else {
-        totalH = totalSearhH;
-      }
-
-      var searhWrapH = totalH * .52;
-
-      $('.searh-resolt-wrap').addClass('flex-column').css('height', searhWrapH);
-
-    } else {
-      $('.searh-resolt-wrap').removeClass('flex-column').removeAttr('style');
     }
   }
 
