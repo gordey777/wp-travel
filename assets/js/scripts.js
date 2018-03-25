@@ -4557,59 +4557,65 @@ jQuery(document).ready(function($) {
   });
 
 
-
+  //multiselect
   var isMobile = window.matchMedia("only screen and (max-width: 760px)");
 
-  if (!isMobile.matches) {
-
-    $('.multisel').each(function(index, el) {
-      var inp_placeholder = '';
+  if (!isMobile.matches) {}
 
 
-      if ($(this).closest('.input-wrapp').data('placeholder')) {
-        inp_placeholder = "placeholder='" + $(this).closest('.input-wrapp').data('placeholder') + "'";
-      }
+  $('.multisel').each(function(index, el) {
+    var inp_placeholder = '';
 
-      $(this).multiSelect({
-        selectableHeader: "<input type='text' class='search-input' autocomplete='off' " + inp_placeholder + ">",
-        //selectionHeader: "<i class='fa fa-plus sellect-arrow-icon'></i><input type='text' class='search-input' autocomplete='off' placeholder='try \"4\"'>",
-        afterInit: function(ms) {
-          var that = this,
-            $selectableSearch = that.$selectableUl.prev(),
-            /*$selectionSearch = that.$selectionUl.prev(),*/
-            selectableSearchString = '#' + that.$container.attr('id') + ' .ms-elem-selectable:not(.ms-selected)';
-          //selectionSearchString = '#'+that.$container.attr('id')+' .ms-elem-selection.ms-selected';
 
-          that.qs1 = $selectableSearch.quicksearch(selectableSearchString)
-            .on('keydown', function(e) {
-              if (e.which === 40) {
-                that.$selectableUl.focus();
+    if ($(this).closest('.input-wrapp').data('placeholder')) {
+      inp_placeholder = "placeholder='" + $(this).closest('.input-wrapp').data('placeholder') + "'";
+    }
+
+    $(this).multiSelect({
+      selectableHeader: "<input type='text' class='search-input' autocomplete='off' " + inp_placeholder + ">",
+      //selectionHeader: "<i class='fa fa-plus sellect-arrow-icon'></i><input type='text' class='search-input' autocomplete='off' placeholder='try \"4\"'>",
+      afterInit: function(ms) {
+        var that = this,
+          $selectableSearch = that.$selectableUl.prev(),
+          /*$selectionSearch = that.$selectionUl.prev(),*/
+          selectableSearchString = '#' + that.$container.attr('id') + ' .ms-elem-selectable:not(.ms-selected)';
+        //selectionSearchString = '#'+that.$container.attr('id')+' .ms-elem-selection.ms-selected';
+
+        that.qs1 = $selectableSearch.quicksearch(selectableSearchString)
+          .on('keydown', function(e) {
+            if (e.which === 40) {
+              that.$selectableUl.focus();
+              return false;
+            }
+          });
+
+        /*    that.qs2 = $selectionSearch.quicksearch(selectionSearchString)
+            .on('keydown', function(e){
+              if (e.which == 40){
+                that.$selectionUl.focus();
                 return false;
               }
-            });
-
-          /*    that.qs2 = $selectionSearch.quicksearch(selectionSearchString)
-              .on('keydown', function(e){
-                if (e.which == 40){
-                  that.$selectionUl.focus();
-                  return false;
-                }
-              });*/
-        },
-        afterSelect: function() {
-          this.qs1.cache();
-          //this.qs2.cache();
-        },
-        afterDeselect: function() {
-          this.qs1.cache();
-          //this.qs2.cache();
-        }
-      });
-
-
+            });*/
+      },
+      afterSelect: function() {
+        this.qs1.cache();
+        //this.qs2.cache();
+      },
+      afterDeselect: function() {
+        this.qs1.cache();
+        //this.qs2.cache();
+      }
     });
 
-  }
+
+  });
+
+  $(document).find('.ms-selectable').click(function(event) {
+    $(this).children('.ms-list').toggleClass('open');
+
+  });
+
+
 
 
   //TEL LIST

@@ -277,26 +277,31 @@ picture {
   right: 10px;
   bottom: 10vw;
 
-
   display: none;
 
   width: 50px;
   height: 50px;
   padding-top: 3px;
 
+  transition: all .3s;
   text-align: center;
 
   opacity: .5;
   color: #4f5860;
   border: 1px solid #4f5860;
   border-radius: 50%;
+  background: rgba(#fff, .4);
   &:hover,
   &:active,
   &:focus {
     text-decoration: none;
-
+  }
+  &:hover {
     opacity: 1;
-    color: #4f5860;
+    color: $red;
+    border-color: $red;
+    background: #fff;
+    box-shadow: 0 0 5px 0 #fff;
   }
 }
 
@@ -2198,6 +2203,8 @@ article {
     color: #4f5860;
   }
   .input-wrapp {
+    position: relative;
+
     display: inline-block;
     float: left;
 
@@ -3381,6 +3388,26 @@ footer {
     }
   }
 }
+
+
+// @media only screen {
+//   .form-wrap {
+//     .input-wrapp {
+//       .multisel {
+//         z-index: 99;
+//         top: 0;
+//         right: 0!important;
+//         bottom: 0;
+//         left: 0!important;
+
+//         height: auto;
+
+//         opacity: 0;
+//       }
+//     }
+//   }
+// }
+
 
 @media (max-width: 768px) {
   .header--nav {

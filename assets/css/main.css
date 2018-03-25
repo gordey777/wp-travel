@@ -574,17 +574,10 @@ button.gray-btn:active {
   content: '';
   text-align: center;
   vertical-align: middle;
-  pointer-events: none;
+  pointer-events: auto;
   color: #fff;
   border-radius: 0 3px 3px 0;
   background: linear-gradient(180deg, #313e47 0%, #16242e 100%);
-}
-
-.ms-container .ms-selectable .search-input:hover + .ms-list,
-.ms-container .ms-selectable .search-input:focus + .ms-list {
-  max-height: 200px;
-  margin-bottom: 10px;
-  opacity: 1;
 }
 
 .ms-container .ms-selectable .ms-list {
@@ -602,15 +595,19 @@ button.gray-btn:active {
   background: #fff;
 }
 
-.ms-container .ms-selectable .ms-list:hover, .ms-container .ms-selectable .ms-list:focus, .ms-container .ms-selectable .ms-list.open {
-  max-height: 138px;
+.ms-container .ms-selectable .ms-list:hover, .ms-container .ms-selectable .ms-list:active, .ms-container .ms-selectable .ms-list:focus {
+  outline: 0;
+}
+
+.ms-container .ms-selectable .ms-list:hover, .ms-container .ms-selectable .ms-list.open {
+  max-height: 200px;
   margin-bottom: 10px;
   opacity: 1;
 }
 
 .ms-container .ms-selectable .ms-list li,
 .ms-container .ms-selectable .ms-list .sellect-item {
-  font-size: 12px;
+  font-size: 15px;
   display: block;
   width: 100%;
   margin-right: 5px;
@@ -641,8 +638,12 @@ button.gray-btn:active {
   width: 100%;
 }
 
+.ms-container .ms-selection ul:hover, .ms-container .ms-selection ul:active, .ms-container .ms-selection ul:focus {
+  outline: 0;
+}
+
 .ms-container .ms-selection li {
-  font-size: 12px;
+  font-size: 13px;
   position: relative;
   display: inline-block;
   margin: 0 5px 5px 0;
@@ -4065,17 +4066,25 @@ picture {
   width: 50px;
   height: 50px;
   padding-top: 3px;
+  transition: all .3s;
   text-align: center;
   opacity: .5;
   color: #4f5860;
   border: 1px solid #4f5860;
   border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
 }
 
 #to_top:hover, #to_top:active, #to_top:focus {
   text-decoration: none;
+}
+
+#to_top:hover {
   opacity: 1;
-  color: #4f5860;
+  color: #DA3730;
+  border-color: #DA3730;
+  background: #fff;
+  box-shadow: 0 0 5px 0 #fff;
 }
 
 .modal-content {
@@ -5790,6 +5799,7 @@ header .slogan {
 }
 
 .form-wrap .input-wrapp {
+  position: relative;
   display: inline-block;
   float: left;
   width: auto;
