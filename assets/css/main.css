@@ -5656,7 +5656,8 @@ header .slogan {
   background: #faf8f9;
 }
 
-.section-search-form h1 {
+.section-search-form h1,
+.section-search-form h2 {
   font-family: Roboto;
   font-size: 18px;
   display: inline-block;
@@ -5706,6 +5707,7 @@ header .slogan {
 }
 
 .form-wrap .input-wrapp.btn-wrap {
+  margin: 0;
   padding-top: 22px;
 }
 
@@ -5719,10 +5721,6 @@ header .slogan {
 
 .form-wrap .input-wrapp.med-s {
   max-width: 140px;
-}
-
-.form-wrap .input-wrapp.small {
-  max-width: 95px;
 }
 
 .form-wrap .input-wrapp:first-child {

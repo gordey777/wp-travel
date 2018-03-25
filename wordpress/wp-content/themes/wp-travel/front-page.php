@@ -14,19 +14,41 @@
   <?php if( have_rows('main_slider') ): ?>
     <div id="main-slider" class="owl-carousel container">
       <?php while ( have_rows('main_slider') ) : the_row(); ?>
+
+        <?php //color & bg-color
+        if ( get_sub_field('color_title')) {
+          $color_title = 'color: '. get_sub_field('color_title').';';
+        }
+        if ( get_sub_field('color_title_bg')) {
+          $color_title_bg = 'background-color: '. get_sub_field('color_title_bg').';';
+        }
+        if ( get_sub_field('color_days')) {
+          $color_days = 'color: '. get_sub_field('color_days').';';
+        }
+        if ( get_sub_field('color_days_bg')) {
+          $color_days_bg = 'background-color: '. get_sub_field('color_days_bg').';';
+        }
+        if ( get_sub_field('color_price')) {
+          $color_price= 'color: '. get_sub_field('color_price').';';
+        }
+        if ( get_sub_field('color_price_bg')) {
+          $color_price_bg = 'background-color: '. get_sub_field('color_price_bg').';';
+        }
+        ?>
+
         <?php $bg_image = get_sub_field('img'); ?>
         <div class="slide item" style="background: url(<?php if ( !empty($bg_image)) { echo $bg_image['url'];} ?>);">
           <div class="row">
             <div class="slider-cont-wrap col-xs-10 col-xs-offset-1">
               <div class="slider-cont">
                 <?php if ( get_sub_field('title')) { ?>
-                  <div class="title-wrap"><h2><?php the_sub_field('title'); ?></h2></div>
+                  <div class="title-wrap"><h2 style="<?php echo $color_title; ?><?php echo $color_title_bg; ?>"><?php the_sub_field('title'); ?></h2></div>
                 <?php } ?>
                 <?php if ( get_sub_field('days')) { ?>
-                  <p class="time"><?php the_sub_field('days'); ?></p>
+                  <p class="time" style="<?php echo $color_days; ?><?php echo $color_days_bg; ?>"><?php the_sub_field('days'); ?></p>
                 <?php } ?>
                 <?php if ( get_sub_field('price')) { ?>
-                  <p class="price"><?php the_sub_field('price'); ?></p>
+                  <p class="price" style="<?php echo $color_price; ?><?php echo $color_price_bg; ?>"><?php the_sub_field('price'); ?></p>
                 <?php } ?>
               </div>
               <?php if ( get_sub_field('link')) { ?>

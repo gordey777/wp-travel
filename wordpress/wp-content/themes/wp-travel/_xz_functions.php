@@ -771,22 +771,24 @@ function filter_ptags_on_images($content){
 }
 add_filter('the_content', 'filter_ptags_on_images');
 
-//
-//
+
 //shortcode slider
 function insert_slider() {
-if( have_rows("page_slider" ) ){
-  $html = '<div class="page_slider_wrap">';
+    $images = get_field('page_image_slider');
 
-  while ( have_rows("page_slider" ) ) : the_row();
-    $img = get_sub_field('img');
-    $html = $html . '<div class="page_slider_item item">';
-        $html = $html . '<div class="img_wrapp"><a href="' . $img['url'] . '" rel="lightbox"><img src="' . $img['sizes']['medium'] . '"/></div></a>';
+    if( $images ){
+        $html = '<div class="page_slider_wrap">';
+        $html = '<div class="page_slider owl-carousel">';
+        foreach( $images as $image ):
+            $img = get_sub_field('img');
+            $html = $html . '<div class="page_slider_item item">';
+                $html = $html . '<div class="img_wrapp"><a href="' . $img['url'] . '" rel="lightbox"><img src="' . $img['sizes']['medium'] . '"/></div></a>';
+            $html = $html . '</div>';
+        endforeach;
+    }
     $html = $html . '</div>';
-  endwhile;
-}
-$html = $html . '</div>';
-return $html;
+    $html = $html . '</div>';
+    return $html;
 }
 add_shortcode( 'insert_slider', 'insert_slider' );
 //[insert_slider]
@@ -796,11 +798,9 @@ add_shortcode( 'insert_slider', 'insert_slider' );
 
 
 
+
+
 //FILTER
-
-
-
-
 
 function misha_filter_function(){
   $args = array(
@@ -1134,6 +1134,8 @@ add_action('wp_ajax_nopriv_update_fpost', 'update_wpfp__post');*/
 
 
 
+
+
 /*
 Plugin Name: Filter Page by Template
 Description: See list of pages or any type of posts by filtering based on used template. Page template filter dropdown for post/page listing. New column in page list that shows template name.
@@ -1240,4 +1242,9 @@ class FilterPagesByTemplate {
 
 new FilterPagesByTemplate();
 
+
+
+
+
 ?>
+

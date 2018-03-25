@@ -17,9 +17,12 @@ $args = array(
   'taxonomy'     => 'category',
   'pad_counts'   => false,
 
-);  ?>
+);
 
+$fiilter_set = get_field('set_search_filter');
+$months_set = get_field('set_months_filter');
 
+ ?>
   <section class="section-search-form">
 
     <?php $front__id = (int)(get_option( 'page_on_front' )); ?>
@@ -37,11 +40,17 @@ $args = array(
                         <select class="multisel" id="regionfilter" name="regionfilter[]" multiple="multiple">
 
                           <?php foreach ( $categories as $cat ) :
+
                               $cat__ID = $cat->cat_ID;
+                              if (!empty($fiilter_set) && in_array($cat__ID, $fiilter_set)){
+                                $select = 'selected';
+                              }else{
+                                $select = '';
+                              }
                               $field_term = 'category_' . $cat__ID;
                               $cat__type = get_field('cat_type', $field_term);
                               if($cat__type === 'region') {
-                                  echo '<option value="' . $cat->name . '">' . $cat->name . '</option>';
+                                  echo '<option value="' . $cat->name . '" '.$select.'>' . $cat->name . '</option>';
                               } ?>
                           <?php endforeach; ?>
                         </select>
@@ -53,15 +62,25 @@ $args = array(
                   <div class="select-title"><?php the_field('title_country_filter', $front__id); ?></div>
 
                     <?php if( $categories = get_categories( $args ) ) : ?>
+
                         <select class="multisel" id="countryfilter" name="countryfilter[]" multiple="multiple">
 
                           <?php foreach ( $categories as $cat ) :
+
                               $cat__ID = $cat->cat_ID;
+
+                              if (!empty($fiilter_set) && in_array($cat__ID, $fiilter_set)){
+                                $select = 'selected';
+                              }else{
+                                $select = '';
+                              }
                               $field_term = 'category_' . $cat__ID;
                               $cat__type = get_field('cat_type', $field_term);
                               if($cat__type === 'country') {
-                                  echo '<option value="' . $cat->name . '">' . $cat->name . '</option>';
+                                  echo '<option value="' . $cat->name . '" '.$select.'>' . $cat->name . '</option>';
+                                  var_dump($cat__ID); var_dump($fiilter_set);
                               } ?>
+
                           <?php endforeach; ?>
                         </select>
                       <?php endif; ?>
@@ -95,10 +114,15 @@ $args = array(
                         <select class="multisel" id="tourtypefilter" name="tourtypefilter[]" multiple="multiple">
                           <?php foreach ( $categories as $cat ) :
                               $cat__ID = $cat->cat_ID;
+                              if (!empty($fiilter_set) && in_array($cat__ID, $fiilter_set)){
+                                $select = 'selected';
+                              }else{
+                                $select = '';
+                              }
                               $field_term = 'category_' . $cat__ID;
                               $cat__type = get_field('cat_type', $field_term);
                               if($cat__type === 'tour_type') {
-                                  echo '<option value="' . $cat->term_id . '">' . $cat->name . '</option>';
+                                  echo '<option value="' . $cat->name . '" '.$select.'>' . $cat->name . '</option>';
                               } ?>
                           <?php endforeach; ?>
                         </select>
