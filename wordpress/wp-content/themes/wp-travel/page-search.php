@@ -53,27 +53,32 @@
     }
   }
 
+  $bunners = get_field('search_bunners');
+
+  if($bunners){
+    $per_page = 8;
+  }else{
+    $per_page = -1;
+  }
 //set args to qury post
   $tours_args = array(
     'cat' => $tours_cat,
     //'meta_key'      => 'tour_price',
     //'orderby'     => 'meta_value',
     'order'       => 'DESC',
-    'posts_per_page' => -1,
+    'posts_per_page' => $per_page,
     //'meta_value' => 'single-tour.php',
   );
-
-
-
   $tours_args['meta_key'] =  'tour_price';
   $tours_args['orderby'] =  'meta_value';
 
 //GET FRONT PAGE ID
   $front__id = (int)(get_option( 'page_on_front' ));
+//if bunners
+
+
  ?>
   <section class="section-search-form">
-
-
     <div class="container">
       <div class="row">
         <div class="col-md-12">
@@ -197,7 +202,7 @@
                     <label class="custom-select" for=" ">
                       <select name="currency-filter" id="currency-filter">
                         <?php while ( have_rows('currency_settings', $front__id) ) : the_row(); ?>
-                          <option value="<?php the_sub_field('curr_coef'); ?>"><?php the_sub_field('curr_name'); ?> <?php the_sub_field('curr_label'); ?></option>
+                          <option value="<?php the_sub_field('curr_coef'); ?>;<?php the_sub_field('curr_label'); ?>"><?php the_sub_field('curr_name'); ?> <?php the_sub_field('curr_label'); ?></option>
                         <?php  endwhile; ?>
                       </select>
                     </label>
@@ -230,6 +235,7 @@
             $query = new WP_Query( $tours_args );
 
             if( $query->have_posts() ) :
+              $j = 0;
               while( $query->have_posts() ): $query->the_post();
                 $monthCompare = true;
                 if( $monthArr ){ // if set month filter
@@ -249,6 +255,12 @@
                       get_template_part('search-loop');
                     }
                 }
+                if($j == 1 && $bunners[0]){ echo '<div class="col-md-6 bunner bunner-1>'.$bunners[0].'</div>';}
+                if($j == 3 && $bunners[1]){ echo '<div class="col-md-6 bunner bunner-2>'.$bunners[1].'</div>';}
+                if($j == 3 && $bunners[2]){ echo '<div class="col-md-6 bunner bunner-3>'.$bunners[2].'</div>';}
+                if($j == 5 && $bunners[3]){ echo '<div class="col-md-6 bunner bunner-4>'.$bunners[3].'</div>';}
+
+                $j++;
               endwhile;
               wp_reset_postdata();
             endif;?>

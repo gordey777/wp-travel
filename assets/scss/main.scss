@@ -778,14 +778,14 @@ header {
 
         display: inline-block;
 
-        padding: 10px 0;
+        padding: 0;
 
         transition: all .3s;
         pointer-events: none;
 
         opacity: 0;
         background: #3a434b;
-        box-shadow: 0 0 4px rgba(0, 0, 0, .4);
+        //box-shadow: 0 0 4px rgba(0, 0, 0, .4);
         > li.menu-item-has-children {
           //position: static;
           > a {
@@ -981,6 +981,86 @@ header {
                   background: #283037;
                 }
               }
+              ul {
+                display: none;
+              }
+            }
+          }
+        }
+      }
+    }
+    .more_list {
+      //position: static;
+      &:hover {
+        background: #1d262e;
+      }
+      > .sub-menu {
+        position: absolute;
+        top: 100%;
+        right: -50px;
+        left: auto;
+
+        display: flex;
+
+        width: auto;
+        padding: 0;
+
+        white-space: nowrap;
+
+        background: #1d262e;
+
+        align-items: flex-start;
+        flex-flow: row nowrap;
+        .menu-item-has-children {
+          a {
+            &:before {
+              display: none;
+            }
+          }
+        }
+        > li {
+          position: relative;
+
+          display: inline-block;
+          float: left;
+
+          width: auto;
+          padding: 0;
+
+          white-space: normal;
+          > a {
+            font-size: 18px;
+            font-weight: bold;
+
+            display: inline-block;
+
+            width: 100%;
+            padding: 15px 20px;
+            &:hover {
+              background: #283037;
+            }
+          }
+          &:hover {
+            background: transparent;
+            a {
+              background: #283037;
+            }
+          }
+          > .sub-menu {
+            position: relative;
+            z-index: 1;
+            top: auto;
+            right: auto;
+            bottom: auto;
+            left: auto;
+
+            display: inline-block;
+
+            width: 100%;
+
+            opacity: 1;
+            li {
+              width: 100%;
               ul {
                 display: none;
               }

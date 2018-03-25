@@ -4607,34 +4607,6 @@ jQuery(document).ready(function($) {
   }
 
 
-  // POSITON SEARC RESULT
-  function searchResH() {
-
-    if ($(window).width() > 992 && $('.searh-resolt-wrap > div').length > 4) {
-
-      var totalSearhH = 0;
-      $('.searh-resolt-wrap > div').each(function(i) {
-        totalSearhH += $(this).outerHeight() + 50;
-
-
-      });
-      divsNum = $('.searh-resolt-wrap > div').length;
-
-      if (divsNum % 2 == 1) {
-        totalH = (totalSearhH / divsNum) * (divsNum + 1);
-      } else {
-        totalH = totalSearhH;
-      }
-
-      var searhWrapH = totalH * .52;
-
-      $('.searh-resolt-wrap').addClass('flex-column').css('height', searhWrapH);
-
-    } else {
-      $('.searh-resolt-wrap').removeClass('flex-column').removeAttr('style');
-    }
-  }
-
   //TEL LIST
   $('.tel-btn').click(function(event) {
     $(this).siblings('.sub-phones-wrap').toggleClass('open');
@@ -4723,13 +4695,13 @@ jQuery(document).ready(function($) {
 
   })
 
-  //MEIN MENU SUB ITEMS POSITION
+  //MAIN MENU SUB ITEMS POSITION
   function subMenuAlign() {
     var headnavPos = $('.headnav').offset().left,
       headnavW = $('.headnav').width();
 
     $('.sub-menu').each(function(index, el) {
-      if (!$(this).parents('.tours-list').length) {
+      if (!$(this).parents('.tours-list, .more_list').length) {
         var subPos = $(this).offset().left,
           subW = $(this).width(),
           subParentW = $(this).closest('li').width(),
@@ -4743,6 +4715,22 @@ jQuery(document).ready(function($) {
     });
   }
 
+  //PRICE TRIGGER
+
+  $('#currency-filter').change(function(event) {
+    currencyTrigger();
+  });
+
+  function currencyTrigger() {
+    var $curr_koef = ($('#currency-filter').find(":selected").attr('value')).split(";");;
+    $('.looper-price').each(function(index, el) {
+      var $prise = $('.looper-price').data('price');
+      $new_price = ($prise * $curr_koef[0] + '').replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ');
+      $(this).children('.price').text($new_price);
+      $(this).children('.currency').text($curr_koef[1]);
+      //console.log($new_price);
+    });
+  }
 
 
 
@@ -4788,7 +4776,7 @@ jQuery(document).ready(function($) {
     })*/
 
 
-
+  //TOUR SIDE MENU
   function scrollActive() {
     if ($('.scroll-side-nav').length) {
       var windscroll = jQuery(window).scrollTop();
@@ -4864,6 +4852,8 @@ jQuery(document).ready(function($) {
           function() {
             searchResH();
           }, 100);
+        currencyTrigger();
+        noSearchResolt();
         $('#response').closest('section').removeClass('ajax_load');
       }
     });
@@ -4875,11 +4865,39 @@ jQuery(document).ready(function($) {
 
   ///Favorites list
 
+
+
   $('#favorite_open').click(function() {
     setTimeout(function() {
       autoRatio();
     }, 500);
   });
+
+  updateFPCounter();
+
+  jQuery(document).on('click', '.wpfp-link', function() {
+
+    dhis = $(this);
+    wpfp_do_js(dhis, 1);
+    // for favorite post listing page
+    if (dhis.hasClass('remove-parent')) {
+      dhis.parent("li").fadeOut();
+    }
+
+    return false;
+  });
+
+
+  noSearchResolt();
+
+
+  function noSearchResolt() {
+    if ($('#response').find('div').length != 0) {
+      $('#nothing_find').hide();
+    } else {
+      $('#nothing_find').show();
+    }
+  }
 
   updateFPCounter();
 
@@ -4970,6 +4988,7 @@ jQuery(document).ready(function($) {
 
   function updateFPCounter() {
 
+
     if ($('#favoritslist').find('div').length != 0) {
       var countFP = $('#favoritslist .favorites-row').data('fpcount');
     } else {
@@ -4990,5 +5009,37 @@ jQuery(document).ready(function($) {
       $('#favoritesTours').modal('toggle');
     }
   }
+
+
+
+  // POSITON SEARC RESULT
+  function searchResH() {
+
+    if ($(window).width() > 992 && $('.searh-resolt-wrap > div').length > 4) {
+
+      var totalSearhH = 0;
+      $('.searh-resolt-wrap > div').each(function(i) {
+        totalSearhH += $(this).outerHeight() + 50;
+
+
+      });
+      divsNum = $('.searh-resolt-wrap > div').length;
+
+      if (divsNum % 2 == 1) {
+        totalH = (totalSearhH / divsNum) * (divsNum + 1);
+      } else {
+        totalH = totalSearhH;
+      }
+
+      var searhWrapH = totalH * .52;
+
+      $('.searh-resolt-wrap').addClass('flex-column').css('height', searhWrapH);
+
+    } else {
+      $('.searh-resolt-wrap').removeClass('flex-column').removeAttr('style');
+    }
+  }
+
+
 
 });
