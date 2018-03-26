@@ -4902,7 +4902,8 @@ jQuery(document).ready(function($) {
 
   function closeEmtyFPList() {
     if ($('#favoritslist').find('div').length == 0) {
-      $('#favoritesTours').modal('toggle');
+      //$('#favoritesTours').modal('toggle');
+      $('#favoritesTours').modal('hide');
     }
   }
 

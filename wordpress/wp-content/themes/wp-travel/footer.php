@@ -98,7 +98,7 @@
 
  <a href="#" id="to_top" class="fa fa-angle-up"></a>
 
-<div class="modal fade" id="favoritesTours" tabindex="-1">
+<div class="modal" id="favoritesTours" tabindex="-1">
   <div class="modal-dialog">
     <div class="modal-content">
 
