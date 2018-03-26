@@ -771,26 +771,27 @@ function filter_ptags_on_images($content){
 }
 add_filter('the_content', 'filter_ptags_on_images');
 
-//
-//
+
 //shortcode slider
 function insert_slider() {
-if( have_rows("page_slider" ) ){
-  $html = '<div class="page_slider_wrap">';
+    $images = get_field('page_image_slider');
 
-  while ( have_rows("page_slider" ) ) : the_row();
-    $img = get_sub_field('img');
-    $html = $html . '<div class="page_slider_item item">';
-        $html = $html . '<div class="img_wrapp"><a href="' . $img['url'] . '" rel="lightbox"><img src="' . $img['sizes']['medium'] . '"/></div></a>';
-    $html = $html . '</div>';
-  endwhile;
-}
-$html = $html . '</div>';
-return $html;
+    if( $images ){
+        $html = '<div class="page_slider_wrap">';
+        $html .= '<div class="page_slider owl-carousel" >';
+        foreach( $images as $img ):
+
+            $html .= '<div class="page_slider_item item">';
+                $html .= '<div class="img_wrapp"><a href="' . $img['url'] . '" rel="lightbox"><img src="' . $img['sizes']['small'] . '"/></div></a>';
+            $html .= '</div>';
+        endforeach;
+    }
+    $html .= '</div>';
+    $html .= '</div>';
+    return $html;
 }
 add_shortcode( 'insert_slider', 'insert_slider' );
 //[insert_slider]
-
 
 
 

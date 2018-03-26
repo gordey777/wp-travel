@@ -56,7 +56,7 @@
   $bunners = get_field('search_bunners');
 
   if($bunners){
-    $per_page = 8;
+    $per_page = -1;
   }else{
     $per_page = -1;
   }
@@ -255,17 +255,20 @@
                       get_template_part('search-loop');
                     }
                 }
-                if($j == 1 && $bunners[0]){ echo '<div class="col-md-6 bunner bunner-1">'.$bunners[0]['bunner'].'</div>';}
-                if($j == 3 && $bunners[1]){ echo '<div class="col-md-6 bunner bunner-2">'.$bunners[1]['bunner'].'</div>';}
-                if($j == 3 && $bunners[2]){ echo '<div class="col-md-6 bunner bunner-3">'.$bunners[2]['bunner'].'</div>';}
-                if($j == 5 && $bunners[3]){ echo '<div class="col-md-6 bunner bunner-4">'.$bunners[3]['bunner'].'</div>';}
+                if($j == 2 && $bunners[0]){ echo '<div class="col-md-6 bunner bunner-1">'.$bunners[0]['bunner'].'</div>';}
+                if($j == 5 && $bunners[1]){ echo '<div class="col-md-6 bunner bunner-2">'.$bunners[1]['bunner'].'</div>';}
+                if($j == 5 && $bunners[2]){ echo '<div class="col-md-6 bunner bunner-3">'.$bunners[2]['bunner'].'</div>';}
+                if($j == 9 && $bunners[3]){ echo '<div class="col-md-6 bunner bunner-4">'.$bunners[3]['bunner'].'</div>';}
 
                 $j++;
               endwhile;
+
               wp_reset_postdata();
             endif;?>
           </div><!-- /.row -->
+
         </div>
+
       </div><!-- /.row -->
     </div><!-- /.container -->
   </section>

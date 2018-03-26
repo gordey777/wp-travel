@@ -4295,7 +4295,7 @@ jQuery(document).ready(function($) {
   $('.hotels-slider').each(function() {
     $(this).owlCarousel({
       lazyLoad: true,
-      loop: true,
+      loop: false,
 
       nav: true,
       dots: false,
@@ -4310,7 +4310,34 @@ jQuery(document).ready(function($) {
           margin: 20,
         },
         992: {
+          margin: 30,
           items: 2
+        }
+      }
+    });
+  });
+
+  $('.page_slider').each(function() {
+    $(this).owlCarousel({
+      lazyLoad: true,
+      loop: false,
+      autoWidth: true,
+      nav: true,
+      dots: false,
+      navText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
+      //stagePadding:50,
+      responsive: {
+        0: {
+          items: 2,
+          margin: 10,
+        },
+        480: {
+          items: 3,
+          margin: 20,
+        },
+        992: {
+          items: 4,
+          margin: 30,
         }
       }
     });

@@ -179,3 +179,13 @@
     }
   }
 }
+
+#ms-input-direction {
+  .ms-selectable {
+    &:before {
+      content: '\f067';
+
+      background: $red;
+    }
+  }
+}
