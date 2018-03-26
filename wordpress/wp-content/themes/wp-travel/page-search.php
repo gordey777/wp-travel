@@ -226,7 +226,7 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-10 col-lg-offset-1">
-          <div id="nothing_find" style="display: none;">
+          <div id="nothing_find" >
             <?php the_field('content_nothing_found', $front__id); ?>
           </div>
           <div  id="response" class="row searh-resolt-wrap">
@@ -255,10 +255,10 @@
                       get_template_part('search-loop');
                     }
                 }
-                if($j == 1 && $bunners[0]){ echo '<div class="col-md-6 bunner bunner-1>'.$bunners[0].'</div>';}
-                if($j == 3 && $bunners[1]){ echo '<div class="col-md-6 bunner bunner-2>'.$bunners[1].'</div>';}
-                if($j == 3 && $bunners[2]){ echo '<div class="col-md-6 bunner bunner-3>'.$bunners[2].'</div>';}
-                if($j == 5 && $bunners[3]){ echo '<div class="col-md-6 bunner bunner-4>'.$bunners[3].'</div>';}
+                if($j == 1 && $bunners[0]){ echo '<div class="col-md-6 bunner bunner-1">'.$bunners[0]['bunner'].'</div>';}
+                if($j == 3 && $bunners[1]){ echo '<div class="col-md-6 bunner bunner-2">'.$bunners[1]['bunner'].'</div>';}
+                if($j == 3 && $bunners[2]){ echo '<div class="col-md-6 bunner bunner-3">'.$bunners[2]['bunner'].'</div>';}
+                if($j == 5 && $bunners[3]){ echo '<div class="col-md-6 bunner bunner-4">'.$bunners[3]['bunner'].'</div>';}
 
                 $j++;
               endwhile;

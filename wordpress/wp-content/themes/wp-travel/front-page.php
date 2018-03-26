@@ -66,20 +66,36 @@
 <?php if($front_tags) { ?>
   <section class="search-tags">
     <div class="container">
-      <div class="tags-line">
-        <a href="<?php echo $front_tags[0]['link']; ?>" class="tag tag1"><?php echo $front_tags[0]['title']; ?></a>
-        <a href="<?php echo $front_tags[1]['link']; ?>" class="tag tag2"><?php echo $front_tags[1]['title']; ?></a>
-        <a href="<?php echo $front_tags[2]['link']; ?>" class="tag tag3"><?php echo $front_tags[2]['title']; ?></a>
+      <div class="tags-wrapp">
+
+        <?php if( have_rows('front_tags') ): ?>
+            <div id="tags">
+            <?php $i = 0; ?>
+            <?php while ( have_rows('front_tags') ) : the_row(); ?>
+              <?php $i++ ; ?>
+              <a href="<?php the_sub_field('link'); ?>" class="tag tag<?php echo $i; ?>"><?php the_sub_field('title'); ?></a>
+              <?php if ($i >= 7){ ?>
+                <?php $i = 0 ; ?>
+              <?php } ?>
+            <?php  endwhile; ?>
+        <?php endif; ?>
       </div>
-      <div class="tags-line">
-        <a href="<?php echo $front_tags[3]['link']; ?>" class="tag tag4"><?php echo $front_tags[3]['title']; ?></a>
-        <a href="<?php echo $front_tags_search[0]['link']; ?>" class="btn tag-search"><?php echo $front_tags_search[0]['title']; ?><i class="fa fa-search"></i></a>
-        <a href="<?php echo $front_tags[4]['link']; ?>" class="tag tag5"><?php echo $front_tags[4]['title']; ?></a>
-      </div>
-      <div class="tags-line">
-        <a href="<?php echo $front_tags[5]['link']; ?>" class="tag tag6"><?php echo $front_tags[5]['title']; ?></a>
-        <a href="<?php echo $front_tags[6]['link']; ?>" class="tag tag7"><?php echo $front_tags[6]['title']; ?></a>
-      </div>
+      <a href="<?php echo $front_tags_search[0]['link']; ?>" class="btn tag-search"><?php echo $front_tags_search[0]['title']; ?><i class="fa fa-search"></i></a>
+    </div>
+<!--       <div class="tags-line">
+  <a href="<?php echo $front_tags[0]['link']; ?>" class="tag tag1"><?php echo $front_tags[0]['title']; ?></a>
+  <a href="<?php echo $front_tags[1]['link']; ?>" class="tag tag2"><?php echo $front_tags[1]['title']; ?></a>
+  <a href="<?php echo $front_tags[2]['link']; ?>" class="tag tag3"><?php echo $front_tags[2]['title']; ?></a>
+</div>
+<div class="tags-line">
+  <a href="<?php echo $front_tags[3]['link']; ?>" class="tag tag4"><?php echo $front_tags[3]['title']; ?></a>
+  <a href="<?php echo $front_tags_search[0]['link']; ?>" class="btn tag-search"><?php echo $front_tags_search[0]['title']; ?><i class="fa fa-search"></i></a>
+  <a href="<?php echo $front_tags[4]['link']; ?>" class="tag tag5"><?php echo $front_tags[4]['title']; ?></a>
+</div>
+<div class="tags-line">
+  <a href="<?php echo $front_tags[5]['link']; ?>" class="tag tag6"><?php echo $front_tags[5]['title']; ?></a>
+  <a href="<?php echo $front_tags[6]['link']; ?>" class="tag tag7"><?php echo $front_tags[6]['title']; ?></a>
+</div> -->
     </div><!-- /.container -->
   </section>
 <?php } ?>

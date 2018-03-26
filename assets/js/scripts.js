@@ -26,213 +26,6 @@ if (typeof jQuery === 'undefined') {
 
 
 
-/**
- * jQuery TagCloud plugin
- *
- * @version 1.2.2 (12-MAY-2009)
- * @author Nurul Ferdous <nurul_ferdous@yahoo.com>
- * @requires jQuery v1.4.3 or later Examples and documentation at:
- * http://dynamicguy.com/ Dual licensed under the MIT and GPL
- * licenses: http://www.opensource.org/licenses/mit-license.php
- * http://www.gnu.org/licenses/gpl.html
- *
- * Revision: $Id$
- */
-
-;
-(function($) {
-  var tags;
-  var mathAssets = {
-    halfHeight: null,
-    halfWidth: null,
-    hwratio: null,
-    dtr: null,
-    diameter: null,
-    speedX: null,
-    speedY: null,
-    tLength: null
-  }
-  var settings = {
-    //height of sphere container
-    height: 400,
-    //width of sphere container
-    width: 400,
-    //radius of sphere
-    radius: 150,
-    //rotation speed
-    speed: 3,
-    //sphere rotations slower
-    slower: 0.9,
-    //delay between update position
-    timer: 5,
-    //dependence of a font size on axis Z
-    fontMultiplier: 15,
-    //tag css stylies on mouse over
-    hoverStyle: {
-      border: '1px solid #935C26',
-      color: '#935C26'
-    },
-    //tag css stylies on mouse out
-    mouseOutStyle: {
-      border: 'none',
-      color: 'red'
-    }
-  }
-
-  var curState = {
-    mouseOver: null,
-    lastFy: null,
-    lastFx: null,
-    sy: null,
-    cy: null,
-    sx: null,
-    cx: null,
-    mouseX: null,
-    mouseY: null
-  }
-  var options = {};
-  jQuery.fn.tagoSphere = function(opt) {
-    options = jQuery.extend(settings, opt);
-    initContainer(this);
-    initTags(this);
-    initMaths();
-    deployTags();
-    setInterval(updateTags, options.timer);
-    return this;
-  };
-
-  function initMaths() {
-    mathAssets.halfHeight = options.height / 2;
-    mathAssets.halfWidth = options.width / 2;
-    mathAssets.speedX = options.speed / mathAssets.halfWidth;
-    mathAssets.speedY = options.speed / mathAssets.halfHeight;
-    mathAssets.dtr = Math.PI / 180;
-    mathAssets.diameter = options.radius * 2;
-    mathAssets.hwratio = options.height / options.width;
-    mathAssets.whratio = options.width / options.height;
-    mathAssets.tLength = tags.length - 1;
-    curState.mouseOver = false;
-    curState.lastFx = options.speed;
-    curState.lastFy = options.speed;
-  }
-
-  function initContainer(tagContainer) {
-    tagContainer.height(options.height);
-    tagContainer.width(options.width);
-    tagContainer.css({
-      'overflow': 'hidden',
-      'position': 'relative'
-    });
-    tagContainer.mousemove(function(e) {
-      curState.mouseX = e.pageX - this.offsetLeft;
-      curState.mouseY = e.pageY - this.offsetTop;
-    });
-    tagContainer.hover(function() {
-      curState.mouseOver = true;
-    }, function() {
-      curState.mouseOver = false;
-    });
-  }
-
-  function initTags(tagContainer) {
-    tags = tagContainer.children('ul').children();
-    tags.css({
-      'position': 'absolute',
-      'list-style-type': 'none',
-      'list-style-position': 'outside',
-      'list-style-image': 'none'
-    });
-    for (var i = 0; i < tags.length; i++) {
-      var jTag = jQuery(tags[i]);
-      var link = jQuery(jTag.children()[0]);
-      tags[i] = jTag;
-      jTag.hover(function() {
-        jQuery(this).css(options.hoverStyle);
-      }, function() {
-        jQuery(this).css(options.mouseOutStyle);
-      })
-    }
-  }
-
-  function deployTags() {
-    var phi = 0;
-    var theta = 0;
-    var max = mathAssets.tLength + 1;
-    var i = 0;
-    while (i++ < max) {
-      phi = Math.acos(-1 + (2 * i - 1) / max);
-      theta = Math.sqrt(max * Math.PI) * phi;
-      tags[i - 1].cx = options.radius * Math.cos(theta) * Math.sin(phi);
-      tags[i - 1].cy = options.radius * Math.sin(theta) * Math.sin(phi);
-      tags[i - 1].cz = options.radius * Math.cos(phi);
-      tags[i - 1].h = jQuery(tags[i - 1]).height() / 4;
-      tags[i - 1].w = jQuery(tags[i - 1]).width() / 4;
-    }
-  }
-
-  function calcRotation(fy, fx) {
-    curState.sy = Math.sin(fy * mathAssets.dtr);
-    curState.cy = Math.cos(fy * mathAssets.dtr);
-    curState.sx = Math.sin(fx * mathAssets.dtr);
-    curState.cx = Math.cos(fx * mathAssets.dtr);
-  }
-
-  function updateTags() {
-    var fy;
-    var fx;
-    if (curState.mouseOver) {
-      fy = options.speed - mathAssets.speedY * curState.mouseY;
-      fx = mathAssets.speedX * curState.mouseX - options.speed;
-    } else {
-      fy = curState.lastFy * options.slower;
-      fx = curState.lastFx * options.slower;
-    }
-    if (curState.lastFy != fy || curState.lastFx != fx) {
-      calcRotation(fy, fx);
-      curState.lastFy = fy;
-      curState.lastFx = fx;
-    }
-    if (Math.abs(fy) > 0.01 || Math.abs(fx) > 0.01) {
-      j = -1;
-      while (j++ < mathAssets.tLength) {
-        rx1 = tags[j].cx;
-        ry1 = tags[j].cy * curState.cy + tags[j].cz * -curState.sy;
-        rz1 = tags[j].cy * curState.sy + tags[j].cz * curState.cy;
-        tags[j].cx = rx1 * curState.cx + rz1 * curState.sx;
-        tags[j].cy = tags[j].cy * curState.cy + tags[j].cz * -curState.sy;
-        tags[j].cz = rx1 * -curState.sx + rz1 * curState.cx;
-        var per = mathAssets.diameter / (mathAssets.diameter + tags[j].cz);
-        tags[j].x = tags[j].cx * per;
-        tags[j].y = tags[j].cy * per;
-        tags[j].alpha = per / 2;
-        tags[j]
-          .css({
-            'left': mathAssets.whratio * (tags[j].x - tags[j].w * per) + mathAssets.halfWidth,
-            'top': mathAssets.hwratio * (tags[j].y - tags[j].h * per) + mathAssets.halfHeight,
-            'opacity': tags[j].alpha,
-            'font-size': options.fontMultiplier * tags[j].alpha + 'px',
-            'z-index': Math.round(-tags[j].cz)
-          });
-      }
-    }
-  }
-})(jQuery);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 ////////////////////////////////////////////
@@ -4443,7 +4236,24 @@ function(a, b, c, d) {
 
 
 
+
+
+
+
+
+
+
+
+
 jQuery(document).ready(function($) {
+
+
+
+
+
+
+
+
 
 
   $('.tours-slider').each(function() {
@@ -4610,9 +4420,8 @@ jQuery(document).ready(function($) {
 
   });
 
-  $(document).find('.ms-selectable').click(function(event) {
+  $(document).on('click', '.ms-selectable', function() {
     $(this).children('.ms-list').toggleClass('open');
-
   });
 
 
@@ -4847,6 +4656,7 @@ jQuery(document).ready(function($) {
       success: function(data) {
         $('#countryfilter').html(data); // insert data
         $('#countryfilter').multiSelect('refresh');
+        //console.log(data);
       }
     });
     return false;
@@ -5067,6 +4877,221 @@ jQuery(document).ready(function($) {
     if ($('#favoritslist').find('div').length == 0) {
       $('#favoritesTours').modal('toggle');
     }
+  }
+
+  //tag cloud
+  if ($(document).find('#tags').length) {
+
+    var radius = 200;
+    var dtr = Math.PI / 180;
+    var d = 300;
+
+    var mcList = [];
+    var active = false;
+    var lasta = 1;
+    var lastb = 1;
+    var distr = true;
+    var tspeed = 1.1;
+    var size = 500;
+
+    var mouseX = 0;
+    var mouseY = 0;
+
+    var howElliptical = 1;
+
+    var aA = null;
+    var oDiv = null;
+
+    window.onload = function() {
+      var i = 0;
+      var oTag = null;
+
+      oDiv = document.getElementById('tags');
+
+      aA = oDiv.getElementsByTagName('a');
+
+
+      for (i = 0; i < aA.length; i++) {
+        oTag = {};
+
+        oTag.offsetWidth = aA[i].offsetWidth;
+        oTag.offsetHeight = aA[i].offsetHeight;
+
+        mcList.push(oTag);
+      }
+
+      sineCosine(0, 0, 0);
+
+      positionAll();
+
+      oDiv.onmouseover = function() {
+        active = true;
+      };
+
+      oDiv.onmouseout = function() {
+        active = false;
+      };
+
+      oDiv.onmousemove = function(ev) {
+        var oEvent = window.event || ev;
+
+        mouseX = oEvent.clientX - (oDiv.offsetLeft + oDiv.offsetWidth / 2);
+        mouseY = oEvent.clientY - (oDiv.offsetTop + oDiv.offsetHeight / 2);
+
+        mouseX /= 5;
+        mouseY /= 5;
+      };
+
+      setInterval(update, 4);
+    };
+
+    function update() {
+      var a;
+      var b;
+
+      if (active) {
+        a = (-Math.min(Math.max(-mouseY, -size), size) / radius) * tspeed;
+        b = (Math.min(Math.max(-mouseX, -size), size) / radius) * tspeed;
+      } else {
+        a = lasta * 0.98;
+        b = lastb * 0.98;
+      }
+
+      lasta = a;
+      lastb = b;
+
+      if (Math.abs(a) <= 0.01 && Math.abs(b) <= 0.01) {
+        return;
+      }
+
+      var c = 0;
+      sineCosine(a, b, c);
+      for (var j = 0; j < mcList.length; j++) {
+        var rx1 = mcList[j].cx;
+        var ry1 = mcList[j].cy * ca + mcList[j].cz * (-sa);
+        var rz1 = mcList[j].cy * sa + mcList[j].cz * ca;
+
+        var rx2 = rx1 * cb + rz1 * sb;
+        var ry2 = ry1;
+        var rz2 = rx1 * (-sb) + rz1 * cb;
+
+        var rx3 = rx2 * cc + ry2 * (-sc);
+        var ry3 = rx2 * sc + ry2 * cc;
+        var rz3 = rz2;
+
+        mcList[j].cx = rx3;
+        mcList[j].cy = ry3;
+        mcList[j].cz = rz3;
+
+        per = d / (d + rz3);
+
+        mcList[j].x = (howElliptical * rx3 * per) - (howElliptical * 2);
+        mcList[j].y = ry3 * per;
+        mcList[j].scale = per;
+        mcList[j].alpha = per;
+
+        mcList[j].alpha = (mcList[j].alpha - 0.6) * (10 / 6);
+      }
+
+      doPosition();
+      depthSort();
+    }
+
+    function depthSort() {
+      var i = 0;
+      var aTmp = [];
+
+      for (i = 0; i < aA.length; i++) {
+        aTmp.push(aA[i]);
+      }
+
+      aTmp.sort(
+        function(vItem1, vItem2) {
+          if (vItem1.cz > vItem2.cz) {
+            return -1;
+          } else if (vItem1.cz < vItem2.cz) {
+            return 1;
+          } else {
+            return 0;
+          }
+        }
+      );
+
+      for (i = 0; i < aTmp.length; i++) {
+        aTmp[i].style.zIndex = i;
+      }
+    }
+
+    function positionAll() {
+      var phi = 0;
+      var theta = 0;
+      var max = mcList.length;
+      var i = 0;
+
+      var aTmp = [];
+      var oFragment = document.createDocumentFragment();
+
+
+      for (i = 0; i < aA.length; i++) {
+        aTmp.push(aA[i]);
+      }
+
+      aTmp.sort(
+        function() {
+          return Math.random() < 0.5 ? 1 : -1;
+        }
+      );
+
+      for (i = 0; i < aTmp.length; i++) {
+        oFragment.appendChild(aTmp[i]);
+      }
+
+      oDiv.appendChild(oFragment);
+
+      for (var i = 1; i < max + 1; i++) {
+        if (distr) {
+          phi = Math.acos(-1 + (2 * i - 1) / max);
+          theta = Math.sqrt(max * Math.PI) * phi;
+        } else {
+          phi = Math.random() * (Math.PI);
+          theta = Math.random() * (2 * Math.PI);
+        }
+
+        mcList[i - 1].cx = radius * Math.cos(theta) * Math.sin(phi);
+        mcList[i - 1].cy = radius * Math.sin(theta) * Math.sin(phi);
+        mcList[i - 1].cz = radius * Math.cos(phi);
+
+        aA[i - 1].style.left = mcList[i - 1].cx + oDiv.offsetWidth / 2 - mcList[i - 1].offsetWidth / 2 + 'px';
+        aA[i - 1].style.top = mcList[i - 1].cy + oDiv.offsetHeight / 2 - mcList[i - 1].offsetHeight / 2 + 'px';
+      }
+    }
+
+    function doPosition() {
+      var l = oDiv.offsetWidth / 2;
+      var t = oDiv.offsetHeight / 2;
+      for (var i = 0; i < mcList.length; i++) {
+        aA[i].style.left = mcList[i].cx + l - mcList[i].offsetWidth / 2 + 'px';
+        aA[i].style.top = mcList[i].cy + t - mcList[i].offsetHeight / 2 + 'px';
+
+        //aA[i].style.fontSize = Math.ceil(12 * mcList[i].scale / 2) + 8 + 'px';
+
+        aA[i].style.transform = "scale3d(" + (mcList[i].scale / 2) + "," + (mcList[i].scale / 2) + "," + (mcList[i].scale / 2) + ")";
+
+        aA[i].style.filter = "alpha(opacity=" + 100 * mcList[i].alpha + ")";
+        aA[i].style.opacity = mcList[i].alpha;
+      }
+    }
+
+    function sineCosine(a, b, c) {
+      sa = Math.sin(a * dtr);
+      ca = Math.cos(a * dtr);
+      sb = Math.sin(b * dtr);
+      cb = Math.cos(b * dtr);
+      sc = Math.sin(c * dtr);
+      cc = Math.cos(c * dtr);
+    }
+
+
   }
 
 

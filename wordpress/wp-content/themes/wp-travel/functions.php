@@ -1010,13 +1010,14 @@ function regionfilter_ajax() {
   $value = $_POST['data'];
   if( $value ){
     foreach ($value as $key => $var) {
-        $value[$key] = get_cat_ID($var);
+        $valueIDs[$key] = get_cat_ID($var);
     }
-    foreach ( $value as $valueArray ) :
-      if($valueArray == 0){ $valueArray = '';}
+
+    foreach ( $valueIDs as $valID ) :
+      if($valID == 0){ $valID = '';}
         $argsCountry = array(
           'type'         => 'post',
-          'parent'       => $valueArray,
+          'parent'       => $valID,
           'orderby'      => 'name',
           'order'        => 'ASC',
           //'hide_empty'   => false,
@@ -1032,6 +1033,7 @@ function regionfilter_ajax() {
                       echo '<option value="' . $cat->name . '">' . $cat->name . '</option>';
               }
           endforeach;
+          wp_reset_postdata();
       endif;
     endforeach;
   }

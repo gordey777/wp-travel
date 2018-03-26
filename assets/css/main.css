@@ -5022,7 +5022,6 @@ header .slogan {
 }
 
 .search-tags .container {
-  padding-top: 50px;
   text-align: center;
   background-image: url("../img/tags-bg.png");
   background-repeat: no-repeat;
@@ -5151,6 +5150,46 @@ header .slogan {
   bottom: calc(100% - 1px);
   left: 30px;
   transform: matrix(-1, 0, 0, 1, 0, 0);
+}
+
+.search-tags .tags-wrapp {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  width: 100%;
+  height: 350px;
+  text-align: center;
+}
+
+.search-tags .tags-wrapp .tag-search {
+  position: absolute;
+  z-index: 99;
+  top: 50%;
+  left: 50%;
+  width: 180px;
+  height: 42px;
+  margin-top: -21px;
+  margin-left: -90px;
+}
+
+.search-tags #tags {
+  position: relative;
+  left: -100px;
+  display: inline-block;
+  width: 100%;
+  min-width: 700px;
+  height: 350px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.search-tags #tags a {
+  font-size: 18px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: auto;
+  padding: 7px 15px;
 }
 
 .hotels-slider .owl-stage,
@@ -5618,10 +5657,24 @@ header .slogan {
   margin-bottom: 0;
 }
 
-.searh-resolt .bunner img {
+.searh-resolt #nothing_find {
+  display: none;
+  width: 100%;
+  height: auto;
+  padding: 30px 0;
+  text-align: center;
+}
+
+.searh-resolt #nothing_find h2 {
+  font-size: 25px;
+}
+
+.searh-resolt .bunner > img {
   display: inline-block;
   width: 100%;
   height: auto;
+  margin: 0;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.25);
 }
 
 .searh-resolt .looper {
