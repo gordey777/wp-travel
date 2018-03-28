@@ -1,5 +1,5 @@
 <?php /* Template Name: Home Page */ get_header(); ?>
-
+<?php $front__id = (int)(get_option( 'page_on_front' )); ?>
   <?php if (have_posts()): while (have_posts()) : the_post(); ?>
     <?php //the_ID(); ?>
     <?php //post_class(); ?>
@@ -69,7 +69,8 @@
       <div class="tags-wrapp">
 
         <?php if( have_rows('front_tags') ): ?>
-            <div id="tags">
+          <div id="tags">
+
             <?php $i = 0; ?>
             <?php while ( have_rows('front_tags') ) : the_row(); ?>
               <?php $i++ ; ?>
@@ -78,10 +79,11 @@
                 <?php $i = 0 ; ?>
               <?php } ?>
             <?php  endwhile; ?>
+          </div>
         <?php endif; ?>
+
+        <a href="<?php echo $front_tags_search[0]['link']; ?>" class="btn tag-search"><?php echo $front_tags_search[0]['title']; ?><i class="fa fa-search"></i></a>
       </div>
-      <a href="<?php echo $front_tags_search[0]['link']; ?>" class="btn tag-search"><?php echo $front_tags_search[0]['title']; ?><i class="fa fa-search"></i></a>
-    </div>
 <!--       <div class="tags-line">
   <a href="<?php echo $front_tags[0]['link']; ?>" class="tag tag1"><?php echo $front_tags[0]['title']; ?></a>
   <a href="<?php echo $front_tags[1]['link']; ?>" class="tag tag2"><?php echo $front_tags[1]['title']; ?></a>
@@ -146,7 +148,7 @@
 
                 <div id="tour-<?php the_ID(); ?>" <?php post_class('tour item'); ?>>
                   <div class="img-wrap ratio" data-hkoef="0.85" style="background-image: url('<?php the_post_thumbnail_url( 'medium'); //echo $thumb_link; ?>');">
-                    <a href="<?php the_permalink(); ?>"><span>Подробнее</span></a>
+                    <a href="<?php the_permalink(); ?>"><span><?php the_field('more_btn_title', $front__id);?></span></a>
                   </div>
                   <div class="tours-cont">
                     <h3><?php the_title(); ?></h3>

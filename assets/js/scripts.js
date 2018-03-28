@@ -25,7 +25,123 @@ if (typeof jQuery === 'undefined') {
 
 
 
+/*!
+ * jQuery Cookie Plugin v1.4.1
+ * https://github.com/carhartl/jquery-cookie
+ *
+ * Copyright 2006, 2014 Klaus Hartl
+ * Released under the MIT license
+ */
+(function(factory) {
+  if (typeof define === 'function' && define.amd) {
+    // AMD (Register as an anonymous module)
+    define(['jquery'], factory);
+  } else if (typeof exports === 'object') {
+    // Node/CommonJS
+    module.exports = factory(require('jquery'));
+  } else {
+    // Browser globals
+    factory(jQuery);
+  }
+}(function($) {
 
+  var pluses = /\+/g;
+
+  function encode(s) {
+    return config.raw ? s : encodeURIComponent(s);
+  }
+
+  function decode(s) {
+    return config.raw ? s : decodeURIComponent(s);
+  }
+
+  function stringifyCookieValue(value) {
+    return encode(config.json ? JSON.stringify(value) : String(value));
+  }
+
+  function parseCookieValue(s) {
+    if (s.indexOf('"') === 0) {
+      // This is a quoted cookie as according to RFC2068, unescape...
+      s = s.slice(1, -1).replace(/\\"/g, '"').replace(/\\\\/g, '\\');
+    }
+
+    try {
+      // Replace server-side written pluses with spaces.
+      // If we can't decode the cookie, ignore it, it's unusable.
+      // If we can't parse the cookie, ignore it, it's unusable.
+      s = decodeURIComponent(s.replace(pluses, ' '));
+      return config.json ? JSON.parse(s) : s;
+    } catch (e) {}
+  }
+
+  function read(s, converter) {
+    var value = config.raw ? s : parseCookieValue(s);
+    return $.isFunction(converter) ? converter(value) : value;
+  }
+
+  var config = $.cookie = function(key, value, options) {
+
+    // Write
+
+    if (arguments.length > 1 && !$.isFunction(value)) {
+      options = $.extend({}, config.defaults, options);
+
+      if (typeof options.expires === 'number') {
+        var days = options.expires,
+          t = options.expires = new Date();
+        t.setMilliseconds(t.getMilliseconds() + days * 864e+5);
+      }
+
+      return (document.cookie = [
+        encode(key), '=', stringifyCookieValue(value),
+        options.expires ? '; expires=' + options.expires.toUTCString() : '', // use expires attribute, max-age is not supported by IE
+        options.path ? '; path=' + options.path : '',
+        options.domain ? '; domain=' + options.domain : '',
+        options.secure ? '; secure' : ''
+      ].join(''));
+    }
+
+    // Read
+
+    var result = key ? undefined : {},
+      // To prevent the for loop in the first place assign an empty array
+      // in case there are no cookies at all. Also prevents odd result when
+      // calling $.cookie().
+      cookies = document.cookie ? document.cookie.split('; ') : [],
+      i = 0,
+      l = cookies.length;
+
+    for (; i < l; i++) {
+      var parts = cookies[i].split('='),
+        name = decode(parts.shift()),
+        cookie = parts.join('=');
+
+      if (key === name) {
+        // If second argument (value) is a function it's a converter...
+        result = read(cookie, value);
+        break;
+      }
+
+      // Prevent storing a cookie that we couldn't decode.
+      if (!key && (cookie = read(cookie)) !== undefined) {
+        result[name] = cookie;
+      }
+    }
+
+    return result;
+  };
+
+  config.defaults = {};
+
+  $.removeCookie = function(key, options) {
+    // Must not alter options, thus extending a fresh object...
+    $.cookie(key, '', $.extend({}, options, {
+      expires: -1
+    }));
+    return !$.cookie(key);
+  };
+
+}));
 
 
 ////////////////////////////////////////////
@@ -4476,7 +4592,7 @@ jQuery(document).ready(function($) {
   $(document).on('click', '#ms_input_button', function(e) {
 
 
-      var vallCF = $(this).siblings('input.search-input').val();
+    var vallCF = $(this).siblings('input.search-input').val();
     console.log(vallCF);
     if (vallCF || vallCF.length > 0) {
       $('#input-direction').append('<option selected>' + vallCF + '</option>');
@@ -4515,6 +4631,60 @@ jQuery(document).ready(function($) {
     });
   });
 
+
+  function cookieFromTelList() {
+    var ch = [];
+    ch[0] = $(".main-tel img").attr('src');
+    ch[1] = $(".main-tel a").attr('href');
+    ch[2] = $(".main-tel a").text();
+    $.cookie("telListCookie", ch.join(','));
+  }
+
+
+  function telListFromCookie() {
+    if ($.cookie("telListCookie") == null)
+      return;
+    var chMap = $.cookie("telListCookie").split(',');
+    $(".main-tel img").attr('src', chMap[0]);
+    $(".main-tel a").attr('href', chMap[1]);
+    $(".main-tel a").text(chMap[2]);
+  }
+
+  function clearCookie() {
+    $.cookie("telListCookie", null);
+  }
+
+  $('.sub-phones li').click(function(event) {
+
+
+    var telImg = $(this).children("img").attr('src'),
+      telNumLink = $(this).children(".tel-num").attr('href'),
+      telNum = $(this).children(".tel-num").text();
+    $(".main-tel img").attr('src', telImg);
+    $(".main-tel a").attr('href', telNumLink);
+    $(".main-tel a").text(telNum);
+
+    cookieFromTelList();
+  });
+
+
+
+
+
+  var checkboxCookie = $.cookie("telListCookie");
+  if (checkboxCookie == null) {
+    cookieFromTelList();
+    checkboxCookie = $.cookie("telListCookie");
+  } else {
+    telListFromCookie();
+  }
+
+
+
+
+
+
+
   $('.tours-list > ul > li').click(function(event) {
     $(this).siblings('li').removeClass('active');
     $(this).addClass('active');
@@ -4524,6 +4694,14 @@ jQuery(document).ready(function($) {
   //   $(this).siblings('li').removeClass('active');
   //   $(this).addClass('active');
   // });
+
+
+
+
+
+
+
+
 
 
 
@@ -4974,24 +5152,24 @@ jQuery(document).ready(function($) {
   }
 
   //tag cloud
-  if ($(document).find('#tags').length) {
+/*  if ($(document).find('#tags').length) {
 
     var radius = 200;
     var dtr = Math.PI / 180;
     var d = 400;
 
     var mcList = [];
-    var active = true;
+    var active = false;
     var lasta = 1;
     var lastb = 1;
     var distr = true;
-    var tspeed = 1.1;
+    var tspeed = 2;
     var size = 100;
 
-    var mouseX = 100;
-    var mouseY = 100;
+    var mouseX = 0;
+    var mouseY = 0;
 
-    var howElliptical = 1000;
+    var howElliptical = 1;
 
     var aA = null;
     var oDiv = null;
@@ -5018,8 +5196,10 @@ jQuery(document).ready(function($) {
 
       positionAll();
 
+
+
       oDiv.onmouseover = function() {
-        active = true;
+        //active = true;
       };
 
       oDiv.onmouseout = function() {
@@ -5036,7 +5216,7 @@ jQuery(document).ready(function($) {
         mouseY /= 5;
       };
 
-      setInterval(update, 4);
+      setInterval(update, 3000);
     };
 
     function update() {
@@ -5169,10 +5349,11 @@ jQuery(document).ready(function($) {
 
         //aA[i].style.fontSize = Math.ceil(12 * mcList[i].scale / 2) + 8 + 'px';
 
-        aA[i].style.transform = "scale3d(" + (mcList[i].scale / 2) + "," + (mcList[i].scale / 2) + "," + (mcList[i].scale / 2) + ")";
+        aA[i].style.transform = "scale3d(" + ((mcList[i].scale + 2 ) / 3) + "," + ((mcList[i].scale + 1 ) / 2) + "," + ((mcList[i].scale + 1 ) / 2) + ")";
 
         aA[i].style.filter = "alpha(opacity=" + 100 * mcList[i].alpha + ")";
         aA[i].style.opacity = mcList[i].alpha;
+
       }
     }
 
@@ -5186,7 +5367,7 @@ jQuery(document).ready(function($) {
     }
 
 
-  }
+  }*/
 
 
 

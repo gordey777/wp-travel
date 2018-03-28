@@ -137,7 +137,7 @@ get_header(); ?>
 
                 <div id="tour-<?php the_ID(); ?>" <?php post_class('tour item'); ?>>
                   <div class="img-wrap ratio" data-hkoef="0.85" style="background-image: url('<?php the_post_thumbnail_url( 'medium'); //echo $thumb_link; ?>');">
-                    <a href="<?php the_permalink(); ?>"><span>Подробнее</span></a>
+                    <a href="<?php the_permalink(); ?>"><span><?php the_field('more_btn_title', $front__id);?></span></a>
                   </div>
                   <div class="tours-cont">
                     <h3><?php the_title(); ?></h3>

@@ -1,4 +1,4 @@
-
+<?php $front__id = (int)(get_option( 'page_on_front' )); ?>
   <?php
 
   if( $categories = get_the_category( ) ) :
@@ -25,7 +25,7 @@
       <div class="col-md-6 looper-wrap">
         <div id="f-post-<?php the_ID(); ?>" <?php post_class('looper'); ?>>
           <div class="img-wrap ratio" data-hkoef="0.48" style="background-image: url(' <?php if ( has_post_thumbnail()) {  echo the_post_thumbnail_url('medium');  } else {  echo catchFirstImage(); ?><?php } ?>');">
-            <a  class="tour_link" href="<?php the_permalink(); ?>"><span>Подробнее</span></a>
+            <a  class="tour_link" href="<?php the_permalink(); ?>"><span><?php the_field('more_btn_title', $front__id);?></span></a>
             <div class="tags"><?php echo $countryList;?></div>
             <?php  wpfp_link(); ?>
           </div>
