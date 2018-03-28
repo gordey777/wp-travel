@@ -58,7 +58,7 @@ function wpeHeaderScripts() {
     wp_deregister_script( 'jquery-form' );
 
     //  Load footer scripts (footer.php)
-    wp_register_script('wpeScripts', get_template_directory_uri() . '/js/scripts.js', array(), '1.0.1', true);
+    wp_register_script('wpeScripts', get_template_directory_uri() . '/js/scripts.js', array(), '1.0.0', true);
     wp_enqueue_script('wpeScripts');
 
   }
@@ -759,6 +759,108 @@ function disable_emojicons_tinymce( $plugins ) {
     return array();
   }
 }
+/*
+function rflms_post_type() {
+    $labels = array(
+        'name'                => _x( 'Lessons', 'Post Type General Name', 'text_domain' ),
+        'singular_name'       => _x( 'Lesson', 'Post Type Singular Name', 'text_domain' ),
+        'menu_name'           => __( 'Lessons', 'text_domain' ),
+        'parent_item_colon'   => __( 'Parent Product:', 'text_domain' ),
+        'all_items'           => __( 'All Lessons', 'text_domain' ),
+        'view_item'           => __( 'View Lesson', 'text_domain' ),
+        'add_new_item'        => __( 'Add New Lesson', 'text_domain' ),
+        'add_new'             => __( 'New Lesson', 'text_domain' ),
+        'edit_item'           => __( 'Edit Lesson', 'text_domain' ),
+        'update_item'         => __( 'Update Lesson', 'text_domain' ),
+        'search_items'        => __( 'Search Lessions', 'text_domain' ),
+        'not_found'           => __( 'No Lessons Found', 'text_domain' ),
+        'not_found_in_trash'  => __( 'No Lessons Found in Trash', 'text_domain' ),
+    );
+
+    $args = array(
+        'label'               => __( 'Lessons', 'text_domain' ),
+        'description'         => __( 'Referable Lessons', 'text_domain' ),
+        'labels'              => $labels,
+        'hierarchical'        => true,
+        'public'              => true,
+        'show_ui'             => true,
+        'show_in_menu'        => true,
+        'show_in_nav_menus'   => true,
+        'show_in_admin_bar'   => true,
+        'supports'        => array('title', 'editor', 'author', 'thumbnail', 'page-attributes'),
+        'menu_position'       => 5,
+        'menu_icon'           => null,
+        'can_export'          => true,
+        'has_archive'         => true,
+        'exclude_from_search' => true,
+        'publicly_queryable'  => true,
+        'capability_type'     => 'page',
+        'rewrite' => array('slug' => '%course%')
+    );
+
+    register_post_type( 'lessons', $args );
+
+
+// Hook into the 'init' action
+
+}
+add_action( 'init', 'rflms_post_type', 0 );
+
+// Register Custom Taxonomy
+function custom_taxonomy()  {
+    $labels = array(
+        'name'                       => _x( 'Courses', 'Taxonomy General Name', 'text_domain' ),
+        'singular_name'              => _x( 'Course', 'Taxonomy Singular Name', 'text_domain' ),
+        'menu_name'                  => __( 'Courses', 'text_domain' ),
+        'all_items'                  => __( 'All Courses', 'text_domain' ),
+        'parent_item'                => __( 'Parent Course', 'text_domain' ),
+        'parent_item_colon'          => __( 'Parent Course:', 'text_domain' ),
+        'new_item_name'              => __( 'New Course Name', 'text_domain' ),
+        'add_new_item'               => __( 'Add New Course', 'text_domain' ),
+        'edit_item'                  => __( 'Edit Course', 'text_domain' ),
+        'update_item'                => __( 'Update Course', 'text_domain' ),
+        'separate_items_with_commas' => __( 'Separate Courses with commas', 'text_domain' ),
+        'search_items'               => __( 'Search Courses', 'text_domain' ),
+        'add_or_remove_items'        => __( 'Add or Remove Courses', 'text_domain' ),
+        'choose_from_most_used'      => __( 'Choose from Most Used courses', 'text_domain' ),
+    );
+
+    $args = array(
+        'labels'                     => $labels,
+        'hierarchical'               => true,
+        'public'                     => true,
+        'show_ui'                    => true,
+        'show_admin_column'          => true,
+        'show_in_nav_menus'          => true,
+        'show_tagcloud'              => false,
+        'rewrite'                    => array('slug' => 'courses'),
+    );
+
+    register_taxonomy( 'course', 'lessons', $args );
+}
+
+// Hook into the 'init' action
+add_action( 'init', 'custom_taxonomy', 0 );
+
+
+
+
+function wpa_course_post_link( $post_link, $id = 0 ){
+    $post = get_post($id);
+    if ( is_object( $post ) ){
+        $terms = wp_get_object_terms( $post->ID, 'course' );
+        if( $terms ){
+            return str_replace( '%course%' , $terms[0]->slug , $post_link );
+        }
+    }
+    return $post_link;
+}
+add_filter( 'post_type_link', 'wpa_course_post_link', 1, 3 );
+*/
+
+/*
+// hook into the init action and call create_book_taxonomies when it fires*/
+
 
 
 

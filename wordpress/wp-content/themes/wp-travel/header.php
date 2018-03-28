@@ -116,57 +116,10 @@
 
     <nav class="header--nav">
       <ul class="headnav container dark-cont">
-        <li class="menu-item-has-children tours-list">
-          <a href="#">menu</a>
-            <ul class="sub-menu">
-            <li class="menu-item-has-children active">
-              <a href="#">menu</a>
-              <ul class="sub-menu">
-                <li><a href="#">menu</a></li>
-                <li><a href="#">menu</a></li>
-                <li><a href="#">menu</a></li>
-                <li><a href="#">menu</a></li>
-                <li><a href="#">menu</a></li>
-                <li><a href="#">menu</a></li>
-                <li><a href="#">menu</a></li>
-                <li><a href="#">menu</a></li>
-                <li><a href="#">menu</a></li>
-                <li><a href="#">menu</a></li>
-                <li><a href="#">menu</a></li>
-                <li><a href="#">menu</a></li>
-                <li><a href="#">menu</a></li>
-                <li><a href="#">menu</a></li>
-                <li><a href="#">menu</a></li>
-                <li><a href="#">menu</a></li>
-              </ul>
-            </li>
-            <li class="menu-item-has-children">
-              <a href="#">menu</a>
-              <ul class="sub-menu">
-                <li><a href="#">Menu</a></li>
-                <li><a href="#">menu</a></li>
-                <li><a href="#">menu</a></li>
-                <li><a href="#">menu</a></li>
-                <li><a href="#">menu</a></li>
-                <li><a href="#">menu</a>
-                              <ul class="sub-menu">
-                <li><a href="#">Menu</a></li>
-                <li><a href="#">menu</a></li>
-                <li><a href="#">menu</a></li>
-                <li><a href="#">menu</a></li>
-                <li><a href="#">menu</a></li>
-                <li><a href="#">menu</a></li>
+        <?php get_template_part('countries-menu'); ?>
 
-              </ul></li>
 
-              </ul>
-            </li>
 
-            <li><a href="#">menu</a></li>
-            <li><a href="#">menu</a></li>
-            <li><a href="#">menu</a></li>
-          </ul>
-        </li>
         <?php wpeHeadNav(); ?>
       </ul><!-- /.container -->
     </nav><!-- /header--nav -->

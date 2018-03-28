@@ -1,4 +1,9 @@
-<?php get_header(); ?>
+<?php
+/*
+Template Name: Hotel Page
+Template Post Type: post, page
+ */
+get_header(); ?>
 <?php $front__id = (int)(get_option( 'page_on_front' )); ?>
 
 
@@ -199,12 +204,17 @@
 
 
 
+
+
+
+
   <?php if( get_field('page_search_form_active') && !get_field('page_search_form_position') ): ?>
     <?php get_template_part('tours-searchform'); ?>
   <?php endif; ?>
 
-  <?php get_template_part('cont-form'); ?>
 
+
+<?php get_template_part('cont-form'); ?>
 
 
 

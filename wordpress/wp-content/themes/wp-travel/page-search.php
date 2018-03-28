@@ -1,5 +1,5 @@
 <?php /* Template Name: Search Page */ get_header(); ?>
-
+<?php $front__id = (int)(get_option( 'page_on_front' )); ?>
   <?php
 //categoryec array
   $args = array(
@@ -250,6 +250,7 @@
                     if( ($catTourTypeArray[0] != 0) ){
                       if(in_category($catTourTypeArray) ){
                         get_template_part('search-loop');
+
                       }
                     }else{
                       get_template_part('search-loop');
@@ -288,13 +289,8 @@
   </section>
 
 
+  <?php get_template_part('cont-form'); ?>
 
-    <section class="section-form">
-      <div class="container dark-cont">
-                  <?php $form__code = get_field('home_cont_form', $front__id); ?>
-                  <?php echo do_shortcode($form__code); ?>
-      </div><!-- /.container -->
-    </section>
 
   <?php $tour_sliders = get_field('search_tours_sliders'); ?>
 

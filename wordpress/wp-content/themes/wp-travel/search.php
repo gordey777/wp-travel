@@ -195,12 +195,7 @@ $args = array(
 
 
 
-    <section class="section-form">
-      <div class="container dark-cont">
-                  <?php $form__code = get_field('home_cont_form', $front__id); ?>
-                  <?php echo do_shortcode($form__code); ?>
-      </div><!-- /.container -->
-    </section>
+  <?php get_template_part('cont-form'); ?>
 
   <?php $tour_sliders = get_field('search_tours_sliders'); ?>
 

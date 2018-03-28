@@ -5,6 +5,8 @@ Template Post Type: post, page
 */
 get_header(); ?>
 
+<?php $front__id = (int)(get_option( 'page_on_front' )); ?>
+
   <?php if (have_posts()): while (have_posts()) : the_post(); ?>
 
       <?php //edit_post_link(); ?>
@@ -73,7 +75,7 @@ get_header(); ?>
           </div>
         </div>
         <div class="row programs__wrapp">
-          <div class="col-lg-5 col-lg-offset-2 col-md-6 col-md-offset-1 col-xs-12">
+          <div class="col-lg-5 col-lg-offset-2 col-md-6 col-md-offset-1 col-sm-7 col-sm-offset-1 col-xs-12">
 
             <?php $i = 0; ?>
             <?php while ( have_rows('program_item') ) : the_row(); ?>
@@ -164,7 +166,7 @@ get_header(); ?>
             <?php endwhile; ?>
           </div>
 
-          <div class="col-sm-3 col-sm-offset-1 col-sm-12  side-nav___wrap">
+          <div class="col-sm-3 col-sm-offset-1 col-xs-12  side-nav___wrap">
 
             <div class="fixed_nav side-nav" id="sideScrollspy">
               <div id="sidebar_btn" class="fa fa-arrow-left"></div>
@@ -184,9 +186,7 @@ get_header(); ?>
               </ul>
 
               <div class="side-form">
-                <h2>от 250 000 р/чел</h2>
-                <p>Закажите обратный звонок, свяжитесь с оператором в онлайн-чате, или</p>
-                <a href="#" class="side-link btn">Оформите заявку онлайн</a>
+                <?php the_field('side_menu_content'); ?>
               </div>
             </div>
           </div>
@@ -199,16 +199,7 @@ get_header(); ?>
   <?php endwhile; endif; ?>
 
 
-<?php if (get_field('home_cont_form', $front__id)) { ?>
-
-    <section class="section-form">
-      <div class="container dark-cont">
-                  <?php $form__code = get_field('home_cont_form', $front__id); ?>
-                  <?php echo do_shortcode($form__code); ?>
-      </div><!-- /.container -->
-    </section>
-
-<?php } ?>
+  <?php get_template_part('cont-form'); ?>
 
   <?php $tour_sliders = get_field('tours_sliders_list'); ?>
 

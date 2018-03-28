@@ -223,14 +223,7 @@
   </section>
 
 
-  <?php if (get_field('home_cont_form')) { ?>
-    <section class="section-form">
-      <div class="container dark-cont">
-                  <?php $form__code = get_field('home_cont_form'); ?>
-                  <?php echo do_shortcode($form__code); ?>
-      </div><!-- /.container -->
-    </section>
-  <?php } ?>
+  <?php get_template_part('cont-form'); ?>
 
 
 

@@ -4247,11 +4247,16 @@ function(a, b, c, d) {
 
 jQuery(document).ready(function($) {
 
+  jQuery(function($) {
+    var now = new Date();
+    var day = ("0" + now.getDate()).slice(-2);
+    var month = ("0" + (now.getMonth() + 1)).slice(-2);
+    var today = now.getFullYear() + "-" + (month) + "-" + (day);
+    //$('input.wpcf7-date').val(today);
 
+    $('input.wpcf7-date').attr("min", today);
 
-
-
-
+  });
 
 
 
@@ -4409,7 +4414,7 @@ jQuery(document).ready(function($) {
     }
 
     $(this).multiSelect({
-      selectableHeader: "<input type='text' class='search-input' autocomplete='off' " + inp_placeholder + ">",
+      selectableHeader: "<div id='ms_input_button' class='fa'></div><input type='text' class='search-input' autocomplete='off' " + inp_placeholder + ">",
       //selectionHeader: "<i class='fa fa-plus sellect-arrow-icon'></i><input type='text' class='search-input' autocomplete='off' placeholder='try \"4\"'>",
       afterInit: function(ms) {
         var that = this,
@@ -4447,11 +4452,54 @@ jQuery(document).ready(function($) {
 
   });
 
-  $(document).on('click', '.ms-selectable', function() {
-    $(this).children('.ms-list').toggleClass('open');
+  // $(document).on('click', '.ms-selectable', function() {
+  //   $(this).children('.ms-list').toggleClass('open');
+  // });
+
+  //cont form
+  //$('#input-direction').multiSelect('refresh');
+  $('.wpcf7-form input').on('keypress', function(e) {
+    return e.which !== 13;
   });
 
 
+  $(function() {
+    var sel_options = $('#select_values').html();
+
+    $('#input-direction').html(sel_options);
+    $('#input-direction').multiSelect('refresh');
+
+  });
+
+
+
+  $(document).on('click', '#ms_input_button', function(e) {
+
+
+      var vallCF = $(this).siblings('input.search-input').val();
+    console.log(vallCF);
+    if (vallCF || vallCF.length > 0) {
+      $('#input-direction').append('<option selected>' + vallCF + '</option>');
+      $('#input-direction').multiSelect('refresh');
+    }
+    return false;
+
+
+  });
+
+
+  $(document).on('keypress', 'input.search-input', function(e) {
+    var code = e.keyCode || e.which;
+    if (code == 13) {
+      vall = $(this).val();
+      if (vall || vall.length > 0) {
+        $('#input-direction').append('<option selected>' + vall + '</option>');
+        $('#input-direction').multiSelect('refresh');
+      }
+      return false;
+    }
+
+  });
 
 
   //TEL LIST
@@ -4459,10 +4507,23 @@ jQuery(document).ready(function($) {
     $(this).siblings('.sub-phones-wrap').toggleClass('open');
   });
 
+  $(function() {
+    $(document).click(function(event) {
+      if ($(event.target).closest(".phones").length) return;
+      $('.sub-phones-wrap').removeClass('open');
+      event.stopPropagation();
+    });
+  });
+
   $('.tours-list > ul > li').click(function(event) {
     $(this).siblings('li').removeClass('active');
     $(this).addClass('active');
+    return false;
   });
+  //$('.tours-list > ul > li > ul ').click(function(event) {
+  //   $(this).siblings('li').removeClass('active');
+  //   $(this).addClass('active');
+  // });
 
 
 
@@ -4562,6 +4623,8 @@ jQuery(document).ready(function($) {
     });
   }
 
+
+
   //PRICE TRIGGER
 
   $('#currency-filter').change(function(event) {
@@ -4595,18 +4658,21 @@ jQuery(document).ready(function($) {
       } else {
         $('.top-nav-wrapp').removeClass('active');
       }
-
     })
-    $(document).mouseup(function(e) {
-      var container = $('.top-nav-wrapp');
-      if (container.has(e.target).length === 0 && $('#humburger').has(e.target).length) {
-        container.removeClass('active');
+
+    $(function() {
+      $(document).click(function(event) {
+        if ($(event.target).closest(".top-line").length) return;
         $('#humburger').removeClass('active');
-      }
+        $('.top-nav-wrapp').removeClass('active');
+        event.stopPropagation();
+      });
     });
 
-
   }
+
+
+
 
   /*SCROLL TO*/
   /*  jQuery('a.scroll__to').on('click', function() {
@@ -4912,20 +4978,20 @@ jQuery(document).ready(function($) {
 
     var radius = 200;
     var dtr = Math.PI / 180;
-    var d = 300;
+    var d = 400;
 
     var mcList = [];
-    var active = false;
+    var active = true;
     var lasta = 1;
     var lastb = 1;
     var distr = true;
     var tspeed = 1.1;
-    var size = 500;
+    var size = 100;
 
-    var mouseX = 0;
-    var mouseY = 0;
+    var mouseX = 100;
+    var mouseY = 100;
 
-    var howElliptical = 1;
+    var howElliptical = 1000;
 
     var aA = null;
     var oDiv = null;

@@ -98,6 +98,7 @@ picture {
   position: relative;
 
   width: 100%;
+  width: 100vw;
   height: auto !important;
   height: 100%;
   min-height: 100%;
@@ -127,6 +128,12 @@ picture {
   align-items: flex-start;
 }
 
+.select-values-wrap{
+  display: none;
+}
+
+
+
 .wpfp-span,
 .to-favorite {
   //font-size: 0;
@@ -139,12 +146,20 @@ picture {
   color: #fff;
   .wpfp-img {
     position: absolute;
+    top: 50%;
+    left: 50%;
+
+    width: 16px;
     //display: none!important;
+    height: 16px;
+    margin: -8px;
   }
   .fa {
     font-size: 0;
 
     display: inline-block;
+
+    padding: 20px;
 
     color: #fff;
     &:before {
@@ -309,7 +324,7 @@ picture {
 .modal-content {
   position: relative;
 
-  padding: 60px;
+  padding: 60px 60px;
 
   border-radius: 0;
   .looper {
@@ -930,7 +945,9 @@ header {
         right: 0;
         left: 0;
 
+        padding-top: 40px;
         padding-right: calc(100% - 320px);
+        padding-bottom: 40px;
         padding-left: 40px;
 
         background: #1d262e;
@@ -975,6 +992,8 @@ header {
             .sub-menu {
               z-index: 100;
 
+              pointer-events: auto;
+
               opacity: 1;
             }
             a {
@@ -988,25 +1007,27 @@ header {
           }
           > .sub-menu {
             position: absolute;
-            top: 0;
+            top: 30px;
             right: 0;
-            bottom: 0;
+            bottom: 30px;
             left: auto;
 
             display: flex;
-            //left: 320px;
 
             width: calc(100% - 320px);
 
-            background-color: transparent;
+            background: transparent;
 
             align-items: flex-start;
             justify-content: flex-start;
             align-content: flex-start;
             flex-flow: column wrap;
-            ;
             li {
+              position: static;
+
               width: auto;
+
+              cursor: pointer;
 
               background: transparent;
               a {
@@ -1017,8 +1038,25 @@ header {
                   background: #283037;
                 }
               }
-              ul {
-                display: none;
+              .sub-menu {
+                position: absolute;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0;
+
+                display: flex;
+
+                width: auto;
+
+                opacity: 0;
+                background: transparent;
+                background-color: transparent;
+
+                align-items: flex-start;
+                justify-content: flex-start;
+                align-content: flex-start;
+                flex-flow: column wrap;
               }
             }
           }
@@ -1807,8 +1845,8 @@ article {
     .to-favorite {
       position: absolute;
       z-index: 3;
-      right: 20px;
-      bottom: 20px;
+      right: 0;
+      bottom: 0;
     }
   }
   .looper-cont-wrap {
@@ -1938,6 +1976,8 @@ article {
 }
 
 .searh-resolt {
+  margin-bottom: 30px;
+  padding-top: 30px;
   .searh-resolt-wrap {
     > div {
       margin-bottom: 50px;
@@ -1951,7 +1991,6 @@ article {
 
     width: 100%;
     height: auto;
-    padding: 30px 0;
 
     text-align: center;
     h2 {
@@ -3482,6 +3521,19 @@ footer {
       }
     }
   }
+  .modal-content {
+    .close {
+      top: -50px;
+      right: 0;
+    }
+  }
+  .tour-content {
+    .side-nav {
+      .btn {
+        white-space: normal;
+      }
+    }
+  }
 }
 
 
@@ -3603,22 +3655,69 @@ footer {
   .tours-sliders {
     //
   }
+
+  .tour-day {
+    .days-title {
+      position: relative;
+      left: 20px;
+
+      width: calc(100% - 20px);
+      padding: 15px 15px 15px 40px;
+      &:before {
+        left: 0;
+      }
+      &:after {
+        display: none;
+      }
+    }
+  }
+  .hotels-slider {
+    width: calc(100% - 120px);
+    margin: 0 auto;
+    .owl-nav {
+      .owl-prev,
+      .owl-next {
+        //
+      }
+      .owl-prev {
+        left: -65px;
+      }
+      .owl-next {
+        right: -65px;
+      }
+    }
+  }
   .programs__wrapp {
     position: relative;
     .side-nav___wrap {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+
+      width: auto;
+      margin: 0;
+      padding: 0;
+
+      pointer-events: none;
       .side-nav {
         z-index: 99;
         right: auto!important;
         left: calc(100% + 20px)!important;
 
-        width: 250px;
+        width: 280px;
 
         transition: all .3s;
-        &:hover,
-        &.active {
-          left: calc(100% - 250px)!important;
+        pointer-events: auto;
+        &.active,
+        &:active,
+        &:focus,
+        &:hover {
+          left: calc(100% - 280px)!important;
           #sidebar_btn {
-            opacity: 1;
+            //
+            opacity: 0;
           }
         }
         #sidebar_btn {
@@ -3650,36 +3749,8 @@ footer {
       }
     }
   }
-  .tour-day {
-    .days-title {
-      position: relative;
-      left: 20px;
-
-      width: calc(100% - 20px);
-      padding: 15px 15px 15px 40px;
-      &:before {
-        left: 0;
-      }
-      &:after {
-        display: none;
-      }
-    }
-  }
-  .hotels-slider {
-    width: calc(100% - 120px);
-    margin: 0 auto;
-    .owl-nav {
-      .owl-prev,
-      .owl-next {
-        //
-      }
-      .owl-prev {
-        left: -65px;
-      }
-      .owl-next {
-        right: -65px;
-      }
-    }
+  .modal-content {
+    padding: 60px 30px;
   }
 }
 
@@ -3975,6 +4046,9 @@ footer {
         right: calc( -25vw + 63px);
       }
     }
+  }
+  .modal-content {
+    padding: 30px 10px;
   }
 }
 
