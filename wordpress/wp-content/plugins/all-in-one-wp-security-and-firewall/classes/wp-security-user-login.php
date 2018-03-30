@@ -1,8 +1,4 @@
 <?php
-if(!defined('ABSPATH')){
-    exit;//Exit if accessed directly
-}
-
 class AIOWPSecurity_User_Login
 {
     /**
@@ -277,9 +273,12 @@ class AIOWPSecurity_User_Login
     function increment_failed_logins($username)
     {
         global $wpdb, $aio_wp_security;
+        //$login_attempts_permitted = $aio_wp_security->configs->get_value('aiowps_max_login_attempts');
+        //$lockout_time_length = $aio_wp_security->configs->get_value('aiowps_lockout_time_length');
         $login_fails_table = AIOWPSEC_TBL_FAILED_LOGINS;
         $ip = AIOWPSecurity_Utility_IP::get_user_ip_address(); //Get the IP address of user
-        if(empty($ip)) return;
+        $ip_range = AIOWPSecurity_Utility_IP::get_sanitized_ip_range($ip); //Get the IP range of the current user
+        if(empty($ip_range)) return;
         $user = is_email($username) ? get_user_by('email', $username) : get_user_by('login', $username); //Returns WP_User object if it exists
         if ($user)
         {
@@ -289,9 +288,9 @@ class AIOWPSecurity_User_Login
             //If the login attempt was made using a non-existent user then let's set user_id to blank and record the attempted user login name for DB storage later on
             $user_id = 0;
         }
-        $ip_str = esc_sql($ip);
+        $ip_range_str = esc_sql($ip_range).'.*';
         $now = current_time( 'mysql' );
-        $data = array('user_id' => $user_id, 'user_login' => $username, 'failed_login_date' => $now, 'login_attempt_ip' => $ip_str);
+        $data = array('user_id' => $user_id, 'user_login' => $username, 'failed_login_date' => $now, 'login_attempt_ip' => $ip_range_str);
         $format = array('%d', '%s', '%s', '%s');
         $result = $wpdb->insert($login_fails_table, $data, $format);
         if ($result === FALSE)
@@ -325,13 +324,9 @@ class AIOWPSecurity_User_Login
         }
     }
     
-    /**
-     * Generates and returns an unlock request link which will be used to send to the user.
-     * 
-     * @global type $wpdb
-     * @global AIO_WP_Security $aio_wp_security
-     * @param type $ip_range
-     * @return string or FALSE on failure
+    /*
+     * This function generates a special random string and inserts into the lockdown table for the relevant user
+     * It then generates an unlock request link which will be used to send to the user
      */
     static function generate_unlock_request_link($ip_range)
     {
@@ -346,15 +341,6 @@ class AIOWPSecurity_User_Login
             $aio_wp_security->debug_logger->log_debug("No locked user found with IP range ".$ip_range,4);
             return false;
         }else{
-            //Check if unlock requestor submitted from a woocommerce account login page
-            if(isset($_POST['aiowps-woo-login'])){
-                $date_time = current_time( 'mysql' );
-                $data = array('date_time' => $date_time, 'meta_key1' => 'woo_unlock_request_key', 'meta_value1' => $secret_rand_key);
-                $result = $wpdb->insert(AIOWPSEC_TBL_GLOBAL_META_DATA, $data);
-                if ($result === false){
-                    $aio_wp_security->debug_logger->log_debug("generate_unlock_request_link() - Error inserting woo_unlock_request_key to AIOWPSEC_TBL_GLOBAL_META_DATA table for secret key ".$secret_rand_key,4);
-                }
-            }
             $query_param = array('aiowps_auth_key'=>$secret_rand_key);
             $wp_site_url = AIOWPSEC_WP_URL;
             $unlock_link = esc_url(add_query_arg($query_param, $wp_site_url));
@@ -379,32 +365,13 @@ class AIOWPSecurity_User_Login
         }
         else
         {
-            //Now check if this unlock operation is for a woocommerce login
-            $aiowps_global_meta_tbl_name = AIOWPSEC_TBL_GLOBAL_META_DATA;
-            $sql = $wpdb->prepare("SELECT * FROM $aiowps_global_meta_tbl_name WHERE meta_key1=%s AND meta_value1=%s", 'woo_unlock_request_key', $unlock_key);
-            $woo_result = $wpdb->get_row($sql, OBJECT);
-            if(empty($woo_result)){
-                $woo_unlock = false;
-            }else{
-                $woo_unlock = true;
-            }
             if($aio_wp_security->configs->get_value('aiowps_enable_rename_login_page')=='1'){
                 if (get_option('permalink_structure')){
                     $home_url = trailingslashit(home_url());
                 }else{
                     $home_url = trailingslashit(home_url()) . '?';
                 }
-                if ( $woo_unlock ){
-                    $login_url = wc_get_page_permalink( 'myaccount' ); //redirect to woo login page if applicable
-                    //Now let's cleanup after ourselves and delete the woo-related row in the AIOWPSEC_TBL_GLOBAL_META_DATA table
-                    $delete = $wpdb->delete( $aiowps_global_meta_tbl_name, array( 'meta_key1' => 'woo_unlock_request_key', 'meta_value1' => $unlock_key ) );
-                    if($delete === false){
-                        $aio_wp_security->debug_logger->log_debug("process_unlock_request(): Error deleting row from AIOWPSEC_TBL_GLOBAL_META_DATA for meta_key1=woo_unlock_request_key and meta_value1=".$unlock_key,4);
-                    }
-                }else{
-                    $login_url = $home_url.$aio_wp_security->configs->get_value('aiowps_login_page_slug');
-                }
-                
+                $login_url = $home_url.$aio_wp_security->configs->get_value('aiowps_login_page_slug');
                 AIOWPSecurity_Utility::redirect_to_url($login_url);
             }else{
                 AIOWPSecurity_Utility::redirect_to_url(wp_login_url());
@@ -612,9 +579,6 @@ class AIOWPSecurity_User_Login
         $enc_result = base64_encode($current_time.$unlock_secret_string);
         $unlock_request_form .= '<form method="post" action=""><div style="padding-bottom:10px;"><input type="hidden" name="aiowps-unlock-string-info" id="aiowps-unlock-string-info" value="'.$enc_result.'" />';
         $unlock_request_form .= '<input type="hidden" name="aiowps-unlock-temp-string" id="aiowps-unlock-temp-string" value="'.$current_time.'" />';
-        if(isset($_POST['woocommerce-login-nonce'])){
-            $unlock_request_form .= '<input type="hidden" name="aiowps-woo-login" id="aiowps-woo-login" value="1" />';
-        }
         $unlock_request_form .= '<button type="submit" name="aiowps_unlock_request" id="aiowps_unlock_request" class="button">'.__('Request Unlock', 'all-in-one-wp-security-and-firewall').'</button></div></form>';
         return $unlock_request_form;
     }

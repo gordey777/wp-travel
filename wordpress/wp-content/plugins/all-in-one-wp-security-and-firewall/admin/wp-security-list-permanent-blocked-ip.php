@@ -1,7 +1,4 @@
 <?php
-if(!defined('ABSPATH')){
-    exit;//Exit if accessed directly
-}
 
 class AIOWPSecurity_List_Blocked_IP extends AIOWPSecurity_List_Table
 {

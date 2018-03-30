@@ -2,10 +2,6 @@
 /**
  * Base class for displaying a list of items in an ajaxified HTML table.
  */
-if(!defined('ABSPATH')){
-    exit;//Exit if accessed directly
-}
-
 class AIOWPSecurity_List_Table 
 {
 	/**

@@ -1,7 +1,4 @@
 <?php
-if(!defined('ABSPATH')){
-    exit;//Exit if accessed directly
-}
 
 include_once(dirname(__FILE__) . '/wp-security-configure-settings.php');//Allows activating via wp-cli
 
@@ -175,7 +172,7 @@ class AIOWPSecurity_Installer
             //Case where previously installed plugin was reactivated
             //Let's copy the original configs back to the options table
             $updated = update_option('aio_wp_security_configs', $temp_cfgs);
-            if (!$updated) {
+            if ($updated === FALSE) {
                 $aio_wp_security->debug_logger->log_debug("AIOWPSecurity_Installer::run_installer() - Update of option settings failed upon plugin activation!", 4);
             }
             $aio_wp_security->configs->configs = $temp_cfgs; //copy the original configs to memory

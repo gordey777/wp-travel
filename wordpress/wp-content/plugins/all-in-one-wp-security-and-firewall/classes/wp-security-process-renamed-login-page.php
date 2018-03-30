@@ -1,7 +1,4 @@
 <?php
-if(!defined('ABSPATH')){
-    exit;//Exit if accessed directly
-}
 
 class AIOWPSecurity_Process_Renamed_Login_Page
 {

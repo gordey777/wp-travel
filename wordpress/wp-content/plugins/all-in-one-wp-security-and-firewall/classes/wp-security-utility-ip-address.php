@@ -1,7 +1,4 @@
 <?php
-if(!defined('ABSPATH')){
-    exit;//Exit if accessed directly
-}
 
 class AIOWPSecurity_Utility_IP
 {
@@ -11,44 +8,20 @@ class AIOWPSecurity_Utility_IP
     
     static function get_user_ip_address()
     {
-        global $aio_wp_security;
-
-        //check if user configured custom IP retrieval method
-        $ip_method = $aio_wp_security->configs->get_value('aiowps_ip_retrieve_method');
-        $visitor_ip = ''; //set default
-        if(!empty($ip_method)){
-            //means user has configured non default IP retrieval
-            if($ip_method == 1 && !empty($_SERVER['HTTP_CF_CONNECTING_IP'])){
-                $visitor_ip = $_SERVER['HTTP_CF_CONNECTING_IP'];
-            }else if($ip_method == 2 && !empty($_SERVER['HTTP_X_FORWARDED_FOR'])){
-                $visitor_ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
-            }else if($ip_method == 3 && !empty($_SERVER['HTTP_X_FORWARDED'])){
-                $visitor_ip = $_SERVER['HTTP_X_FORWARDED'];
-            }else if($ip_method == 4 && !empty($_SERVER['HTTP_CLIENT_IP'])){
-                $visitor_ip = $_SERVER['HTTP_CLIENT_IP'];
+        //I have modified this function slightly so that the $_SERVER['REMOTE_ADDR'] value is the first method checked and returned.
+        //This change was necessary because $_SERVER['REMOTE_ADDR'] is the most reliable and accurate way to get IP address because the other methods are easily spoofed.
+        //TODO - in a future release we can probably add a config item to allow admins to choose the other methods of finding IP address. 
+        foreach (array('REMOTE_ADDR', 'HTTP_CF_CONNECTING_IP', 'HTTP_CLIENT_IP', 'HTTP_X_FORWARDED_FOR', 'HTTP_X_FORWARDED', 'HTTP_X_CLUSTER_CLIENT_IP', 'HTTP_FORWARDED_FOR', 'HTTP_FORWARDED') as $key){
+            if (array_key_exists($key, $_SERVER) === true){
+                foreach (explode(',', $_SERVER[$key]) as $ip){
+                    $userIP = trim($ip);
+                    if (filter_var($userIP, FILTER_VALIDATE_IP) !== false){
+                        return $userIP;
+                    }
+                }
             }
         }
-        
-        //Check if multiple IPs were given - these will be present as comma-separated list
-        
-        if(stristr($visitor_ip, ',')){
-            $visitor_ip = trim(end((explode(',', $visitor_ip)))); //get last address because this will likely be the original connecting IP
-        }
-        
-        //Now remove port portion if applicable
-        if(strpos($visitor_ip, '.') !== FALSE && strpos($visitor_ip, ':') !== FALSE){
-            //likely ipv4 address with port
-            $visitor_ip = preg_replace('/:\d+$/', '', $visitor_ip); //Strip off port
-        }
-
-        if(filter_var($visitor_ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {    
-            return $visitor_ip;
-        }else if(filter_var($visitor_ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)){
-            return $visitor_ip;
-        }else{
-            $visitor_ip = !empty($_SERVER['REMOTE_ADDR'])?$_SERVER['REMOTE_ADDR']:'';
-            return $visitor_ip;
-        }
+        return ''; //if we get this far we have an invalid address - return empty string
     }
     
      /*
@@ -101,7 +74,7 @@ class AIOWPSecurity_Utility_IP
                         //possible ipv6 addr
                         $res = WP_Http::is_ip_address($item);
                         if(FALSE === $res){
-                            $errors .= "\n".$item.__(' is not a valid ip address format.', 'all-in-one-wp-security-and-firewall');
+                            $errors .= '<p>'.$item.__(' is not a valid ip address format.', 'all-in-one-wp-security-and-firewall').'</p>';
                         }else if($res == '6'){
                             $list[] = trim($item);
                         }
@@ -116,7 +89,7 @@ class AIOWPSecurity_Utility_IP
                     
                     if (count($ipParts) < 2)
                     {
-                        $errors .= "\n".$item.__(' is not a valid ip address format.', 'all-in-one-wp-security-and-firewall');
+                        $errors .= '<p>'.$item.__(' is not a valid ip address format.', 'all-in-one-wp-security-and-firewall').'</p>';
                         continue;
                     }
 
@@ -135,7 +108,7 @@ class AIOWPSecurity_Utility_IP
                                     if (trim($part) == '*') 
                                     {
                                         $goodip = false;
-                                        $errors .= "\n".$item.__(' is not a valid ip address format.', 'all-in-one-wp-security-and-firewall');
+                                        $errors .= '<p>'.$item.__(' is not a valid ip address format.', 'all-in-one-wp-security-and-firewall').'</p>';
                                     }
                                     break;
                                 case 2:
@@ -150,7 +123,7 @@ class AIOWPSecurity_Utility_IP
                                         if ($foundwild == true) 
                                         {
                                             $goodip = false;
-                                            $errors .= "\n".$item.__(' is not a valid ip address format.', 'all-in-one-wp-security-and-firewall');
+                                            $errors .= '<p>'.$item.__(' is not a valid ip address format.', 'all-in-one-wp-security-and-firewall').'</p>';
                                         }
                                     }
                                     else 
@@ -165,7 +138,7 @@ class AIOWPSecurity_Utility_IP
                     }
                     if (ip2long(trim(str_replace('*', '0', $item))) == false) 
                     { //invalid ip 
-                        $errors .= "\n".$item.__(' is not a valid ip address format.', 'all-in-one-wp-security-and-firewall');
+                        $errors .= '<p>'.$item.__(' is not a valid ip address format.', 'all-in-one-wp-security-and-firewall').'</p>';
                     } 
                     elseif (strlen($item) > 4 && !in_array($item, $list)) 
                     {
@@ -173,7 +146,7 @@ class AIOWPSecurity_Utility_IP
                         if ($current_user_ip == $item && $list_type == 'blacklist')
                         {
                             //You can't ban your own IP
-                            $errors .= "\n".__('You cannot ban your own IP address: ', 'all-in-one-wp-security-and-firewall').$item;
+                            $errors .= '<p>'.__('You cannot ban your own IP address: ', 'all-in-one-wp-security-and-firewall').$item.'</p>';
                         }
                         else
                         {

@@ -1,11 +1,6 @@
 <?php
 
 /* Parent class for all admin menu classes */
-
-if(!defined('ABSPATH')){
-    exit;//Exit if accessed directly
-}
-
 abstract class AIOWPSecurity_Admin_Menu
 {
     /**

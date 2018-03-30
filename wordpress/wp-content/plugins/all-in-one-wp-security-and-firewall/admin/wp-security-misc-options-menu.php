@@ -1,7 +1,4 @@
 <?php
-if(!defined('ABSPATH')){
-    exit;//Exit if accessed directly
-}
 
 class AIOWPSecurity_Misc_Options_Menu extends AIOWPSecurity_Admin_Menu
 {

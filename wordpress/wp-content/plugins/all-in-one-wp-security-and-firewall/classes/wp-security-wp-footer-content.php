@@ -1,7 +1,5 @@
 <?php
-if(!defined('ABSPATH')){
-    exit;//Exit if accessed directly
-}
+/* * * This class handles tasks that need to be executed at wp-loaded time ** */
 
 class AIOWPSecurity_WP_Footer_Content {
 
