@@ -1349,11 +1349,21 @@ new FilterPagesByTemplate();
 
 
 
+// function my_acf_init() {
+
+//   acf_update_setting('google_api_key', '');
+// }
+
+// add_action('acf/init', 'my_acf_init');
 
 
 
+function my_acf_google_map_api( $api ){
+  $api['key'] = 'AIzaSyAoPe7hiMA8FF0IpEVthypKGicTeL4Zy7o';
+  return $api;
+}
 
-
+add_filter('acf/fields/google_map/api', 'my_acf_google_map_api');
 
 
 

@@ -12,7 +12,7 @@ get_header(); ?>
       <?php //edit_post_link(); ?>
 
   <article  id="post-<?php the_ID(); ?>" <?php post_class('page-content'); ?>>
-    <div class="container page-title-wrap" style="background-image: url('<?php the_post_thumbnail_url( 'large'); ?>')" >
+    <div class="container-fluid page-title-wrap" style="background-image: url('<?php the_post_thumbnail_url( 'large'); ?>')" >
       <div class="page-title">
         <h1><?php the_title(); ?></h1>
         <div class="subtitle">
@@ -51,18 +51,37 @@ get_header(); ?>
       </div><!-- /.row -->
     </div><!-- /.container -->
     <?php $bg_map = get_field('map-holder'); ?>
-    <?php if ( $bg_map) { ?>
-      <div class="container title-map" style="background-image: url(<?php echo $bg_map['url']; ?>);">
 
-      </div><!-- /.container -->
-    <?php } ?>
-    <div class="container green__alert">
-      <div class="row">
-        <div class="col-md-12">
-          <?php the_field('tour_warnig'); ?>
+
+
+    <?php if( have_rows('tour_locations') ): ?>
+      <div class="container-fluid title-map">
+        <div class="acf-map" data-icon="<?php echo get_template_directory_uri(); ?>/img/map-flag.png">
+          <?php while ( have_rows('tour_locations') ) : the_row();
+
+            $location = get_sub_field('location');
+
+            ?>
+            <div class="marker" data-lat="<?php echo $location['lat']; ?>" data-lng="<?php echo $location['lng']; ?>">
+              <h4><?php the_sub_field('title'); ?></h4>
+              <p class="address"><?php echo $location['address']; ?></p>
+              <p><?php the_sub_field('description'); ?></p>
+            </div>
+        <?php endwhile; ?>
         </div>
-      </div><!-- /.row -->
-    </div><!-- /.container -->
+      </div><!-- /.container -->
+    <?php endif; ?>
+
+    <div id="green_info">
+      <div class="container green__alert">
+        <div class="row">
+          <div class="col-md-12">
+            <?php the_field('tour_warnig'); ?>
+            <div id="close_green__info" class="">&times;</div>
+          </div>
+        </div><!-- /.row -->
+      </div><!-- /.container -->
+    </div>
   </article>
 
 

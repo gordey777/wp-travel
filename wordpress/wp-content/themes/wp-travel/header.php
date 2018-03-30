@@ -45,11 +45,11 @@
           </ul>
         </nav>
 
-        <nav class="nav-top-left col-sm-6">
+        <nav class="nav-top-left col-sm-7">
           <?php wpeTopLeftNav(); ?>
 
         </nav>
-        <nav class="nav-top-right col-sm-6">
+        <nav class="nav-top-right col-sm-5">
           <?php wpeTopRightNav(); ?>
 
         </nav>
@@ -114,8 +114,8 @@
     </div><!-- /.container -->
 
 
-    <nav class="header--nav">
-      <ul class="headnav container dark-cont">
+    <nav class="header--nav dark-cont">
+      <ul class="headnav container">
         <?php get_template_part('countries-menu'); ?>
 
 

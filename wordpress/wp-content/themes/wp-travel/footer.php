@@ -125,8 +125,9 @@
   var userid = '<?php echo get_current_user_id(); ?>';
   </script>
 
-
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAoPe7hiMA8FF0IpEVthypKGicTeL4Zy7o"></script>
     <?php wp_footer(); ?>
+
 
 </body>
 </html>

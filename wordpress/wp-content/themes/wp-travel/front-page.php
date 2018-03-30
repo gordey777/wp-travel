@@ -12,7 +12,7 @@
 
 
   <?php if( have_rows('main_slider') ): ?>
-    <div id="main-slider" class="owl-carousel container">
+    <div id="main-slider" class="owl-carousel container-fluid">
       <?php while ( have_rows('main_slider') ) : the_row(); ?>
 
         <?php //color & bg-color
