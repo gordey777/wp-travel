@@ -4494,12 +4494,14 @@ jQuery(document).ready(function($) {
   subMenuAlign();
   autoRatio();
   searchResH();
+  tagsPos();
 
 
   jQuery(window).resize(function(event) {
     subMenuAlign();
     autoRatio();
     searchResH();
+    tagsPos();
   });
 
 
@@ -5331,8 +5333,57 @@ jQuery(document).ready(function($) {
 
 
 
+  //TAGS POSITION
+  function tagsPos() {
+if($(document).find('#tags').length > 0){
+    var search_pos = $('.btn.tag-search').offset(),
+      searchH = $('.btn.tag-search').outerHeight(),
+      searchW = $('.btn.tag-search').outerWidth();
+    search_posH = search_pos.top + searchH;
+    search_posW = search_pos.left + searchW;
+    tagsW = $('#tags').outerWidth();
+
+    $('.tag').each(function(i, el) {
+      var tag_pos = $(this).offset(),
+        tagH = $(this).outerHeight(),
+        tagW = $(this).outerWidth();
+      tag_posH = tag_pos.top + tagH;
+      tag_posW = tag_pos.left + tagW;
 
 
+
+      if ((search_posH > tag_pos.top && tag_pos.top > search_pos.top) || (search_posH > tag_posH && tag_posH > search_pos.top)) {
+
+
+        if (tag_pos.left < search_posW && tag_pos.left > search_pos.left) {
+          $(this).removeAttr('style');
+          var marL = search_pos.left - tag_pos.left + searchW + 50;
+          $(this).css('margin-left', marL + 'px');
+        }
+        if (tag_posW < search_posW && tag_posW > search_pos.left) {
+
+          if (tagW > (tagsW / 2)) {
+            $(this).removeAttr('style');
+            var marT = $(this).css('margin-top');
+            $(this).css('margin-top', '-60px');
+          } else {
+            $(this).removeAttr('style');
+            var marR = search_posW - tag_posW + searchW + 50;
+            $(this).css('margin-left', marR + 'px');
+          }
+        }
+        if (tagW > (tagsW / 2)) {
+          $(this).removeAttr('style');
+
+          $(this).css('opacity', '0');
+
+        }
+      }
+
+    });
+    // || ((search_pos.left + searchW) >= (tag_pos.left + tagW) >= search_pos.top)
+}
+  }
 
 
   //tag cloud

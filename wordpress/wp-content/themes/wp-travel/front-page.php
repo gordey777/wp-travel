@@ -12,7 +12,7 @@
 
 
   <?php if( have_rows('main_slider') ): ?>
-    <div id="main-slider" class="owl-carousel container-fluid">
+    <div id="main-slider" class="owl-carousel ">
       <?php while ( have_rows('main_slider') ) : the_row(); ?>
 
         <?php //color & bg-color
@@ -37,7 +37,8 @@
         ?>
 
         <?php $bg_image = get_sub_field('img'); ?>
-        <div class="slide item" style="background: url(<?php if ( !empty($bg_image)) { echo $bg_image['url'];} ?>);">
+        <div class="slide item" style="background-image: url(<?php if ( !empty($bg_image)) { echo $bg_image['url'];} ?>);">
+        <div class="container">
           <div class="row">
             <div class="slider-cont-wrap col-xs-10 col-xs-offset-1">
               <div class="slider-cont">
@@ -55,6 +56,7 @@
                 <a href="<?php the_sub_field('link'); ?>" class="slide-link btn"><?php the_sub_field('btn_text'); ?></a>
               <?php } ?>
             </div>
+          </div>
           </div>
         </div><!-- .slide -->
       <?php  endwhile; ?>

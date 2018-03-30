@@ -12,14 +12,16 @@ get_header(); ?>
       <?php //edit_post_link(); ?>
 
   <article  id="post-<?php the_ID(); ?>" <?php post_class('page-content'); ?>>
-    <div class="container-fluid page-title-wrap" style="background-image: url('<?php the_post_thumbnail_url( 'large'); ?>')" >
-      <div class="page-title">
-        <h1><?php the_title(); ?></h1>
-        <div class="subtitle">
-          <div class="days"><?php the_field('tour_days'); ?> <?php the_field('tour_days_after'); ?></div>
-          <div class="prise">
-            <span class="price"><?php echo number_format(get_field('tour_price', $slide_product),0,'',' '); ?></span>
-            <span class="currency"><?php the_field('tour_currency'); ?></span>
+    <div class="page-title-wrap" style="background-image: url('<?php the_post_thumbnail_url( 'large'); ?>')" >
+      <div class="container">
+        <div class="page-title">
+          <h1><?php the_title(); ?></h1>
+          <div class="subtitle">
+            <div class="days"><?php the_field('tour_days'); ?> <?php the_field('tour_days_after'); ?></div>
+            <div class="prise">
+              <span class="price"><?php echo number_format(get_field('tour_price', $slide_product),0,'',' '); ?></span>
+              <span class="currency"><?php the_field('tour_currency'); ?></span>
+            </div>
           </div>
         </div>
       </div>

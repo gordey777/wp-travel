@@ -97,12 +97,14 @@ picture {
 .wrapper {
   position: relative;
 
+  overflow-x: hidden;
+
   width: 100%;
-  width: 100vw;
+  //width: 100vw;
   height: auto !important;
   height: 100%;
   min-height: 100%;
-  margin: 0 auto;
+  margin: 0;
 
   @extend .clearfix;
 }
@@ -131,8 +133,6 @@ picture {
 .select-values-wrap {
   display: none;
 }
-
-
 
 .wpfp-span,
 .to-favorite {
@@ -319,7 +319,6 @@ picture {
     box-shadow: 0 0 5px 0 #fff;
   }
 }
-
 
 .modal-content {
   position: relative;
@@ -1279,7 +1278,7 @@ header {
 
 .search-tags {
   margin-bottom: 40px;
-  //background-color: ##FAF8F9;
+  background-color: #FAF8F9;
   .container {
     //padding-top: 50px;
     text-align: center;
@@ -1477,6 +1476,7 @@ header {
     }
   }
 }
+
 .page_slider,
 .hotels-slider,
 .tours-slider {
@@ -2068,6 +2068,11 @@ article {
     background-position: center center;
     background-size: cover;
     box-shadow: 0 0 4px rgba(0, 0, 0, .33);
+    .container {
+      position: relative;
+
+      height: 100%;
+    }
     .page-title {
       position: absolute;
       z-index: 2;
@@ -2168,8 +2173,6 @@ article {
   }
 }
 
-
-
 #green_info {
   position: fixed;
   z-index: 99;
@@ -2240,12 +2243,9 @@ article {
   }
 }
 
-
-
-
 .tour-content {
   .container {
-    overflow: hidden;
+    //overflow: hidden;
   }
   .tours-title {
     font-size: 18px;
@@ -2262,11 +2262,10 @@ article {
 }
 
 .section-search-form {
+  background: #faf8f9;
   .container {
     padding-top: 50px;
     padding-bottom: 50px;
-
-    background: #faf8f9;
   }
   h1,
   h2 {
@@ -3301,10 +3300,6 @@ footer {
   }
 }
 
-
-
-
-
 @media (min-width: 769px) {
   .header--nav {
     .headnav {
@@ -3394,10 +3389,6 @@ footer {
       }
     }
   }
-
-
-
-
   .dark-cont {
     &.full-right {
       position: relative;
@@ -3571,7 +3562,7 @@ footer {
             //font-size: 13px;
           }
           &:last-child {
-            display: none;
+            //display: none;
           }
         }
       }
@@ -3596,7 +3587,6 @@ footer {
       margin-bottom: 40px;
     }
   }
-
   .header--nav {
     .headnav,
     ul {
@@ -3624,8 +3614,6 @@ footer {
   }
 }
 
-
-
 // @media only screen {
 //   .form-wrap {
 //     .input-wrapp {
@@ -3635,16 +3623,12 @@ footer {
 //         right: 0!important;
 //         bottom: 0;
 //         left: 0!important;
-
 //         height: auto;
-
 //         opacity: 0;
 //       }
 //     }
 //   }
 // }
-
-
 @media (max-width: 768px) {
   .header--nav {
     position: relative;
@@ -3743,7 +3727,6 @@ footer {
   .tours-sliders {
     //
   }
-
   .tour-day {
     .days-title {
       position: relative;

@@ -1,8 +1,8 @@
 <?php $front__id = (int)(get_option( 'page_on_front' )); ?>
 <?php $page__id = get_the_ID(); ?>
   <?php if (get_field('home_cont_form', $front__id)) { ?>
-    <section id="contact_form" class="section-form">
-      <div class="container dark-cont">
+    <section id="contact_form" class="section-form dark-cont">
+      <div class="container">
         <div class="select-values-wrap">
           <select hidden name="values" id="select_values">
           <?php

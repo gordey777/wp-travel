@@ -3940,12 +3940,12 @@ picture {
 
 .wrapper {
   position: relative;
+  overflow-x: hidden;
   width: 100%;
-  width: 100vw;
   height: auto !important;
   height: 100%;
   min-height: 100%;
-  margin: 0 auto;
+  margin: 0;
 }
 
 .container {
@@ -5026,6 +5026,7 @@ header .slogan {
 
 .search-tags {
   margin-bottom: 40px;
+  background-color: #FAF8F9;
 }
 
 .search-tags .container {
@@ -5720,6 +5721,11 @@ header .slogan {
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.33);
 }
 
+.page-content .page-title-wrap .container {
+  position: relative;
+  height: 100%;
+}
+
 .page-content .page-title-wrap .page-title {
   position: absolute;
   z-index: 2;
@@ -5863,10 +5869,6 @@ header .slogan {
   color: #fff;
 }
 
-.tour-content .container {
-  overflow: hidden;
-}
-
 .tour-content .tours-title {
   font-size: 18px;
   display: inline-block;
@@ -5876,10 +5878,13 @@ header .slogan {
   color: #0f1920;
 }
 
+.section-search-form {
+  background: #faf8f9;
+}
+
 .section-search-form .container {
   padding-top: 50px;
   padding-bottom: 50px;
-  background: #faf8f9;
 }
 
 .section-search-form h1,
@@ -7021,9 +7026,6 @@ footer .footer_nav_wrap {
     width: 100%;
     padding: 10px 0 15px 0;
     text-align: center;
-  }
-  header .nav-top-right ul li:last-child {
-    display: none;
   }
   .hotels-slider .owl-nav .owl-prev {
     left: -65px;
