@@ -108,7 +108,7 @@
 
 
             <li class="menu-item-has-children <?php if ($k == 0){ echo 'active';}?>">
-              <a href="#"><?php the_sub_field('region_title'); ?></a>
+              <a href="<?php the_sub_field('region_page'); ?>"><?php the_sub_field('region_title'); ?></a>
                 <?php if ( $menuCats = get_categories($argsMenu) ){ ?>
                   <ul class="sub-menu">
                     <?php foreach ($menuCats as $menuCat){ ?>

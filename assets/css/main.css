@@ -4459,6 +4459,12 @@ header .nav-top-left ul li a {
   font-family: Open Sans;
   font-size: 14px;
   text-decoration: none;
+  color: #4f5860;
+}
+
+header .nav-top-right ul li a:hover,
+header .nav-top-left ul li a:hover {
+  color: #000;
 }
 
 header .nav-top-right ul li:first-child,
@@ -5026,7 +5032,7 @@ header .slogan {
 
 .search-tags {
   margin-bottom: 40px;
-  background-color: #FAF8F9;
+  background-color: #faf8f9;
 }
 
 .search-tags .container {
@@ -6475,7 +6481,9 @@ header .slogan {
   font-weight: 600;
   display: inline-block;
   box-sizing: border-box;
-  padding: 14px 32px;
+  width: 100%;
+  max-width: 220px;
+  padding: 14px 10px;
   text-align: center;
   color: #0f1920;
   border: 1px solid #4f5860;
@@ -6717,30 +6725,21 @@ footer .footer_nav_wrap {
   line-height: 47px;
   position: absolute;
   z-index: 300;
-  top: 0;
+  top: 1px;
   right: 0;
   display: none;
-  width: 47px;
-  height: 47px;
+  width: 45px;
+  height: 45px;
   cursor: pointer;
   text-align: center;
   vertical-align: middle;
+  border-right: 1px solid #fff;
+  border-left: 1px solid #fff;
 }
 
 #humburger:before {
   content: '\f0c9';
   color: #fff;
-}
-
-#humburger:after {
-  position: absolute;
-  top: 2px;
-  bottom: 2px;
-  left: 0;
-  display: inline-block;
-  width: 1px;
-  content: '';
-  background: #fff;
 }
 
 #humburger.active:before {
@@ -6754,10 +6753,6 @@ footer .footer_nav_wrap {
 .content-page {
   padding-top: 40px;
   padding-bottom: 50px;
-}
-
-.content-page .container {
-  overflow: hidden;
 }
 
 .content-page h1 {
@@ -6819,7 +6814,7 @@ footer .footer_nav_wrap {
 }
 
 .content-page .banner {
-  min-height: 300px;
+  min-height: 20vw;
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
@@ -6947,15 +6942,31 @@ footer .footer_nav_wrap {
   header .slogan {
     font-size: 13px;
     position: absolute;
-    top: -28px;
+    z-index: 2;
+    top: -35px;
     left: 15px;
+    width: calc(100vw - 70px);
     width: auto;
     margin: 0;
     padding: 0;
   }
   header .top-line {
+    position: relative;
+    z-index: 1;
     height: 47px;
     padding: 0;
+    background: #0f1920;
+  }
+  header .top-line:before {
+    position: absolute;
+    z-index: 0;
+    top: 0;
+    right: -999px;
+    bottom: 0;
+    left: -999px;
+    display: inline-block;
+    content: '';
+    background: #0f1920;
   }
   header #humburger {
     display: inline-block;
@@ -7107,8 +7118,8 @@ footer .footer_nav_wrap {
     width: 100%;
     cursor: pointer;
   }
-  .header--nav ul .tours-list > .sub-menu,
-  .header--nav .headnav .tours-list > .sub-menu {
+  .header--nav ul .tours-list:hover > .sub-menu,
+  .header--nav .headnav .tours-list:hover > .sub-menu {
     z-index: 112;
   }
   .header--nav ul .tours-list > .sub-menu > li > .sub-menu,
@@ -7213,27 +7224,40 @@ footer .footer_nav_wrap {
     width: 100%;
     cursor: pointer;
   }
+  .header--nav ul .tours-list:hover > .sub-menu,
+  .header--nav .headnav .tours-list:hover > .sub-menu {
+    z-index: 112;
+  }
   .header--nav ul .tours-list > .sub-menu,
   .header--nav .headnav .tours-list > .sub-menu {
-    z-index: 112;
     padding: 0;
   }
   .header--nav ul .tours-list > .sub-menu > li,
   .header--nav .headnav .tours-list > .sub-menu > li {
-    width: auto;
+    width: 100%;
   }
   .header--nav ul .tours-list > .sub-menu > li > a,
   .header--nav .headnav .tours-list > .sub-menu > li > a {
-    float: left;
+    width: 100%;
     padding: 10px 15px;
+    text-align: center;
+    pointer-events: auto;
+  }
+  .header--nav ul .tours-list > .sub-menu > li > a:hover,
+  .header--nav .headnav .tours-list > .sub-menu > li > a:hover {
+    background: rgba(255, 255, 255, 0.2);
   }
   .header--nav ul .tours-list > .sub-menu > li:hover a,
   .header--nav .headnav .tours-list > .sub-menu > li:hover a {
-    background: rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.2);
   }
   .header--nav ul .tours-list > .sub-menu > li.active a,
   .header--nav .headnav .tours-list > .sub-menu > li.active a {
-    background: #DA3730;
+    background: transparent;
+  }
+  .header--nav ul .tours-list > .sub-menu > li.active a:hover,
+  .header--nav .headnav .tours-list > .sub-menu > li.active a:hover {
+    background: rgba(255, 255, 255, 0.2);
   }
   .header--nav ul .tours-list > .sub-menu > li > .sub-menu,
   .header--nav .headnav .tours-list > .sub-menu > li > .sub-menu {
@@ -7241,6 +7265,7 @@ footer .footer_nav_wrap {
     right: 0;
     bottom: auto;
     left: 0;
+    display: none;
     width: 100%;
     background: #1d262e;
     flex-flow: row wrap;
@@ -7299,6 +7324,10 @@ footer .footer_nav_wrap {
 }
 
 @media (max-width: 480px) {
+  header .slogan {
+    font-size: 13px;
+    left: 2px;
+  }
   .header--nav {
     position: relative;
     padding: 0;
@@ -7428,6 +7457,10 @@ footer .footer_nav_wrap {
 }
 
 @media (max-width: 375px) {
+  header .slogan {
+    line-height: 1.1;
+    width: 280px;
+  }
   .page-content .page-title-wrap .page-title h1 {
     width: 100%;
     min-width: 0;

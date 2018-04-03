@@ -4769,7 +4769,7 @@ jQuery(document).ready(function($) {
   }
 
   //TOUR SIDE NAV
-  jQuery('.side-nav a').on('click', function() {
+  jQuery('.side-nav li a').on('click', function() {
 
     var scrollAnchor = jQuery(this).attr('href'),
       scrollPoint = jQuery(scrollAnchor).offset().top - 30;
@@ -4862,18 +4862,13 @@ jQuery(document).ready(function($) {
 
 
   /*SCROLL TO*/
-  /*  jQuery('a.scroll__to').on('click', function() {
-
-      var scrollAnc = jQuery(this).attr('href'),
-        scrollPos = jQuery(scrollAnc).offset().top - 30;
-
+    jQuery('a.side-link.btn').on('click', function() {
+      var scrollPos = jQuery('#contact_form form').offset().top - 30;
       jQuery('body,html').animate({
         scrollTop: scrollPos
       }, 500);
-
       return false;
-
-    })*/
+    })
 
   $("#to_top").click(function() {
     $("html, body").animate({
@@ -4974,7 +4969,7 @@ jQuery(document).ready(function($) {
   });
 
 
-  noSearchResolt();
+  //noSearchResolt();
 
 
   function noSearchResolt() {
@@ -5301,36 +5296,15 @@ jQuery(document).ready(function($) {
 
     }
 
-    /*
-     *  document ready
-     *
-     *  This function will render each map when the document is ready (page has loaded)
-     *
-     *  @type  function
-     *  @date  8/11/2013
-     *  @since 5.0.0
-     *
-     *  @param n/a
-     *  @return  n/a
-     */
-    // global var
+  })(jQuery);
+
     var map = null;
-
-    $(document).ready(function() {
-
       $('.acf-map').each(function() {
 
         // create map
         map = new_map($(this));
 
       });
-
-    });
-
-  })(jQuery);
-
-
-
 
 
   //TAGS POSITION

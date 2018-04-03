@@ -674,7 +674,11 @@ header {
           font-size: 14px;
 
           text-decoration: none;
-          //color: #fff;
+
+          color: #4f5860;
+          &:hover {
+            color: #000;
+          }
         }
         &:first-child {
           padding-left: 0;
@@ -1278,7 +1282,8 @@ header {
 
 .search-tags {
   margin-bottom: 40px;
-  background-color: #FAF8F9;
+
+  background-color: #faf8f9;
   .container {
     //padding-top: 50px;
     text-align: center;
@@ -2944,7 +2949,9 @@ article {
       display: inline-block;
 
       box-sizing: border-box;
-      padding: 14px 32px;
+      width: 100%;
+      max-width: 220px;
+      padding: 14px 10px;
 
       text-align: center;
 
@@ -3162,35 +3169,24 @@ footer {
 
   position: absolute;
   z-index: 300;
-  top: 0;
+  top: 1px;
   right: 0;
 
   display: none;
 
-  width: 47px;
-  height: 47px;
+  width: 45px;
+  height: 45px;
 
   cursor: pointer;
   text-align: center;
   vertical-align: middle;
+
+  border-right: 1px solid #fff;
+  border-left: 1px solid #fff;
   &:before {
     content: '\f0c9';
 
     color: #fff;
-  }
-  &:after {
-    position: absolute;
-    top: 2px;
-    bottom: 2px;
-    left: 0;
-
-    display: inline-block;
-
-    width: 1px;
-
-    content: '';
-
-    background: #fff;
   }
   &.active {
     &:before {
@@ -3206,7 +3202,7 @@ footer {
   padding-top: 40px;
   padding-bottom: 50px;
   .container {
-    overflow: hidden;
+    //overflow: hidden;
   }
   h1 {
     font-family: Roboto;
@@ -3274,7 +3270,7 @@ footer {
     align-self: stretch;
   }
   .banner {
-    min-height: 300px;
+    min-height: 20vw;
 
     background-repeat: no-repeat;
     background-position: center center;
@@ -3462,18 +3458,39 @@ footer {
       font-size: 13px;
 
       position: absolute;
-      top: -28px;
+      z-index: 2;
+      top: -35px;
       left: 15px;
 
+      width: calc(100vw - 70px);
       width: auto;
       margin: 0;
       padding: 0;
     }
     .top-line {
+      position: relative;
+      z-index: 1;
       //width: 100%;
+
       height: 47px;
       //margin: 0;
       padding: 0;
+
+      background: #0f1920;
+      &:before {
+        position: absolute;
+        z-index: 0;
+        top: 0;
+        right: -999px;
+        bottom: 0;
+        left: -999px;
+
+        display: inline-block;
+
+        content: '';
+
+        background: #0f1920;
+      }
     }
     #humburger {
       display: inline-block;
@@ -3681,8 +3698,13 @@ footer {
         width: 100%;
 
         cursor: pointer;
+        &:hover {
+          > .sub-menu {
+            z-index: 112;
+          }
+        }
         > .sub-menu {
-          z-index: 112;
+          //z-index: 112;
           > li {
             > .sub-menu {
               bottom: auto;
@@ -3837,25 +3859,38 @@ footer {
         width: 100%;
 
         cursor: pointer;
+        &:hover {
+          > .sub-menu {
+            z-index: 112;
+          }
+        }
         > .sub-menu {
-          z-index: 112;
-
           padding: 0;
           > li {
-            width: auto;
+            width: 100%;
             > a {
-              float: left;
-
+              width: 100%;
               padding: 10px 15px;
+              //float: left;
+
+              text-align: center;
+              pointer-events: auto;
+              &:hover {
+                background: rgba(#fff, .2);
+              }
             }
             &:hover {
+              //background: rgba(#fff, .3);
               a {
-                background: rgba(#fff, .3);
+                background: rgba(#fff, .2);
               }
             }
             &.active {
               a {
-                background: $red;
+                background: transparent;
+                &:hover {
+                  background: rgba(#fff, .2);
+                }
               }
             }
             > .sub-menu {
@@ -3864,6 +3899,8 @@ footer {
               right: 0;
               bottom: auto;
               left: 0;
+
+              display: none;
 
               width: 100%;
 
@@ -3960,6 +3997,13 @@ footer {
 }
 
 @media (max-width: 480px) {
+  header {
+    .slogan {
+      font-size: 13px;
+
+      left: 2px;
+    }
+  }
   .header--nav {
     position: relative;
 
@@ -4124,6 +4168,13 @@ footer {
 }
 
 @media (max-width: 375px) {
+  header {
+    .slogan {
+      line-height: 1.1;
+
+      width: 280px;
+    }
+  }
   .page-content {
     .page-title-wrap {
       .page-title {

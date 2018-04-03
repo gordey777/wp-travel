@@ -45,11 +45,11 @@
           </ul>
         </nav>
 
-        <nav class="nav-top-left col-sm-7">
+        <nav class="nav-top-left col-sm-6">
           <?php wpeTopLeftNav(); ?>
 
         </nav>
-        <nav class="nav-top-right col-sm-5">
+        <nav class="nav-top-right col-sm-6">
           <?php wpeTopRightNav(); ?>
 
         </nav>
