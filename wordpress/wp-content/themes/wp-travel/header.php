@@ -31,31 +31,33 @@
 <div class="wrapper">
   <header>
     <a id="favorite_open" href="#favoritesTours" data-toggle="modal" class="favorites link"><i class="fa fa-heart"></i><span class="counter"></span></a>
-    <div class="container top-line">
-      <div id="humburger" class="fa"></div>
-      <div class="top-nav-wrapp">
+    <div class="top-line-wrap">
+      <div class="container top-line">
+        <div id="humburger" class="fa"></div>
+        <div class="top-nav-wrapp">
 
-        <nav class="lang-nav">
-          <?php //wpeLangNav(); ?>
-          <ul class="">
-            <li><a href="#"><img src="<?php echo get_template_directory_uri(); ?>/img/flag-ru.png" alt=""></a></li>
-            <li><a href="#"><img src="<?php echo get_template_directory_uri(); ?>/img/flag-uk.png" alt=""></a></li>
-            <li><a href="#"><img src="<?php echo get_template_directory_uri(); ?>/img/flag-fr.png" alt=""></a></li>
-            <li><a href="#"><img src="<?php echo get_template_directory_uri(); ?>/img/flag-sp.png" alt=""></a></li>
-          </ul>
-        </nav>
+          <nav class="lang-nav">
+            <?php //wpeLangNav(); ?>
+            <ul class="">
+              <li><a href="#"><img src="<?php echo get_template_directory_uri(); ?>/img/flag-ru.png" alt=""></a></li>
+              <li><a href="#"><img src="<?php echo get_template_directory_uri(); ?>/img/flag-uk.png" alt=""></a></li>
+              <li><a href="#"><img src="<?php echo get_template_directory_uri(); ?>/img/flag-fr.png" alt=""></a></li>
+              <li><a href="#"><img src="<?php echo get_template_directory_uri(); ?>/img/flag-sp.png" alt=""></a></li>
+            </ul>
+          </nav>
 
-        <nav class="nav-top-left col-sm-6">
-          <?php wpeTopLeftNav(); ?>
+          <nav class="nav-top-left col-sm-6">
+            <?php wpeTopLeftNav(); ?>
 
-        </nav>
-        <nav class="nav-top-right col-sm-6">
-          <?php wpeTopRightNav(); ?>
+          </nav>
+          <nav class="nav-top-right col-sm-6">
+            <?php wpeTopRightNav(); ?>
 
-        </nav>
-      </div>
+          </nav>
+        </div>
 
-    </div><!-- /.container -->
+      </div><!-- /.container -->
+    </div>
     <div class="container head-bgi">
       <div class="head-center flex-center">
 

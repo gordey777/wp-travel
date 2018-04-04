@@ -4625,6 +4625,10 @@ jQuery(document).ready(function($) {
     $(this).siblings('.sub-phones-wrap').toggleClass('open');
   });
 
+  $('.sub-phones-wrap li').click(function(event) {
+    $('.sub-phones-wrap').removeClass('open');
+  });
+
   $(function() {
     $(document).click(function(event) {
       if ($(event.target).closest(".phones").length) return;
@@ -4632,6 +4636,8 @@ jQuery(document).ready(function($) {
       event.stopPropagation();
     });
   });
+
+
 
 
   function cookieFromTelList() {
@@ -4962,6 +4968,7 @@ jQuery(document).ready(function($) {
         currencyTrigger();
         noSearchResolt();
         $('#response').closest('section').removeClass('ajax_load');
+        $('#response').addClass('resoults');
       }
     });
 
@@ -4985,7 +4992,7 @@ jQuery(document).ready(function($) {
   // POSITON SEARC RESULT
   function searchResH() {
 
-    if ($(window).width() > 992 && $('.searh-resolt-wrap > div').length > 4) {
+    if ($(window).width() > 992 && $('.searh-resolt-wrap > div').length > 4 && !$('#response').hasClass('resoults') ) {
 
       var totalSearhH = 0;
       $('.searh-resolt-wrap > div').each(function(i) {
