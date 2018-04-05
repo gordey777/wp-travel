@@ -299,7 +299,7 @@
   <?php get_template_part('cont-form'); ?>
 
 
-  <?php $tour_sliders = get_field('search_tours_sliders'); ?>
+  <?php $tour_sliders = get_field('category_tours_sliders', $curr_term); ?>
 
   <?php  if( !empty($tour_sliders) ): ?>
   <section class="tours-sliders">
@@ -408,10 +408,6 @@
 
 
 <?php else: ?>
-<?php endif; ?>
-
-
-
 
   <div class="container content-page">
     <div class="row">
@@ -446,7 +442,7 @@
                 <?php echo do_shortcode($form__code); ?>
     </div><!-- /.container -->
   </section>
-
+<?php endif; ?>
 
 <?php get_footer(); ?>
 
