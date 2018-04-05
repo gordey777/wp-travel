@@ -1,8 +1,9 @@
 <?php get_header(); ?>
   <?php $curr__ID = get_queried_object()->cat_ID; ?>
-  <?php $curr_term = 'category_' . $cat__ID; ?>
+  <?php $curr_term = 'category_' . $curr__ID; ?>
   <?php $front__id = (int)(get_option( 'page_on_front' )); ?>
-  <?php $curr__type = get_field('cat_type', $curr_term);; ?>
+  <?php $curr__type = get_field('cat_type', $curr_term); ?>
+
 
 
 
@@ -37,28 +38,7 @@
 
 
 //args of pre settings
-  $tours_cat = '';
-  if($fiilter_set){
-    foreach($fiilter_set as $key => $var){
-      $field_term = 'category_' . $var;
-      $cat__type = get_field('cat_type', $field_term);
-      if($cat__type === 'region') {
-        $catRegionArray[$key] = $var;
-      } else if($cat__type === 'country') {
-        $catCountryArray[$key] = $var;
-      } else if($cat__type === 'tour_type') {
-        $catTourTypeArray[$key] = (int)$var;
-      }
-    }
 
-    if(($catRegionArray[0] != 0) && ($catCountryArray[0] != 0) ){
-      $tours_cat = $catCountryArray;
-    } else if(($catRegionArray[0] != 0) && ($catCountryArray[0] == 0) ){
-      $tours_cat = $catRegionArray;
-    } else if(($catRegionArray[0] == 0) && ($catCountryArray[0] != 0) ){
-      $tours_cat =  $catCountryArray;
-    }
-  }
 
   $bunners = get_field('search_bunners');
 
@@ -69,7 +49,7 @@
   }
 //set args to qury post
   $tours_args = array(
-    'cat' => $tours_cat,
+    'cat' => $curr__ID,
     //'meta_key'      => 'tour_price',
     //'orderby'     => 'meta_value',
     'order'       => 'DESC',
@@ -79,9 +59,7 @@
   $tours_args['meta_key'] =  'tour_price';
   $tours_args['orderby'] =  'meta_value';
 
-//GET FRONT PAGE ID
-  $front__id = (int)(get_option( 'page_on_front' ));
-//if bunners
+
 
 
  ?>
@@ -102,7 +80,7 @@
                           <?php foreach ( $categories as $cat ) :
 
                               $cat__ID = $cat->cat_ID;
-                              if (!empty($fiilter_set) && in_array($cat__ID, $fiilter_set)){
+                              if ($cat__ID == $curr__ID){
                                 $select = 'selected';
                               }else{
                                 $select = '';
@@ -129,7 +107,7 @@
 
                               $cat__ID = $cat->cat_ID;
 
-                              if (!empty($fiilter_set) && in_array($cat__ID, $fiilter_set)){
+                              if ($cat__ID == $curr__ID){
                                 $select = 'selected';
                               }else{
                                 $select = '';
@@ -177,7 +155,7 @@
                         <select class="multisel" id="tourtypefilter" name="tourtypefilter[]" multiple="multiple">
                           <?php foreach ( $categories as $cat ) :
                               $cat__ID = $cat->cat_ID;
-                              if (!empty($fiilter_set) && in_array($cat__ID, $fiilter_set)){
+                              if ($cat__ID == $curr__ID){
                                 $select = 'selected';
                               }else{
                                 $select = '';
