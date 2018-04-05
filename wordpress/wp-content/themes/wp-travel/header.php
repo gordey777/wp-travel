@@ -98,7 +98,7 @@
                         <?php if ( !empty($image)) { ?>
                           <img src="<?php echo $image['url']; ?>" alt="" class="tel-flag">
                         <?php } ?>
-                        <a href="tel:<?php the_sub_field('sub_tel'); ?>" class="tel-num"><?php the_sub_field('sub_tel'); ?></a>
+                        <span data-link="tel:<?php the_sub_field('sub_tel'); ?>" class="tel-num"><?php the_sub_field('sub_tel'); ?></span>
                         <span class="tel-city"><?php the_sub_field('city'); ?></span>
                         <?php if ( get_sub_field('link')) { ?>
                           <a href="<?php the_sub_field('link'); ?>" class="tel-link">www</a>

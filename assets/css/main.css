@@ -4351,7 +4351,7 @@ header .phones .sub-phones-wrap .sub-phones img {
   display: inline-block;
 }
 
-header .phones .sub-phones-wrap .sub-phones a {
+header .phones .sub-phones-wrap .sub-phones .tel-num {
   font-size: 14px;
   display: inline-block;
   float: left;
@@ -4911,6 +4911,7 @@ header .slogan {
   display: -ms-flex;
   display: -o-flex;
   display: flex;
+  height: 360px;
   min-height: 20vw;
   flex-flow: row wrap;
   align-items: center;
@@ -6997,7 +6998,7 @@ footer .footer_nav_wrap {
     right: 0;
     left: auto;
     display: inline-block;
-    width: 380px;
+    width: 400px;
     max-width: 100%;
     padding: 0;
     transition: all .3s;
@@ -7326,6 +7327,9 @@ footer .footer_nav_wrap {
   #main-slider .slide .slider-cont {
     width: 100%;
   }
+  #main-slider .slide .slider-cont .title-wrap h2 {
+    font-size: 32px;
+  }
   .tours-slider .owl-nav .owl-next {
     right: -35px;
     width: 30px;
@@ -7435,13 +7439,25 @@ footer .footer_nav_wrap {
   }
   .header--nav ul .tours-list > .sub-menu,
   .header--nav .headnav .tours-list > .sub-menu {
-    z-index: 112;
+    background: transparent;
   }
-  .header--nav ul .tours-list > .sub-menu > li > .sub-menu,
-  .header--nav .headnav .tours-list > .sub-menu > li > .sub-menu {
-    bottom: auto;
+  .header--nav ul .tours-list > .sub-menu > li:hover a, .header--nav ul .tours-list > .sub-menu > li.active a, .header--nav ul .tours-list > .sub-menu > li a,
+  .header--nav .headnav .tours-list > .sub-menu > li:hover a,
+  .header--nav .headnav .tours-list > .sub-menu > li.active a,
+  .header--nav .headnav .tours-list > .sub-menu > li a {
     background: #1d262e;
-    flex-flow: row wrap;
+  }
+  .header--nav ul .tours-list > .sub-menu > li:hover a:hover, .header--nav ul .tours-list > .sub-menu > li.active a:hover, .header--nav ul .tours-list > .sub-menu > li a:hover,
+  .header--nav .headnav .tours-list > .sub-menu > li:hover a:hover,
+  .header--nav .headnav .tours-list > .sub-menu > li.active a:hover,
+  .header--nav .headnav .tours-list > .sub-menu > li a:hover {
+    background: #1d262e;
+  }
+  .header--nav ul .tours-list > .sub-menu > li:hover .sub-menu, .header--nav ul .tours-list > .sub-menu > li.active .sub-menu, .header--nav ul .tours-list > .sub-menu > li .sub-menu,
+  .header--nav .headnav .tours-list > .sub-menu > li:hover .sub-menu,
+  .header--nav .headnav .tours-list > .sub-menu > li.active .sub-menu,
+  .header--nav .headnav .tours-list > .sub-menu > li .sub-menu {
+    display: none;
   }
   #main-slider .slide .slider-cont-wrap {
     flex-flow: row wrap;
@@ -7449,6 +7465,9 @@ footer .footer_nav_wrap {
   }
   #main-slider .slide .slider-cont {
     width: 100%;
+  }
+  #main-slider .slide .slider-cont .title-wrap h2 {
+    font-size: 29px;
   }
   .tours-sliders .tours-title h2 {
     font-size: 28px;
@@ -7538,7 +7557,58 @@ footer .footer_nav_wrap {
   }
 }
 
+@media (max-width: 470px) {
+  .head-bgi {
+    background-image: url("../img/header-bg-sm.png");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+  }
+  #main-slider .slide .slider-cont-wrap {
+    width: 100%;
+    margin: 0;
+    padding: 10px 20px;
+  }
+  #main-slider .slide .slider-cont .title-wrap h2 {
+    font-size: 27px;
+  }
+  #main-slider .owl-nav .owl-prev {
+    left: 0;
+    width: 20px;
+    padding: 0;
+    text-align: left;
+    border: 0;
+  }
+  #main-slider .owl-nav .owl-next {
+    right: 0;
+    width: 20px;
+    padding: 0;
+    text-align: right;
+    border: 0;
+  }
+  header .head-center {
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+  }
+  header .head-center .phones .sub-phones-wrap {
+    max-width: 100%;
+  }
+  header .head-center .phones,
+  header .head-center .header--logo {
+    float: none;
+    margin-right: auto;
+    margin-left: auto;
+  }
+  header .head-center .header--logo {
+    margin-bottom: 30px;
+  }
+}
+
 @media (max-width: 375px) {
+  #main-slider .slide .slider-cont .title-wrap h2 {
+    font-size: 24px;
+  }
   header .slogan {
     line-height: 1.1;
     width: 280px;

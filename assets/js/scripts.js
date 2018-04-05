@@ -4662,11 +4662,10 @@ jQuery(document).ready(function($) {
     $.cookie("telListCookie", null);
   }
 
+
   $('.sub-phones li').click(function(event) {
-
-
     var telImg = $(this).children("img").attr('src'),
-      telNumLink = $(this).children(".tel-num").attr('href'),
+      telNumLink = $(this).children(".tel-num").data('link'),
       telNum = $(this).children(".tel-num").text();
     $(".main-tel img").attr('src', telImg);
     $(".main-tel a").attr('href', telNumLink);
