@@ -448,6 +448,11 @@ picture {
   }
 }
 
+.cont_paddind {
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
 nav {
   ul {
     @extend .clearfix;
@@ -640,7 +645,7 @@ header {
           display: inline-block;
 
           width: 32px;
-          width: 100%;
+          //width: 100%;
           height: 32px;
 
           vertical-align: middle;

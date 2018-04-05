@@ -221,7 +221,7 @@ function wpeFootNav() {
 }
 
 // WPE sidebar navigation
-function wpeSideNav() {
+/*function wpeSideNav() {
   wp_nav_menu(
   array(
     'theme_location'  => 'sidebar-menu',
@@ -242,7 +242,7 @@ function wpeSideNav() {
     'walker'          => ''
     )
   );
-}
+}*/
 //  Register WPE Navigation
 add_action('init', 'register_html5_menu'); // Add HTML5 Blank Menu
 function register_html5_menu() {
@@ -251,7 +251,7 @@ function register_html5_menu() {
     'top-left-menu' => __('Меню вверху слева', 'wpeasy'),
     'top-right-menu' => __('Меню вверху справа', 'wpeasy'),
     'lang-menu' => __('Меню языков', 'wpeasy'),
-    'sidebar-menu' => __('Меню в сайдбар', 'wpeasy'),
+    //'sidebar-menu' => __('Меню в сайдбар', 'wpeasy'),
     'footer-menu' => __('Меню в подвал', 'wpeasy')
   ));
 }
@@ -876,9 +876,9 @@ add_filter('the_content', 'filter_ptags_on_images');
 //shortcode slider
 function insert_slider() {
     $images = get_field('page_image_slider');
-
+    $html = '';
     if( $images ){
-        $html = '<div class="page_slider_wrap">';
+        $html .= '<div class="page_slider_wrap">';
         $html .= '<div class="page_slider owl-carousel" >';
         foreach( $images as $img ):
 
@@ -886,13 +886,99 @@ function insert_slider() {
                 $html .= '<div class="img_wrapp"><a href="' . $img['url'] . '" rel="lightbox"><img src="' . $img['sizes']['small'] . '"/></div></a>';
             $html .= '</div>';
         endforeach;
+
+        $html .= '</div>';
+        $html .= '</div>';
     }
-    $html .= '</div>';
-    $html .= '</div>';
     return $html;
 }
 add_shortcode( 'insert_slider', 'insert_slider' );
 //[insert_slider]
+
+
+
+//shortcode slider
+function insert_block() {
+  //$attr = (int)$atts[0] - 1;
+    //$contents = get_field('content_blocks');
+    $html = '';
+    if( have_rows('content_blocks') ):
+
+        while ( have_rows('content_blocks') ) : the_row();
+
+                $img = get_sub_field('image')['url'];
+
+
+                if( get_sub_field('block_type') === 'defoult' ){
+                    $html .= '<div class="container cont_paddind">';
+                    $html .= '  <div class="row">';
+
+                    if(get_sub_field('row_num')){
+                        $html .= '    <div class="col-md-10 col-md-offset-1">';
+                        $html .= get_sub_field('content');
+                        $html .= '    </div>';
+                    } else{
+                        $html .= '    <div class="col-md-4 col-md-offset-1 col-xs-6  cont_paddind">';
+                        $html .= get_sub_field('content');
+                        $html .= '    </div>';
+                        $html .= '    <div class="col-md-6 col-md-offset-1 col-xs-6  cont_paddind">';
+                        $html .= get_sub_field('second_content');
+                        $html .= '    </div>';
+                    }
+                    $html .= '  </div>';
+                    $html .= '</div>';
+                }
+                if( get_sub_field('block_type') === 'imagedark' ){
+                    $html .= '<div class="container">';
+                    $html .= '  <div class="row flex-row-sm full_w">';
+                    $html .= '    <div class="col-md-6 col-sm-5 full-left bg__img_wrap">';
+                    $html .= '      <div class="bg__img" style="background-image: url(' . $img . ');"></div>';
+                    $html .= '    </div>';
+                    $html .= '    <div class="col-md-5 col-sm-7">';
+                    $html .= '      <div class="col-md-12 dark-cont full-right">';
+                    $html .= '        <div class="col-sm-10 col-sm-offset-1  cont_paddind">';
+                    $html .= get_sub_field('content');
+                    $html .= '        </div>';
+                    $html .= '      </div>';
+                    $html .= '    </div>';
+                    $html .= '  </div>';
+                    $html .= '</div>';
+                }
+
+                if( get_sub_field('block_type') === 'fulldark' ){
+
+                    $html .= '<div class="dark-cont">';
+                    $html .= '  <div class="container">';
+                    $html .= '    <div class="row">';
+                    if(get_sub_field('row_num')){
+                        $html .= '    <div class="col-md-10 col-md-offset-1">';
+                        $html .= get_sub_field('content');
+                        $html .= '    </div>';
+                    } else{
+                        $html .= '    <div class="col-md-4 col-md-offset-1 col-xs-6  cont_paddind">';
+                        $html .= get_sub_field('content');
+                        $html .= '    </div>';
+                        $html .= '    <div class="col-md-6 col-md-offset-1 col-xs-6  cont_paddind">';
+                        $html .= get_sub_field('second_content');
+                        $html .= '    </div>';
+                    }
+                    $html .= '    </div>';
+                    $html .= '  </div>';
+                    $html .= '</div>';
+                }
+                if( get_sub_field('block_type') === 'bunner' ){
+
+                    $html .= '<div class="banner" style="background-image: url(' . $img . ');"> </div>';
+                }
+        endwhile;
+    endif;
+
+
+
+    return $html;
+}
+add_shortcode( 'insert_block', 'insert_block' );
+//[insert_block attr]
 
 
 

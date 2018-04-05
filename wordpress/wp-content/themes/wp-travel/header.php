@@ -37,13 +37,8 @@
         <div class="top-nav-wrapp">
 
           <nav class="lang-nav">
-            <?php //wpeLangNav(); ?>
-            <ul class="">
-              <li><a href="#"><img src="<?php echo get_template_directory_uri(); ?>/img/flag-ru.png" alt=""></a></li>
-              <li><a href="#"><img src="<?php echo get_template_directory_uri(); ?>/img/flag-uk.png" alt=""></a></li>
-              <li><a href="#"><img src="<?php echo get_template_directory_uri(); ?>/img/flag-fr.png" alt=""></a></li>
-              <li><a href="#"><img src="<?php echo get_template_directory_uri(); ?>/img/flag-sp.png" alt=""></a></li>
-            </ul>
+            <?php wpeLangNav(); ?>
+
           </nav>
 
           <nav class="nav-top-left col-sm-6">
