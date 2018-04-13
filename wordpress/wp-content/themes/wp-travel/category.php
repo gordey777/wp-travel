@@ -60,14 +60,18 @@
   $tours_args['orderby'] =  'meta_value';
 
 
-
+  if (get_field('cat_title', $curr_term)) {
+    $cat_title = get_field('cat_title', $curr_term);
+  } else{
+    $cat_title =  get_queried_object()->name;
+  }
 
  ?>
   <section class="section-search-form">
     <div class="container">
       <div class="row">
         <div class="col-md-12">
-          <h1><?php if( is_category() ) echo get_queried_object()->name; ?></h1>
+          <h1><?php echo $cat_title; ?></h1>
             <form action="<?php echo site_url() ?>/wp-admin/admin-ajax.php" method="POST" id="filter">
               <div class="form-wrap">
 
@@ -348,7 +352,7 @@
                       </div>
                       <div class="tour-price">
                         <span class="price"><?php echo number_format(get_field('tour_price', $slide_product),0,'',' '); ?></span>
-                        <span class="currency"><?php the_field('tour_currency'); ?></span>
+                        <span class="currency"><?php if(get_field('tour_price', $slide_product)) the_field('tour_currency', $front__id); ?></span>
                       </div>
                       <div class="tour-time"><?php the_field('tour_days'); ?> <?php the_field('tour_days_after'); ?></div>
                     </div>

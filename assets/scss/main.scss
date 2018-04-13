@@ -1014,6 +1014,8 @@ header {
             padding: 15px 20px;
 
             pointer-events: none;
+
+            background: transparent;
             &:hover {
               background: url(../img/menu-bg-hover.png) no-repeat 0 0;
               background-size: 100% 100%;
@@ -1021,7 +1023,7 @@ header {
           }
           &:hover {
             background: transparent;
-            .sub-menu {
+            > .sub-menu {
               z-index: -1;
 
               opacity: 0;
@@ -1032,7 +1034,7 @@ header {
             }
           }
           &.active {
-            .sub-menu {
+            > .sub-menu {
               z-index: 100;
 
               pointer-events: auto;
@@ -1069,12 +1071,13 @@ header {
               position: static;
 
               width: auto;
-
-              cursor: pointer;
+              //cursor: pointer;
 
               background: transparent;
               a {
                 font-weight: 400;
+
+                pointer-events: auto;
 
                 background: transparent;
                 &:hover {
@@ -1087,8 +1090,9 @@ header {
                 right: 0;
                 bottom: 0;
                 left: 0;
+                //display: flex;
 
-                display: flex;
+                display: none;
 
                 width: auto;
 
@@ -1512,6 +1516,8 @@ header {
 
     height: 100%;
     .img-wrap {
+      position: relative;
+
       display: inline-block;
 
       width: 100%;
@@ -2539,6 +2545,13 @@ article {
     margin: 0 0 30px 0;
     padding: 0;
   }
+  p {
+    font-family: Open Sans;
+    font-size: 14px;
+    line-height: 21px;
+
+    color: #283037;
+  }
   .showplace-cont {
     font-family: Open Sans;
     font-size: 14px;
@@ -3301,6 +3314,38 @@ footer {
   }
 }
 
+.showplace,
+.content-page,
+.page__content,
+.page-tabs {
+  ul {
+    margin-bottom: 10px;
+    li {
+      margin-bottom: 10px;
+
+      list-style: disc;
+      list-style-position: inside;
+    }
+  }
+  ol {
+    margin-bottom: 10px;
+    li {
+      margin-bottom: 10px;
+
+      list-style: decimal;
+      list-style-position: inside;
+    }
+  }
+}
+
+// .full_w {
+//   margin-bottom: 30px;
+//   + .def_container{
+//     padding-top: 0;
+//   }
+// }
+
+
 ///MEDIA
 @media (min-width: 1500px) {
   .full-left {
@@ -3356,8 +3401,8 @@ footer {
 
           width: auto;
           padding: 0;
-          //white-space: nowrap;
-          //background: #1d262e;
+
+          background: #3a434b;
 
           align-items: flex-start;
           flex-flow: row nowrap;
@@ -3378,6 +3423,19 @@ footer {
             padding: 0;
 
             white-space: normal;
+            &:hover {
+              background: transparent;
+              > a {
+                background: transparent;
+                //background: #283037;
+                &:hover {
+                  background: #283037;
+                }
+              }
+              > .sub-menu {
+                background: transparent;
+              }
+            }
             > a {
               font-size: 18px;
               font-weight: bold;
@@ -3388,17 +3446,10 @@ footer {
               padding: 15px 20px;
 
               white-space: nowrap;
+
+              background: transparent;
               &:hover {
-                //background: #283037;
-              }
-            }
-            &:hover {
-              //background: transparent;
-              a {
-                //background: #283037;
-              }
-              > .sub-menu {
-                background: transparent;
+                background: #283037;
               }
             }
             > .sub-menu {
@@ -3414,9 +3465,22 @@ footer {
               width: 100%;
 
               opacity: 1;
-              background: transparent;
               li {
                 width: 100%;
+
+                background: transparent;
+                a {
+                  background: transparent;
+                  &:hover {
+                    background: #283037;
+                  }
+                }
+                &:hover {
+                  background: transparent;
+                  a {
+                    background: #283037;
+                  }
+                }
                 ul {
                   display: none;
                 }

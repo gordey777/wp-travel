@@ -4695,7 +4695,7 @@ jQuery(document).ready(function($) {
   $('.tours-list > ul > li').click(function(event) {
     $(this).siblings('li').removeClass('active');
     $(this).addClass('active');
-    return false;
+    //return false;
   });
   //$('.tours-list > ul > li > ul ').click(function(event) {
   //   $(this).siblings('li').removeClass('active');
@@ -4798,7 +4798,8 @@ jQuery(document).ready(function($) {
   //MAIN MENU SUB ITEMS POSITION
   function subMenuAlign() {
     var headnavPos = $('.headnav').offset().left,
-      headnavW = $('.headnav').width();
+      //headnavW = $('.headnav').width();
+      headnavW = $('.header--nav').width();
 
     $('.sub-menu').each(function(index, el) {
       if (!$(this).parents('.tours-list, .more_list').length) {
@@ -4806,7 +4807,8 @@ jQuery(document).ready(function($) {
           subW = $(this).width(),
           subParentW = $(this).closest('li').width(),
           subParentPos = $(this).closest('li').offset().left - headnavPos,
-          totW = subParentPos + subParentW + subW;
+          //totW = subParentPos + subParentW + subW;
+          totW = subParentPos + subParentW + subW + headnavPos;
 
         if (totW > headnavW) {
           $(this).addClass('left');
@@ -4824,13 +4826,13 @@ jQuery(document).ready(function($) {
   });
 
   function currencyTrigger() {
-    var $curr_koef = ($('#currency-filter').find(":selected").attr('value')).split(";");;
-    $('.looper-price').each(function(index, el) {
-      var $prise = $('.looper-price').data('price');
-      $new_price = ($prise * $curr_koef[0] + '').replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ');
+    var $curr_koef = ($('#currency-filter').find(":selected").attr('value')).split(";");
+    $('.looper-price').each(function() {
+      var $prise = $(this).data('price');
+      $new_price = (Math.round($prise * $curr_koef[0]) + '').replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ');
       $(this).children('.price').text($new_price);
       $(this).children('.currency').text($curr_koef[1]);
-      //console.log($new_price);
+      console.log($new_price);
     });
   }
 

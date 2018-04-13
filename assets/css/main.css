@@ -4788,6 +4788,7 @@ header .slogan {
   display: inline-block;
   padding: 15px 20px;
   pointer-events: none;
+  background: transparent;
 }
 
 .header--nav ul .tours-list > .sub-menu > li > a:hover,
@@ -4801,8 +4802,8 @@ header .slogan {
   background: transparent;
 }
 
-.header--nav ul .tours-list > .sub-menu > li:hover .sub-menu,
-.header--nav .headnav .tours-list > .sub-menu > li:hover .sub-menu {
+.header--nav ul .tours-list > .sub-menu > li:hover > .sub-menu,
+.header--nav .headnav .tours-list > .sub-menu > li:hover > .sub-menu {
   z-index: -1;
   opacity: 0;
 }
@@ -4813,8 +4814,8 @@ header .slogan {
   background-size: 100% 100%;
 }
 
-.header--nav ul .tours-list > .sub-menu > li.active .sub-menu,
-.header--nav .headnav .tours-list > .sub-menu > li.active .sub-menu {
+.header--nav ul .tours-list > .sub-menu > li.active > .sub-menu,
+.header--nav .headnav .tours-list > .sub-menu > li.active > .sub-menu {
   z-index: 100;
   pointer-events: auto;
   opacity: 1;
@@ -4852,13 +4853,13 @@ header .slogan {
 .header--nav .headnav .tours-list > .sub-menu > li > .sub-menu li {
   position: static;
   width: auto;
-  cursor: pointer;
   background: transparent;
 }
 
 .header--nav ul .tours-list > .sub-menu > li > .sub-menu li a,
 .header--nav .headnav .tours-list > .sub-menu > li > .sub-menu li a {
   font-weight: 400;
+  pointer-events: auto;
   background: transparent;
 }
 
@@ -4874,7 +4875,7 @@ header .slogan {
   right: 0;
   bottom: 0;
   left: 0;
-  display: flex;
+  display: none;
   width: auto;
   opacity: 0;
   background: transparent;
@@ -5239,6 +5240,7 @@ header .slogan {
 .page_slider .item .img-wrap,
 .hotels-slider .item .img-wrap,
 .tours-slider .item .img-wrap {
+  position: relative;
   display: inline-block;
   width: 100%;
   height: 200px;
@@ -6128,6 +6130,13 @@ header .slogan {
   padding: 0;
 }
 
+.showplace p {
+  font-family: Open Sans;
+  font-size: 14px;
+  line-height: 21px;
+  color: #283037;
+}
+
 .showplace .showplace-cont {
   font-family: Open Sans;
   font-size: 14px;
@@ -6842,6 +6851,38 @@ footer .footer_nav_wrap {
   display: inline-block;
 }
 
+.showplace ul,
+.content-page ul,
+.page__content ul,
+.page-tabs ul {
+  margin-bottom: 10px;
+}
+
+.showplace ul li,
+.content-page ul li,
+.page__content ul li,
+.page-tabs ul li {
+  margin-bottom: 10px;
+  list-style: disc;
+  list-style-position: inside;
+}
+
+.showplace ol,
+.content-page ol,
+.page__content ol,
+.page-tabs ol {
+  margin-bottom: 10px;
+}
+
+.showplace ol li,
+.content-page ol li,
+.page__content ol li,
+.page-tabs ol li {
+  margin-bottom: 10px;
+  list-style: decimal;
+  list-style-position: inside;
+}
+
 @media (min-width: 1500px) {
   .full-left {
     margin-left: -40px;
@@ -6873,6 +6914,7 @@ footer .footer_nav_wrap {
     display: flex;
     width: auto;
     padding: 0;
+    background: #3a434b;
     align-items: flex-start;
     flex-flow: row nowrap;
   }
@@ -6887,6 +6929,18 @@ footer .footer_nav_wrap {
     padding: 0;
     white-space: normal;
   }
+  .header--nav .headnav .more_list > .sub-menu > li:hover {
+    background: transparent;
+  }
+  .header--nav .headnav .more_list > .sub-menu > li:hover > a {
+    background: transparent;
+  }
+  .header--nav .headnav .more_list > .sub-menu > li:hover > a:hover {
+    background: #283037;
+  }
+  .header--nav .headnav .more_list > .sub-menu > li:hover > .sub-menu {
+    background: transparent;
+  }
   .header--nav .headnav .more_list > .sub-menu > li > a {
     font-size: 18px;
     font-weight: bold;
@@ -6894,9 +6948,10 @@ footer .footer_nav_wrap {
     width: 100%;
     padding: 15px 20px;
     white-space: nowrap;
-  }
-  .header--nav .headnav .more_list > .sub-menu > li:hover > .sub-menu {
     background: transparent;
+  }
+  .header--nav .headnav .more_list > .sub-menu > li > a:hover {
+    background: #283037;
   }
   .header--nav .headnav .more_list > .sub-menu > li > .sub-menu {
     position: relative;
@@ -6908,10 +6963,22 @@ footer .footer_nav_wrap {
     display: inline-block;
     width: 100%;
     opacity: 1;
-    background: transparent;
   }
   .header--nav .headnav .more_list > .sub-menu > li > .sub-menu li {
     width: 100%;
+    background: transparent;
+  }
+  .header--nav .headnav .more_list > .sub-menu > li > .sub-menu li a {
+    background: transparent;
+  }
+  .header--nav .headnav .more_list > .sub-menu > li > .sub-menu li a:hover {
+    background: #283037;
+  }
+  .header--nav .headnav .more_list > .sub-menu > li > .sub-menu li:hover {
+    background: transparent;
+  }
+  .header--nav .headnav .more_list > .sub-menu > li > .sub-menu li:hover a {
+    background: #283037;
   }
   .header--nav .headnav .more_list > .sub-menu > li > .sub-menu li ul {
     display: none;

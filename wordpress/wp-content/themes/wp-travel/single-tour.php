@@ -19,8 +19,8 @@ get_header(); ?>
           <div class="subtitle">
             <div class="days"><?php the_field('tour_days'); ?> <?php the_field('tour_days_after'); ?></div>
             <div class="prise">
-              <span class="price"><?php echo number_format(get_field('tour_price', $slide_product),0,'',' '); ?></span>
-              <span class="currency"><?php the_field('tour_currency'); ?></span>
+                        <span class="price"><?php echo number_format(get_field('tour_price', $slide_product),0,'',' '); ?></span>
+                        <span class="currency"><?php if(get_field('tour_price', $slide_product)) the_field('tour_currency', $front__id); ?></span>
             </div>
           </div>
         </div>
@@ -148,7 +148,9 @@ get_header(); ?>
                                 <?php } ?>
 
                                 <div class="item">
-                                  <div class="img-wrap ratio" style="background-image: url('<?php the_post_thumbnail_url( 'medium'); ?>'); " data-hkoef="0.85"></div>
+                                  <div class="img-wrap ratio" style="background-image: url('<?php the_post_thumbnail_url( 'medium'); ?>'); " data-hkoef="0.85">
+                                    <a class="tour_link" href="<?php the_permalink(); ?>"><span><?php the_field('more_btn_title', $front__id);?></span></a>
+                                  </div>
                                   <div class="hotel-title"><?php the_title(); ?></div>
                                 </div>
                               <?php endforeach; ?>
@@ -159,6 +161,15 @@ get_header(); ?>
                       <?php wp_reset_postdata(); ?>
                     <?php endif; ?>
 
+                    <?php if( get_sub_field('places_cont') ): ?>
+                      <div class="showplace-wrap">
+                        <?php while ( have_rows('places_cont') ) : the_row(); ?>
+                          <div class="showplace">
+                            <?php the_sub_field('place_cont'); ?>
+                          </div>
+                        <?php endwhile; ?>
+                      </div>
+                    <?php endif; ?>
 
                     <?php $places = get_sub_field('places');?>
                       <?php if( $places ):  ?>
@@ -180,6 +191,8 @@ get_header(); ?>
                       </div>
                       <?php wp_reset_postdata(); ?>
                     <?php endif; ?>
+
+
 
                   <?php endwhile; ?>
                 </div><!-- .tour-day -->
@@ -293,7 +306,7 @@ get_header(); ?>
                       </div>
                       <div class="tour-price">
                         <span class="price"><?php echo number_format(get_field('tour_price', $slide_product),0,'',' '); ?></span>
-                        <span class="currency"><?php the_field('tour_currency'); ?></span>
+                        <span class="currency"><?php if(get_field('tour_price', $slide_product)) the_field('tour_currency', $front__id); ?></span>
                       </div>
                       <div class="tour-time"><?php the_field('tour_days'); ?> <?php the_field('tour_days_after'); ?></div>
                     </div>

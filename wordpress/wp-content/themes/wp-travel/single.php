@@ -163,7 +163,7 @@
                       </div>
                       <div class="tour-price">
                         <span class="price"><?php echo number_format(get_field('tour_price', $slide_product),0,'',' '); ?></span>
-                        <span class="currency"><?php the_field('tour_currency'); ?></span>
+                        <span class="currency"><?php if(get_field('tour_price', $slide_product)) the_field('tour_currency', $front__id); ?></span>
                       </div>
                       <div class="tour-time"><?php the_field('tour_days'); ?> <?php the_field('tour_days_after'); ?></div>
                     </div>

@@ -32,15 +32,21 @@
 //args of pre settings
   $tours_cat = '';
   if($fiilter_set){
+    $i = 0;
+    $j = 0;
+    $k = 0;
     foreach($fiilter_set as $key => $var){
       $field_term = 'category_' . $var;
       $cat__type = get_field('cat_type', $field_term);
       if($cat__type === 'region') {
-        $catRegionArray[$key] = $var;
+        $catRegionArray[$i] = $var;
+        $i++;
       } else if($cat__type === 'country') {
-        $catCountryArray[$key] = $var;
+        $catCountryArray[$j] = $var;
+        $j++;
       } else if($cat__type === 'tour_type') {
-        $catTourTypeArray[$key] = (int)$var;
+        $catTourTypeArray[$k] = (int)$var;
+        $k++;
       }
     }
 
@@ -363,7 +369,7 @@
                       </div>
                       <div class="tour-price">
                         <span class="price"><?php echo number_format(get_field('tour_price', $slide_product),0,'',' '); ?></span>
-                        <span class="currency"><?php the_field('tour_currency'); ?></span>
+                        <span class="currency"><?php if(get_field('tour_price', $slide_product)) the_field('tour_currency', $front__id); ?></span>
                       </div>
                       <div class="tour-time"><?php the_field('tour_days'); ?> <?php the_field('tour_days_after'); ?></div>
                     </div>

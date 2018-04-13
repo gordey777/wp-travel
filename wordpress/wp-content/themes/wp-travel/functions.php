@@ -38,7 +38,7 @@ function wpeStyles()  {
   wp_dequeue_style('fancybox');
   wp_dequeue_style('wp_dequeue_style');
 
-  wp_register_style('wpeasy-style', get_template_directory_uri() . '/css/main.css', array(), '1.0', 'all');
+  wp_register_style('wpeasy-style', get_template_directory_uri() . '/css/main.css', array(), '1.4', 'all');
   wp_enqueue_style('wpeasy-style'); // Enqueue it!
 }
 
@@ -58,7 +58,7 @@ function wpeHeaderScripts() {
     wp_deregister_script( 'jquery-form' );
 
     //  Load footer scripts (footer.php)
-    wp_register_script('wpeScripts', get_template_directory_uri() . '/js/scripts.js', array(), '1.0.0', true);
+    wp_register_script('wpeScripts', get_template_directory_uri() . '/js/scripts.js', array(), '1.0.4', true);
     wp_enqueue_script('wpeScripts');
 
   }
@@ -910,11 +910,11 @@ function insert_block() {
 
 
                 if( get_sub_field('block_type') === 'defoult' ){
-                    $html .= '<div class="container cont_paddind">';
+                    $html .= '<div class="container def_container page__content">';
                     $html .= '  <div class="row">';
 
                     if(get_sub_field('row_num')){
-                        $html .= '    <div class="col-md-10 col-md-offset-1">';
+                        $html .= '    <div class="col-md-10 col-md-offset-1 cont_paddind">';
                         $html .= get_sub_field('content');
                         $html .= '    </div>';
                     } else{
@@ -929,7 +929,7 @@ function insert_block() {
                     $html .= '</div>';
                 }
                 if( get_sub_field('block_type') === 'imagedark' ){
-                    $html .= '<div class="container">';
+                    $html .= '<div class="container cont_paddind page__content">';
                     $html .= '  <div class="row flex-row-sm full_w">';
                     $html .= '    <div class="col-md-6 col-sm-5 full-left bg__img_wrap">';
                     $html .= '      <div class="bg__img" style="background-image: url(' . $img . ');"></div>';
@@ -947,7 +947,7 @@ function insert_block() {
 
                 if( get_sub_field('block_type') === 'fulldark' ){
 
-                    $html .= '<div class="dark-cont">';
+                    $html .= '<div class="dark-cont page__content">';
                     $html .= '  <div class="container">';
                     $html .= '    <div class="row">';
                     if(get_sub_field('row_num')){
