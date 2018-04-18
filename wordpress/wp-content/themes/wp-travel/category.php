@@ -7,6 +7,8 @@
 
 
 
+
+
 <?php if($curr__type === 'country' || $curr__type === 'region' || $curr__type === 'tour_type'): ?>
   <?php
 //categoryes array
@@ -67,11 +69,14 @@
   }
 
  ?>
+
+
   <section class="section-search-form">
     <div class="container">
       <div class="row">
         <div class="col-md-12">
           <h1><?php echo $cat_title; ?></h1>
+
             <form action="<?php echo site_url() ?>/wp-admin/admin-ajax.php" method="POST" id="filter">
               <div class="form-wrap">
 
@@ -277,13 +282,193 @@
     </div><!-- /.container -->
   </section>
 
+<?php elseif($curr__type === 'city_kurort'): ?>
+    <div class="content-page">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-10 col-md-offset-1">
+            <h1 class="page-title inner-title"><?php if( is_category() ) echo get_queried_object()->name; ?></h1>
+          </div>
+        </div><!-- /.row -->
+      </div><!-- /.container -->
+
+
+
+      <?php if( have_rows('cat_content_blocks', $curr_term) ):
+          while ( have_rows('cat_content_blocks', $curr_term) ) : the_row();
+                  $img = get_sub_field('image')['url'];
+                  if( get_sub_field('block_type') === 'defoult' ){ ?>
+                      <div class="container def_container page__content">
+                        <div class="row">
+                      <?php if(get_sub_field('row_num')){ ?>
+                              <div class="col-md-10 col-md-offset-1 cont_paddind">
+                          <?php the_sub_field('content'); ?>
+                              </div>
+                      <?php } else{ ?>
+                              <div class="col-md-4 col-md-offset-1 col-xs-6 cont-col cont_paddind">
+                          <?php the_sub_field('content'); ?>
+                              </div>
+                              <div class="col-md-6 col-md-offset-1 col-xs-6 cont-col cont_paddind">
+                          <?php the_sub_field('second_content'); ?>
+                              </div>
+                      <?php } ?>
+                        </div>
+                      </div>
+                  <?php } ?>
+                  <?php if( get_sub_field('block_type') === 'imagedark' ){ ?>
+                      <div class="container cont_paddind page__content">
+                        <div class="row flex-row-sm full_w">
+                          <div class="col-md-6 col-sm-5 full-left bg__img_wrap">
+                            <div class="bg__img" style="background-image: url(' . $img . ');"></div>
+                          </div>
+                          <div class="col-md-5 col-sm-7">
+                            <div class="col-md-12 dark-cont full-right">
+                              <div class="col-sm-10 col-sm-offset-1  cont_paddind">
+                      <?php the_sub_field('content'); ?>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                  <?php } ?>
+                  <?php if( get_sub_field('block_type') === 'fulldark' ){ ?>
+                      <div class="dark-cont page__content">
+                        <div class="container">
+                          <div class="row">
+                      <?php if(get_sub_field('row_num')){ ?>
+                              <div class="col-md-10 col-md-offset-1">
+                          <?php the_sub_field('content'); ?>
+                              </div>
+                      <?php } else{ ?>
+                              <div class="col-md-4 col-md-offset-1 col-xs-6 cont-col cont_paddind">
+                          <?php the_sub_field('content'); ?>
+                              </div>
+                              <div class="col-md-6 col-md-offset-1 col-xs-6 cont-col cont_paddind">
+                          <?php the_sub_field('second_content'); ?>
+                              </div>
+                      <?php } ?>
+                          </div>
+                        </div>
+                      </div>
+                  <?php } ?>
+                  <?php if( get_sub_field('block_type') === 'bunner' ){ ?>
+                      <div class="banner" style="background-image: url(' <?php echo $img;?> ');"> </div>
+                  <?php } ?>
+          <?php endwhile; ?>
+      <?php endif; ?>
+    </div>
+
+    <div class="cat_city container">
+      <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+          <?php if (have_posts()):  ?>
+
+              <div class="hotels-slider-wrap">
+                <h3><?php the_field('cat_hotels_title', $curr_term); ?></h3>
+                <div class="row">
+                  <div class="col-sm-10 col-sm-offset-1">
+                    <div class="hotels-slider owl-carousel">
+                      <?php while (have_posts()) : the_post(); ?>
+                        <?php if(get_page_template_slug() === 'page-hotel.php'){ ?>
+                          <?php $thumb_link = ''; ?>
+                          <?php if ( has_post_thumbnail()) { ?>
+                            <?php $thumb_link = get_the_post_thumbnail_url( 'medium'); ?>
+                          <?php } else { ?>
+                            <?php $thumb_link =  catchFirstImage(); ?>
+                          <?php } ?>
+
+                          <div class="item">
+                            <div class="img-wrap ratio" style="background-image: url('<?php the_post_thumbnail_url( 'medium'); ?>'); " data-hkoef="0.85">
+                              <a class="tour_link" href="<?php the_permalink(); ?>"><span><?php the_field('more_btn_title', $front__id);?></span></a>
+                            </div>
+                            <div class="hotel-title"><?php the_title(); ?></div>
+                          </div>
+                        <?php } ?>
+                      <?php endwhile; ?>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            <?php endif; ?>
+
+
+            <?php if( get_field('places_cont_cat', $curr_term) ): ?>
+              <div class="showplace-wrap">
+                <?php while ( have_rows('places_cont_cat', $curr_term) ) : the_row(); ?>
+                  <div class="showplace">
+                    <?php the_sub_field('place_cont'); ?>
+                  </div>
+                <?php endwhile; ?>
+              </div>
+            <?php endif; ?>
+
+            <?php $places = get_field('places_cat', $curr_term);?>
+              <?php if( $places ):  ?>
+              <div class="showplace-wrap">
+                <?php foreach( $places as $post): ?>
+                  <?php setup_postdata($post); ?>
+                  <div class="showplace">
+                    <h3><?php the_title(); ?></h3>
+                    <div class="img-wrap">
+                      <?php if ( has_post_thumbnail()) { ?>
+                        <img src="<?php echo the_post_thumbnail_url('medium'); ?>" title="<?php the_title(); ?>" alt="<?php the_title(); ?>" />
+                      <?php } else { ?>
+                        <img src="<?php echo catchFirstImage(); ?>" title="<?php the_title(); ?>" alt="<?php the_title(); ?>" />
+                      <?php } ?>
+                    </div>
+                    <div class="showplace-cont"><?php the_content(); ?></div>
+                  </div>
+                <?php endforeach; ?>
+              </div>
+              <?php wp_reset_postdata(); ?>
+            <?php endif; ?>
+        </div>
+      </div>
+    </div>
+
+  <?php else: ?>
+
+    <div class="container content-page">
+      <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+          <h1 class="page-title inner-title"><?php if( is_category() ) echo get_queried_object()->name; ?></h1>
+        </div>
+      </div><!-- /.row -->
+    </div><!-- /.container -->
+
+    <section class="searh-resolt">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-10 col-lg-offset-1">
+
+            <div class="row searh-resolt-wrap">
+              <?php if (have_posts()): while (have_posts()) : the_post(); ?>
+                  <?php if(get_page_template_slug() === 'single-tour.php'){
+                    get_template_part('search-loop');
+                  } else{
+                    get_template_part('loop');
+                  } ?>
+              <?php endwhile; endif; ?>
+            </div><!-- /.row -->
+          </div>
+        </div><!-- /.row -->
+      </div><!-- /.container -->
+    </section>
+
+  <?php endif; ?>
+
+
 
   <?php get_template_part('cont-form'); ?>
 
-
   <?php $tour_sliders = get_field('category_tours_sliders', $curr_term); ?>
-
   <?php  if( !empty($tour_sliders) ): ?>
+  <div id="exclusive_tours">
+    <h3><?php the_field('exclusive_link_text', $front__id); ?></h3>
+  </div>
+
+
   <section class="tours-sliders">
     <div class="container">
     <?php foreach( $tour_sliders as $slider__id): ?>
@@ -294,7 +479,7 @@
         <div class="col-sm-10 col-sm-offset-1">
           <div class="tours-title">
             <h2><?php echo get_the_title($slider__id); ?></h2>
-            <a href="" class="more-tours btn red-btn">Смотреть все</a>
+            <a href="<?php the_field('more_tours_link', $slider__id); ?>" class="more-tours btn red-btn"><?php the_field('more_tours_link_text', $slider__id); ?></a>
             <div class="clearfix"></div>
           </div>
         </div>
@@ -389,42 +574,8 @@
   <?php endif; ?>
 
 
-<?php else: ?>
 
-  <div class="container content-page">
-    <div class="row">
-      <div class="col-md-10 col-md-offset-1">
-        <h1 class="page-title inner-title"><?php if( is_category() ) echo get_queried_object()->name; ?></h1>
-      </div>
-    </div><!-- /.row -->
-  </div><!-- /.container -->
 
-  <section class="searh-resolt">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-10 col-lg-offset-1">
-
-          <div class="row searh-resolt-wrap">
-            <?php if (have_posts()): while (have_posts()) : the_post(); ?>
-                <?php if(get_page_template_slug() === 'single-tour.php'){
-                  get_template_part('search-loop');
-                } else{
-                  get_template_part('loop');
-                } ?>
-            <?php endwhile; endif; ?>
-          </div><!-- /.row -->
-        </div>
-      </div><!-- /.row -->
-    </div><!-- /.container -->
-  </section>
-
-  <section class="section-form">
-    <div class="container dark-cont">
-                <?php $form__code = get_field('home_cont_form', $front__id); ?>
-                <?php echo do_shortcode($form__code); ?>
-    </div><!-- /.container -->
-  </section>
-<?php endif; ?>
 
 <?php get_footer(); ?>
 

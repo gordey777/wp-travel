@@ -3962,6 +3962,20 @@ picture {
   color: #000;
 }
 
+.flex-center {
+  display: block;
+  display: flex;
+  align-items: center;
+  flex-flow: row wrap;
+}
+
+.flex-row {
+  display: block;
+  display: flex;
+  align-items: stretch;
+  flex-flow: row wrap;
+}
+
 .flex-column {
   display: flex;
   flex-flow: column wrap;
@@ -4040,20 +4054,6 @@ picture {
 .wpfp-span:hover .fa:before,
 .to-favorite:hover .fa:before {
   content: '\f004';
-}
-
-.flex-center {
-  display: block;
-  display: flex;
-  align-items: center;
-  flex-flow: row wrap;
-}
-
-.flex-row {
-  display: block;
-  display: flex;
-  align-items: stretch;
-  flex-flow: row wrap;
 }
 
 #favorite_open {
@@ -5222,6 +5222,43 @@ header .slogan {
   padding: 7px 15px;
 }
 
+#exclusive_tours {
+  position: relative;
+  top: -150px;
+  display: inline-block;
+  width: 100%;
+  margin: 0 auto 0 auto;
+  padding-bottom: 50px;
+  text-align: center;
+  background: #4f5860;
+}
+
+#exclusive_tours h3 {
+  font-family: Open Sans;
+  font-size: 14px;
+  position: relative;
+  display: inline-block;
+  float: none;
+  margin: 0 auto;
+  padding-bottom: 20px;
+  text-align: center;
+  color: #fff;
+}
+
+#exclusive_tours h3:before {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  width: 110px;
+  height: 18px;
+  margin: 0 -55px;
+  content: '';
+  background: url(../img/exclusive_title.png) no-repeat center center;
+  background-size: contain;
+}
+
 .page_slider .owl-stage,
 .hotels-slider .owl-stage,
 .tours-slider .owl-stage {
@@ -5997,6 +6034,7 @@ header .slogan {
   margin-bottom: 20px;
 }
 
+.cat_city .days-title,
 .tour-day .days-title {
   font-family: Open Sans;
   font-size: 18px;
@@ -6011,6 +6049,7 @@ header .slogan {
   background: #4f5860;
 }
 
+.cat_city .days-title:before,
 .tour-day .days-title:before {
   position: absolute;
   z-index: 1;
@@ -6025,6 +6064,7 @@ header .slogan {
   background-size: contain;
 }
 
+.cat_city .days-title:after,
 .tour-day .days-title:after {
   position: absolute;
   top: 0;
@@ -6036,6 +6076,7 @@ header .slogan {
   background: #4f5860;
 }
 
+.cat_city > h3,
 .tour-day > h3 {
   font-family: Open Sans;
   font-size: 16px;
@@ -6047,10 +6088,12 @@ header .slogan {
   color: #0f1920;
 }
 
+.cat_city .tours-langs,
 .tour-day .tours-langs {
   margin-bottom: 50px;
 }
 
+.cat_city .tours-langs span,
 .tour-day .tours-langs span {
   font-family: Open Sans;
   font-size: 12px;
@@ -6060,21 +6103,25 @@ header .slogan {
   color: #000;
 }
 
+.cat_city .tours-langs ul,
 .tour-day .tours-langs ul {
   display: inline-block;
 }
 
+.cat_city .tours-langs ul li,
 .tour-day .tours-langs ul li {
   display: inline-block;
   padding-right: -14px;
 }
 
+.cat_city .hotels-slider-wrap,
 .tour-day .hotels-slider-wrap {
   position: relative;
   margin-bottom: 60px;
   padding: 65px 0;
 }
 
+.cat_city .hotels-slider-wrap:before,
 .tour-day .hotels-slider-wrap:before {
   position: absolute;
   top: 0;
@@ -6086,6 +6133,7 @@ header .slogan {
   background: #faf8f9;
 }
 
+.cat_city .hotels-slider-wrap h3,
 .tour-day .hotels-slider-wrap h3 {
   font-family: Open Sans;
   font-size: 16px;
@@ -6098,6 +6146,7 @@ header .slogan {
   color: #000;
 }
 
+.cat_city .showplace,
 .tour-day .showplace {
   position: relative;
   display: inline-block;
@@ -6107,6 +6156,7 @@ header .slogan {
   border-top: 1px solid #e8e8e8;
 }
 
+.cat_city .showplace:first-child,
 .tour-day .showplace:first-child {
   padding-top: 0;
   border-top: 0;
@@ -7306,11 +7356,11 @@ footer .footer_nav_wrap {
     transition: all .3s;
     pointer-events: auto;
   }
-  .programs__wrapp .side-nav___wrap .side-nav.active, .programs__wrapp .side-nav___wrap .side-nav:active, .programs__wrapp .side-nav___wrap .side-nav:focus, .programs__wrapp .side-nav___wrap .side-nav:hover {
+  .programs__wrapp .side-nav___wrap .side-nav.active {
     left: calc(100% - 280px) !important;
   }
-  .programs__wrapp .side-nav___wrap .side-nav.active #sidebar_btn, .programs__wrapp .side-nav___wrap .side-nav:active #sidebar_btn, .programs__wrapp .side-nav___wrap .side-nav:focus #sidebar_btn, .programs__wrapp .side-nav___wrap .side-nav:hover #sidebar_btn {
-    opacity: 0;
+  .programs__wrapp .side-nav___wrap .side-nav.active #sidebar_btn:before {
+    content: '\f061';
   }
   .programs__wrapp .side-nav___wrap .side-nav #sidebar_btn {
     font-family: FontAwesome;
@@ -7331,6 +7381,9 @@ footer .footer_nav_wrap {
     color: #DA3730;
     border: 2px solid #DA3730;
     border-radius: 50%;
+  }
+  .programs__wrapp .side-nav___wrap .side-nav #sidebar_btn:before {
+    content: '\f060';
   }
   .modal-content {
     padding: 60px 30px;
@@ -7448,6 +7501,9 @@ footer .footer_nav_wrap {
 }
 
 @media (max-width: 480px) {
+  .cont-col {
+    width: 100%;
+  }
   header .slogan {
     font-size: 13px;
     left: 2px;

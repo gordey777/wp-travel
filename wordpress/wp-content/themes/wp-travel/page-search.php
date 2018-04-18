@@ -235,7 +235,7 @@
           <div id="nothing_find" >
             <?php the_field('content_nothing_found', $front__id); ?>
           </div>
-          <div  id="response" class="row searh-resolt-wrap">
+          <div  id="response" class="row searh-resolt-wrap flex-row">
             <?php
 
             $query = new WP_Query( $tours_args );
@@ -264,7 +264,7 @@
                 }
                 if($j == 2 && $bunners[0]){ echo '<div class="col-md-6 bunner bunner-1">'.$bunners[0]['bunner'].'</div>';}
                 if($j == 5 && $bunners[1]){ echo '<div class="col-md-6 bunner bunner-2">'.$bunners[1]['bunner'].'</div>';}
-                if($j == 5 && $bunners[2]){ echo '<div class="col-md-6 bunner bunner-3">'.$bunners[2]['bunner'].'</div>';}
+                if($j == 7 && $bunners[2]){ echo '<div class="col-md-6 bunner bunner-3">'.$bunners[2]['bunner'].'</div>';}
                 if($j == 9 && $bunners[3]){ echo '<div class="col-md-6 bunner bunner-4">'.$bunners[3]['bunner'].'</div>';}
 
                 $j++;
@@ -299,8 +299,10 @@
 
 
   <?php $tour_sliders = get_field('search_tours_sliders'); ?>
-
   <?php  if( !empty($tour_sliders) ): ?>
+  <div id="exclusive_tours">
+    <h3><?php the_field('exclusive_link_text', $front__id); ?></h3>
+  </div>
   <section class="tours-sliders">
     <div class="container">
     <?php foreach( $tour_sliders as $slider__id): ?>
@@ -311,7 +313,7 @@
         <div class="col-sm-10 col-sm-offset-1">
           <div class="tours-title">
             <h2><?php echo get_the_title($slider__id); ?></h2>
-            <a href="" class="more-tours btn red-btn">Смотреть все</a>
+            <a href="<?php the_field('more_tours_link', $slider__id); ?>" class="more-tours btn red-btn"><?php the_field('more_tours_link_text', $slider__id); ?></a>
             <div class="clearfix"></div>
           </div>
         </div>

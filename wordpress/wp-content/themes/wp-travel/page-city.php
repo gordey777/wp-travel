@@ -30,6 +30,12 @@ get_header(); ?>
         if ( get_sub_field('color_price_bg')) {
           $color_price_bg = 'background-color: '. get_sub_field('color_price_bg').';';
         }
+        if ( get_sub_field('color_button')) {
+          $color_button = 'color: '. get_sub_field('color_button').';';
+        }
+        if ( get_sub_field('color_button_bg')) {
+          $color_button_bg = 'background: '. get_sub_field('color_button_bg').';';
+        }
         ?>
 
         <?php $bg_image = get_sub_field('img'); ?>
@@ -49,7 +55,7 @@ get_header(); ?>
                 <?php } ?>
               </div>
               <?php if ( get_sub_field('link')) { ?>
-                <a href="<?php the_sub_field('link'); ?>" class="slide-link btn"><?php the_sub_field('btn_text'); ?></a>
+                <a href="<?php the_sub_field('link'); ?>" class="slide-link btn"  style="<?php echo $color_button; ?><?php echo $color_button_bg; ?>"><?php the_sub_field('btn_text'); ?></a>
               <?php } ?>
             </div>
           </div>
@@ -110,7 +116,7 @@ get_header(); ?>
         <div class="col-sm-10 col-sm-offset-1">
           <div class="tours-title">
             <h2><?php echo get_the_title($slider__id); ?></h2>
-            <a href="" class="more-tours btn red-btn">Смотреть все</a>
+            <a href="<?php the_field('more_tours_link', $slider__id); ?>" class="more-tours btn red-btn"><?php the_field('more_tours_link_text', $slider__id); ?></a>
             <div class="clearfix"></div>
           </div>
         </div>

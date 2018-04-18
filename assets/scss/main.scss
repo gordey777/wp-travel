@@ -123,6 +123,23 @@ picture {
   }
 }
 
+.flex-center {
+  display: block;
+  display: flex;
+
+  align-items: center;
+  flex-flow: row wrap;
+}
+
+.flex-row {
+  display: block;
+  display: flex;
+
+  align-items: stretch;
+  flex-flow: row wrap;
+}
+
+
 .flex-column {
   display: flex;
 
@@ -200,21 +217,7 @@ picture {
   }
 }
 
-.flex-center {
-  display: block;
-  display: flex;
 
-  align-items: center;
-  flex-flow: row wrap;
-}
-
-.flex-row {
-  display: block;
-  display: flex;
-
-  align-items: stretch;
-  flex-flow: row wrap;
-}
 
 #favorite_open {
   position: fixed;
@@ -1502,6 +1505,54 @@ header {
   }
 }
 
+#exclusive_tours {
+  position: relative;
+  top: -150px;
+
+  display: inline-block;
+
+  width: 100%;
+  margin: 0 auto 0 auto;
+  padding-bottom: 50px;
+
+  text-align: center;
+
+  background: #4f5860;
+  h3 {
+    font-family: Open Sans;
+    font-size: 14px;
+
+    position: relative;
+
+    display: inline-block;
+    float: none;
+
+    margin: 0 auto;
+    padding-bottom: 20px;
+
+    text-align: center;
+
+    color: #fff;
+    &:before {
+      position: absolute;
+      top: 100%;
+      left: 50%;
+
+      display: inline-block;
+
+      box-sizing: border-box;
+      width: 110px;
+      height: 18px;
+      margin: 0 -55px;
+
+      content: '';
+
+      background: url(../img/exclusive_title.png) no-repeat center center;
+      background-size: contain;
+    }
+  }
+}
+
 .page_slider,
 .hotels-slider,
 .tours-slider {
@@ -2385,6 +2436,7 @@ article {
   }
 }
 
+.cat_city,
 .tour-day {
   .days-title {
     font-family: Open Sans;
@@ -3948,14 +4000,15 @@ footer {
 
         transition: all .3s;
         pointer-events: auto;
-        &.active,
-        &:active,
-        &:focus,
-        &:hover {
+        //&:active,
+        //&:focus,
+        //&:hover,
+        &.active {
           left: calc(100% - 280px)!important;
           #sidebar_btn {
-            //
-            opacity: 0;
+            &:before {
+              content: '\f061';
+            }
           }
         }
         #sidebar_btn {
@@ -3983,6 +4036,9 @@ footer {
           color: $red;
           border: 2px solid $red;
           border-radius: 50%;
+          &:before {
+            content: '\f060';
+          }
         }
       }
     }
@@ -4147,6 +4203,9 @@ footer {
 }
 
 @media (max-width: 480px) {
+  .cont-col {
+    width: 100%;
+  }
   header {
     .slogan {
       font-size: 13px;

@@ -232,12 +232,16 @@ get_header(); ?>
 
   <?php endwhile; endif; ?>
 
-
   <?php get_template_part('cont-form'); ?>
 
-  <?php $tour_sliders = get_field('tours_sliders_list'); ?>
 
+  <?php $tour_sliders = get_field('tours_sliders_list'); ?>
   <?php  if( !empty($tour_sliders) ): ?>
+
+  <div id="exclusive_tours">
+    <h3><?php the_field('exclusive_link_text', $front__id); ?></h3>
+  </div>
+
   <section class="tours-sliders">
     <div class="container">
     <?php foreach( $tour_sliders as $slider__id): ?>
@@ -248,7 +252,7 @@ get_header(); ?>
         <div class="col-sm-10 col-sm-offset-1">
           <div class="tours-title">
             <h2><?php echo get_the_title($slider__id); ?></h2>
-            <a href="" class="more-tours btn red-btn">Смотреть все</a>
+            <a href="<?php the_field('more_tours_link', $slider__id); ?>" class="more-tours btn red-btn"><?php the_field('more_tours_link_text', $slider__id); ?></a>
             <div class="clearfix"></div>
           </div>
         </div>

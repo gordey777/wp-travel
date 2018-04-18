@@ -38,7 +38,7 @@ function wpeStyles()  {
   wp_dequeue_style('fancybox');
   wp_dequeue_style('wp_dequeue_style');
 
-  wp_register_style('wpeasy-style', get_template_directory_uri() . '/css/main.css', array(), '1.4', 'all');
+  wp_register_style('wpeasy-style', get_template_directory_uri() . '/css/main.css', array(), '1.0', 'all');
   wp_enqueue_style('wpeasy-style'); // Enqueue it!
 }
 
@@ -58,7 +58,7 @@ function wpeHeaderScripts() {
     wp_deregister_script( 'jquery-form' );
 
     //  Load footer scripts (footer.php)
-    wp_register_script('wpeScripts', get_template_directory_uri() . '/js/scripts.js', array(), '1.0.4', true);
+    wp_register_script('wpeScripts', get_template_directory_uri() . '/js/scripts.js', array(), '1.0.6', true);
     wp_enqueue_script('wpeScripts');
 
   }
@@ -463,7 +463,7 @@ remove_action('wp_head', 'start_post_rel_link', 10, 0); // Start link
 remove_action('wp_head', 'adjacent_posts_rel_link', 10, 0); // Display relational links for the posts adjacent to the current post.
 remove_action('wp_head', 'wp_generator'); // Display the XHTML generator that is generated on the wp_head hook, WP version
 remove_action('wp_head', 'adjacent_posts_rel_link_wp_head', 10, 0);
-remove_action('wp_head', 'rel_canonical');
+//remove_action('wp_head', 'rel_canonical');
 remove_action('wp_head', 'wp_shortlink_wp_head', 10, 0);
 
 // Add Filters
@@ -918,10 +918,10 @@ function insert_block() {
                         $html .= get_sub_field('content');
                         $html .= '    </div>';
                     } else{
-                        $html .= '    <div class="col-md-4 col-md-offset-1 col-xs-6  cont_paddind">';
+                        $html .= '    <div class="col-md-4 col-md-offset-1 col-xs-6 cont-col cont_paddind">';
                         $html .= get_sub_field('content');
                         $html .= '    </div>';
-                        $html .= '    <div class="col-md-6 col-md-offset-1 col-xs-6  cont_paddind">';
+                        $html .= '    <div class="col-md-6 col-md-offset-1 col-xs-6 cont-col cont_paddind">';
                         $html .= get_sub_field('second_content');
                         $html .= '    </div>';
                     }
@@ -955,10 +955,10 @@ function insert_block() {
                         $html .= get_sub_field('content');
                         $html .= '    </div>';
                     } else{
-                        $html .= '    <div class="col-md-4 col-md-offset-1 col-xs-6  cont_paddind">';
+                        $html .= '    <div class="col-md-4 col-md-offset-1 col-xs-6 cont-col cont_paddind">';
                         $html .= get_sub_field('content');
                         $html .= '    </div>';
-                        $html .= '    <div class="col-md-6 col-md-offset-1 col-xs-6  cont_paddind">';
+                        $html .= '    <div class="col-md-6 col-md-offset-1 col-xs-6 cont-col cont_paddind">';
                         $html .= get_sub_field('second_content');
                         $html .= '    </div>';
                     }
