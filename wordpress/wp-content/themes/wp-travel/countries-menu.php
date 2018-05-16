@@ -56,13 +56,18 @@
                           $childID = $child->cat_ID;
                           $field_term = 'category_' . $childID;
                           $cat__type = get_field('cat_type', $field_term);
-                          if( $cat__type === 'country' && !in_array($subCatID, $arrCountries) ) {
+                          if( $cat__type === 'country' && !in_array($childID, $arrCountries) ) {
                               $arrCountries[$i] = $childID;
                               $i++;
-                            }
+                          }
                         }
-                      } else{
-
+                      } else {
+                        $field_term = 'category_' . $subCatID;
+                        $cat__type = get_field('cat_type', $field_term);
+                        if( $cat__type === 'country' && !in_array($subCatID, $arrCountries) ) {
+                            $arrCountries[$i] = $subCatID;
+                            $i++;
+                        }
                       }
                   }
                   if(empty($arrCountries)){

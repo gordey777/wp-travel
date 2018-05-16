@@ -61,7 +61,7 @@
             <?php if ( !is_front_page() && !is_home() ){ ?>
               <a href="<?php echo home_url(); ?>">
             <?php } ?>
-                <img src="<?php echo get_template_directory_uri(); ?>/img/logo.png" alt="<?php wp_title( '' ); ?>" title="<?php wp_title( '' ); ?>" class="logo-img">
+                <img src="<?php if(get_field('logo_head_img', $front__id)){ echo get_field('logo_head_img', $front__id)['url'];} else { echo get_template_directory_uri().'/img/logo.png';} ?>" alt="<?php wp_title( '' ); ?>" title="<?php wp_title( '' ); ?>" class="logo-img">
             <?php if ( !is_front_page() && !is_home() ){ ?>
               </a>
             <?php } ?>

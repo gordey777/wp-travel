@@ -932,7 +932,8 @@ if (typeof jQuery === 'undefined') {
   throw new Error('Bootstrap\'s JavaScript requires jQuery')
 }
 
-+ function($) {
++
+function($) {
   'use strict';
   var version = $.fn.jquery.split(' ')[0].split('.')
   if ((version[0] < 2 && version[1] < 9) || (version[0] == 1 && version[1] == 9 && version[2] < 1) || (version[0] > 3)) {
@@ -949,7 +950,8 @@ if (typeof jQuery === 'undefined') {
  * ======================================================================== */
 
 
-+ function($) {
++
+function($) {
   'use strict';
 
   // CSS TRANSITION SUPPORT (Shoutout: http://www.modernizr.com/)
@@ -1015,7 +1017,8 @@ if (typeof jQuery === 'undefined') {
  * ======================================================================== */
 
 
-+ function($) {
++
+function($) {
   'use strict';
 
   // ALERT CLASS DEFINITION
@@ -1110,7 +1113,8 @@ if (typeof jQuery === 'undefined') {
  * ======================================================================== */
 
 
-+ function($) {
++
+function($) {
   'use strict';
 
   // BUTTON PUBLIC CLASS DEFINITION
@@ -1216,7 +1220,7 @@ if (typeof jQuery === 'undefined') {
       if (!($(e.target).is('input[type="radio"], input[type="checkbox"]'))) {
         // Prevent double click on radios, and the double selections (so cancellation) on checkboxes
         e.preventDefault()
-          // The target component still receive the focus
+        // The target component still receive the focus
         if ($btn.is('input,button')) $btn.trigger('focus')
         else $btn.find('input:visible,button:visible').first().trigger('focus')
       }
@@ -1236,7 +1240,8 @@ if (typeof jQuery === 'undefined') {
  * ======================================================================== */
 
 
-+ function($) {
++
+function($) {
   'use strict';
 
   // CAROUSEL CLASS DEFINITION
@@ -1317,8 +1322,8 @@ if (typeof jQuery === 'undefined') {
     if (pos > (this.$items.length - 1) || pos < 0) return
 
     if (this.sliding) return this.$element.one('slid.bs.carousel', function() {
-        that.to(pos)
-      }) // yes, "slid"
+      that.to(pos)
+    }) // yes, "slid"
     if (activeIndex == pos) return this.pause().cycle()
 
     return this.slide(pos > activeIndex ? 'next' : 'prev', this.$items.eq(pos))
@@ -1375,9 +1380,9 @@ if (typeof jQuery === 'undefined') {
     }
 
     var slidEvent = $.Event('slid.bs.carousel', {
-        relatedTarget: relatedTarget,
-        direction: direction
-      }) // yes, "slid"
+      relatedTarget: relatedTarget,
+      direction: direction
+    }) // yes, "slid"
     if ($.support.transition && this.$element.hasClass('slide')) {
       $next.addClass(type)
       $next[0].offsetWidth // force reflow
@@ -1482,7 +1487,8 @@ if (typeof jQuery === 'undefined') {
 
 /* jshint latedef: false */
 
-+ function($) {
++
+function($) {
   'use strict';
 
   // COLLAPSE PUBLIC CLASS DEFINITION
@@ -1692,7 +1698,8 @@ if (typeof jQuery === 'undefined') {
  * ======================================================================== */
 
 
-+ function($) {
++
+function($) {
   'use strict';
 
   // DROPDOWN CLASS DEFINITION
@@ -1864,7 +1871,8 @@ if (typeof jQuery === 'undefined') {
  * ======================================================================== */
 
 
-+ function($) {
++
+function($) {
   'use strict';
 
   // MODAL CLASS DEFINITION
@@ -2209,7 +2217,8 @@ if (typeof jQuery === 'undefined') {
  * ======================================================================== */
 
 
-+ function($) {
++
+function($) {
   'use strict';
 
   // TOOLTIP PUBLIC CLASS DEFINITION
@@ -2580,8 +2589,8 @@ if (typeof jQuery === 'undefined') {
       })
     }
     var isSvg = window.SVGElement && el instanceof window.SVGElement
-      // Avoid using $.offset() on SVGs since it gives incorrect results in jQuery 3.
-      // See https://github.com/twbs/bootstrap/issues/20280
+    // Avoid using $.offset() on SVGs since it gives incorrect results in jQuery 3.
+    // See https://github.com/twbs/bootstrap/issues/20280
     var elOffset = isBody ? {
       top: 0,
       left: 0
@@ -2766,7 +2775,8 @@ if (typeof jQuery === 'undefined') {
  * ======================================================================== */
 
 
-+ function($) {
++
+function($) {
   'use strict';
 
   // POPOVER PUBLIC CLASS DEFINITION
@@ -2874,7 +2884,8 @@ if (typeof jQuery === 'undefined') {
  * ======================================================================== */
 
 
-+ function($) {
++
+function($) {
   'use strict';
 
   // SCROLLSPY CLASS DEFINITION
@@ -3045,7 +3056,8 @@ if (typeof jQuery === 'undefined') {
  * ======================================================================== */
 
 
-+ function($) {
++
+function($) {
   'use strict';
 
   // TAB CLASS DEFINITION
@@ -3054,7 +3066,7 @@ if (typeof jQuery === 'undefined') {
   var Tab = function(element) {
     // jscs:disable requireDollarBeforejQueryAssignment
     this.element = $(element)
-      // jscs:enable requireDollarBeforejQueryAssignment
+    // jscs:enable requireDollarBeforejQueryAssignment
   }
 
   Tab.VERSION = '3.3.7'
@@ -3199,7 +3211,8 @@ if (typeof jQuery === 'undefined') {
  * ======================================================================== */
 
 
-+ function($) {
++
+function($) {
   'use strict';
 
   // AFFIX CLASS DEFINITION
@@ -4464,6 +4477,34 @@ jQuery(document).ready(function($) {
     });
   });
 
+  $('#workers-slider').owlCarousel({
+
+    lazyLoad: true,
+    loop: false,
+
+    nav: true,
+    dots: false,
+    navText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
+    //stagePadding:50,
+    responsive: {
+      0: {
+        items: 1,
+        margin: 10,
+      },
+      480: {
+        items: 2,
+        margin: 20,
+      },
+      768: {
+        items: 3,
+        margin: 30,
+      },
+      992: {
+        items: 4,
+        margin: 30,
+      }
+    }
+  });
 
   $('.tours-slider').each(function() {
     var slideH = $(this).height(),
@@ -4868,10 +4909,10 @@ jQuery(document).ready(function($) {
 
 
   if ($(window).width() < 768) {
-  $('#green_info').click(function(event) {
-    $(this).fadeOut('400');
-  });
-  //SIDE MOB MENU
+    $('#green_info').click(function(event) {
+      $(this).fadeOut('400');
+    });
+    //SIDE MOB MENU
     $('#sidebar_btn').on('click', function() {
       $(this).closest('.side-nav').toggleClass('active');
 

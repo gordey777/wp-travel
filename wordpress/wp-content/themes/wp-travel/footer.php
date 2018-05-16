@@ -11,18 +11,22 @@
             <div class="row">
               <div class="col-md-12 title-wrapp"><h2><?php the_field('questions_title', $front__id); ?></h2></div>
               <div class="clearfix"></div>
+            </div><!-- /.row -->
 
+              <div class="col-md-12">
+              <div id="workers-slider" class="owl-carousel ">
               <?php while ( have_rows('questions', $front__id) ) : the_row(); ?>
                 <?php $image = get_sub_field('img'); ?>
-                <div class="col-md-3 col-sm-6 workers">
-                  <div class="img-wrap">
-                    <?php if ( !empty($image)) { ?>
-                      <img src="<?php echo $image['url']; ?>" alt="<?php the_sub_field('btn_title'); ?>">
-                    <?php } ?>
-                  </div>
-                  <a href="<?php the_sub_field('link'); ?>" class="contact-link"><?php the_sub_field('btn_title'); ?></a>
-                </div>
+                    <div class="workers">
+                      <div class="img-wrap">
+                        <?php if ( !empty($image)) { ?>
+                          <img src="<?php echo $image['url']; ?>" alt="<?php the_sub_field('btn_title'); ?>">
+                        <?php } ?>
+                      </div>
+                      <a href="<?php the_sub_field('link'); ?>" class="contact-link"><?php the_sub_field('btn_title'); ?></a>
+                    </div>
               <?php  endwhile; ?>
+              </div>
             </div>
           </div>
         </div><!-- /.row -->
@@ -67,7 +71,7 @@
   <div class="container">
     <div class="row">
       <div class="footer--logo col-md-4 col-sm-4 col-xs-3">
-        <img src="<?php echo get_template_directory_uri(); ?>/img/footer-logo.png" alt="" title="">
+        <img src="<?php if(get_field('logo_footer_img', $front__id)){ echo get_field('logo_footer_img', $front__id)['url'];} else { echo get_template_directory_uri() . '/img/footer-logo.png'; } ?>" alt="" title="">
       </div>
 
       <div class="footer-contacts col-md-5">
