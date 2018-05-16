@@ -1457,7 +1457,15 @@ add_filter('acf/fields/google_map/api', 'my_acf_google_map_api');
 
 
 
+add_action( 'admin_print_scripts', 'my_admin_term_filter', 99 );
+function my_admin_term_filter() {
+  $screen = get_current_screen();
 
+  if( 'post' !== $screen->base ) return;
+  ?>
+
+  <?php
+}
 
 
 

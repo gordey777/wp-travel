@@ -3892,11 +3892,17 @@ em {
 }
 
 h1,
+.h1,
 h2,
+.h2,
 h3,
+.h3,
 h4,
+.h4,
 h5,
-h6 {
+.h5,
+h6,
+.h6 {
   font-family: "Roboto", sans-serif;
   font-size: 16px;
   line-height: 1.2;
@@ -4836,11 +4842,12 @@ header .slogan {
 .header--nav .headnav .tours-list > .sub-menu > li > .sub-menu {
   position: absolute;
   top: 30px;
-  right: 0;
+  right: 30px;
   bottom: 30px;
   left: auto;
   display: flex;
-  width: calc(100% - 320px);
+  overflow-x: auto;
+  width: calc(100% - 350px);
   background: transparent;
   align-items: flex-start;
   justify-content: flex-start;
@@ -4858,6 +4865,8 @@ header .slogan {
 .header--nav ul .tours-list > .sub-menu > li > .sub-menu li a,
 .header--nav .headnav .tours-list > .sub-menu > li > .sub-menu li a {
   font-weight: 400;
+  line-height: 1.3;
+  max-width: 180px;
   pointer-events: auto;
   background: transparent;
 }
@@ -4922,7 +4931,8 @@ header .slogan {
   justify-content: space-between;
 }
 
-#main-slider .slide .slider-cont h2 {
+#main-slider .slide .slider-cont h2,
+#main-slider .slide .slider-cont .h2 {
   font-family: Open Sans;
   font-size: 36px;
   font-weight: bold;
@@ -5191,7 +5201,7 @@ header .slogan {
 
 .search-tags .tags-wrapp .tag-search {
   position: absolute;
-  z-index: 99;
+  z-index: 90;
   top: 50%;
   left: 50%;
   width: 180px;
@@ -5232,7 +5242,8 @@ header .slogan {
   background: #4f5860;
 }
 
-#exclusive_tours h3 {
+#exclusive_tours h3,
+#exclusive_tours .h3 {
   font-family: Open Sans;
   font-size: 14px;
   position: relative;
@@ -5244,7 +5255,8 @@ header .slogan {
   color: #fff;
 }
 
-#exclusive_tours h3:before {
+#exclusive_tours h3:before,
+#exclusive_tours .h3:before {
   position: absolute;
   top: 100%;
   left: 50%;
@@ -5422,7 +5434,8 @@ header .slogan {
   align-content: stretch;
 }
 
-.tours-slider .tour .tours-cont h3 {
+.tours-slider .tour .tours-cont h3,
+.tours-slider .tour .tours-cont .h3 {
   font-family: Open Sans;
   font-size: 18px;
   font-weight: bold;
@@ -5515,7 +5528,8 @@ header .slogan {
   text-align: center;
 }
 
-.tours-slider .tour.last-slide .content h3 {
+.tours-slider .tour.last-slide .content h3,
+.tours-slider .tour.last-slide .content .h3 {
   font-family: Open Sans;
   font-size: 24px;
   font-weight: bold;
@@ -5536,7 +5550,8 @@ header .slogan {
   padding-left: 10px;
 }
 
-.tours-sliders .tours-title h2 {
+.tours-sliders .tours-title h2,
+.tours-sliders .tours-title .h2 {
   font-family: Roboto;
   font-size: 30px;
   font-weight: 300;
@@ -5632,7 +5647,8 @@ header .slogan {
   padding: 20px 0;
 }
 
-.looper .looper-cont-wrap .looper-cont h3 {
+.looper .looper-cont-wrap .looper-cont h3,
+.looper .looper-cont-wrap .looper-cont .h3 {
   font-family: Open Sans;
   font-size: 18px;
   font-weight: bold;
@@ -5748,7 +5764,8 @@ header .slogan {
   text-align: center;
 }
 
-.searh-resolt #nothing_find h2 {
+.searh-resolt #nothing_find h2,
+.searh-resolt #nothing_find .h2 {
   font-size: 25px;
 }
 
@@ -5794,7 +5811,8 @@ header .slogan {
   text-align: center;
 }
 
-.page-content .page-title-wrap .page-title h1 {
+.page-content .page-title-wrap .page-title h1,
+.page-content .page-title-wrap .page-title .h1 {
   font-family: Roboto;
   font-size: 36px;
   font-weight: bold;
@@ -5903,7 +5921,8 @@ header .slogan {
   padding-bottom: 15px;
 }
 
-#green_info .green__alert h2 {
+#green_info .green__alert h2,
+#green_info .green__alert .h2 {
   font-size: 16px;
   display: inline-block;
   float: left;
@@ -5946,7 +5965,9 @@ header .slogan {
 }
 
 .section-search-form h1,
-.section-search-form h2 {
+.section-search-form .h1,
+.section-search-form h2,
+.section-search-form .h2 {
   font-family: Roboto;
   font-size: 18px;
   display: inline-block;
@@ -6076,7 +6097,9 @@ header .slogan {
 }
 
 .cat_city > h3,
-.tour-day > h3 {
+.cat_city .h3,
+.tour-day > h3,
+.tour-day .h3 {
   font-family: Open Sans;
   font-size: 16px;
   font-weight: bold;
@@ -6133,7 +6156,9 @@ header .slogan {
 }
 
 .cat_city .hotels-slider-wrap h3,
-.tour-day .hotels-slider-wrap h3 {
+.cat_city .hotels-slider-wrap .h3,
+.tour-day .hotels-slider-wrap h3,
+.tour-day .hotels-slider-wrap .h3 {
   font-family: Open Sans;
   font-size: 16px;
   font-weight: 600;
@@ -6161,7 +6186,8 @@ header .slogan {
   border-top: 0;
 }
 
-.showplace h3 {
+.showplace h3,
+.showplace .h3 {
   font-family: Open Sans;
   font-size: 16px;
   font-weight: 600;
@@ -6304,7 +6330,8 @@ header .slogan {
   background: #283037;
 }
 
-.tour-content .side-nav h2 {
+.tour-content .side-nav h2,
+.tour-content .side-nav .h2 {
   font-family: Open Sans;
   font-size: 24px;
   position: relative;
@@ -6315,7 +6342,8 @@ header .slogan {
   text-align: center;
 }
 
-.tour-content .side-nav h2:before {
+.tour-content .side-nav h2:before,
+.tour-content .side-nav .h2:before {
   position: absolute;
   bottom: 0;
   left: 50%;
@@ -6361,7 +6389,8 @@ header .slogan {
   padding-bottom: 100px;
 }
 
-.section-form h2 {
+.section-form h2,
+.section-form .h2 {
   font-family: Open Sans;
   font-size: 14px;
   position: relative;
@@ -6372,7 +6401,8 @@ header .slogan {
   text-align: center;
 }
 
-.section-form h2:before {
+.section-form h2:before,
+.section-form .h2:before {
   position: absolute;
   bottom: 0;
   left: 50%;
@@ -6384,7 +6414,8 @@ header .slogan {
   background: #bfcdd6;
 }
 
-.section-form h3 {
+.section-form h3,
+.section-form .h3 {
   font-family: Roboto;
   font-size: 18px;
   display: inline-block;
@@ -6420,7 +6451,8 @@ header .slogan {
   margin-bottom: 23px;
 }
 
-.section-form .input-wrapp + h3 {
+.section-form .input-wrapp + h3,
+.section-form .input-wrapp .h3 {
   padding-top: 40px;
 }
 
@@ -6520,7 +6552,8 @@ header .slogan {
   background: #e8e8e8;
 }
 
-.section-contacts h2 {
+.section-contacts h2,
+.section-contacts .h2 {
   font-family: Roboto;
   font-size: 36px;
   font-weight: bold;
@@ -6585,7 +6618,8 @@ header .slogan {
   background: #e8e8e8;
 }
 
-.section-advanteges h2 {
+.section-advanteges h2,
+.section-advanteges .h2 {
   font-family: Roboto;
   font-size: 36px;
   font-weight: bold;
@@ -6639,7 +6673,8 @@ footer {
   background: linear-gradient(to bottom, #0f1920 0%, #485058 100%);
 }
 
-footer h3 {
+footer h3,
+footer .h3 {
   font-size: 18px;
   font-weight: bold;
   margin-bottom: 20px;
@@ -6831,7 +6866,8 @@ footer .footer_nav_wrap {
   padding-bottom: 50px;
 }
 
-.content-page h1 {
+.content-page h1,
+.content-page .h1 {
   font-family: Roboto;
   font-size: 24px;
   font-weight: 400;
@@ -6842,7 +6878,8 @@ footer .footer_nav_wrap {
   text-transform: uppercase;
 }
 
-.content-page h2 {
+.content-page h2,
+.content-page .h2 {
   font-family: Roboto;
   font-size: 18px;
   display: inline-block;
@@ -6852,7 +6889,8 @@ footer .footer_nav_wrap {
   text-transform: uppercase;
 }
 
-.content-page h3 {
+.content-page h3,
+.content-page .h3 {
   font-family: Roboto;
   font-size: 16px;
   display: inline-block;
@@ -6945,6 +6983,9 @@ footer .footer_nav_wrap {
 @media (min-width: 1200px) {
   .sub-menu li a {
     white-space: nowrap;
+  }
+  .countries li a {
+    white-space: normal;
   }
 }
 
@@ -7251,14 +7292,16 @@ footer .footer_nav_wrap {
   .header--nav .headnav > li.menu-item-has-children > a {
     pointer-events: none;
   }
-  .header--nav ul > li.menu-item-has-children:not(.tours-list), .header--nav ul > li:not(.tours-list),
+  .header--nav ul > li.menu-item-has-children:not(.tours-list),
+  .header--nav ul > li:not(.tours-list),
   .header--nav .headnav > li.menu-item-has-children:not(.tours-list),
   .header--nav .headnav > li:not(.tours-list) {
     display: inline-block;
     width: 100%;
   }
   .header--nav ul > li.menu-item-has-children:not(.tours-list) .sub-menu,
-  .header--nav ul > li.menu-item-has-children:not(.tours-list) .sub-menu.left, .header--nav ul > li:not(.tours-list) .sub-menu,
+  .header--nav ul > li.menu-item-has-children:not(.tours-list) .sub-menu.left,
+  .header--nav ul > li:not(.tours-list) .sub-menu,
   .header--nav ul > li:not(.tours-list) .sub-menu.left,
   .header--nav .headnav > li.menu-item-has-children:not(.tours-list) .sub-menu,
   .header--nav .headnav > li.menu-item-has-children:not(.tours-list) .sub-menu.left,
@@ -7271,7 +7314,8 @@ footer .footer_nav_wrap {
     display: inline-block;
   }
   .header--nav ul > li.menu-item-has-children:not(.tours-list) .sub-menu li,
-  .header--nav ul > li.menu-item-has-children:not(.tours-list) .sub-menu.left li, .header--nav ul > li:not(.tours-list) .sub-menu li,
+  .header--nav ul > li.menu-item-has-children:not(.tours-list) .sub-menu.left li,
+  .header--nav ul > li:not(.tours-list) .sub-menu li,
   .header--nav ul > li:not(.tours-list) .sub-menu.left li,
   .header--nav .headnav > li.menu-item-has-children:not(.tours-list) .sub-menu li,
   .header--nav .headnav > li.menu-item-has-children:not(.tours-list) .sub-menu.left li,
@@ -7294,9 +7338,7 @@ footer .footer_nav_wrap {
   }
   .header--nav ul .tours-list > .sub-menu > li > .sub-menu,
   .header--nav .headnav .tours-list > .sub-menu > li > .sub-menu {
-    bottom: auto;
     background: #1d262e;
-    flex-flow: row wrap;
   }
   #main-slider .slide .slider-cont-wrap {
     flex-flow: row wrap;
@@ -7450,7 +7492,8 @@ footer .footer_nav_wrap {
   #main-slider .slide .slider-cont {
     width: 100%;
   }
-  #main-slider .slide .slider-cont .title-wrap h2 {
+  #main-slider .slide .slider-cont .title-wrap h2,
+  #main-slider .slide .slider-cont .title-wrap .h2 {
     font-size: 32px;
   }
   .tours-slider .owl-nav .owl-next {
@@ -7526,14 +7569,16 @@ footer .footer_nav_wrap {
   .header--nav .headnav > li.menu-item-has-children > a {
     pointer-events: none;
   }
-  .header--nav ul > li.menu-item-has-children:not(.tours-list), .header--nav ul > li:not(.tours-list),
+  .header--nav ul > li.menu-item-has-children:not(.tours-list),
+  .header--nav ul > li:not(.tours-list),
   .header--nav .headnav > li.menu-item-has-children:not(.tours-list),
   .header--nav .headnav > li:not(.tours-list) {
     display: inline-block;
     width: 100%;
   }
   .header--nav ul > li.menu-item-has-children:not(.tours-list) .sub-menu,
-  .header--nav ul > li.menu-item-has-children:not(.tours-list) .sub-menu.left, .header--nav ul > li:not(.tours-list) .sub-menu,
+  .header--nav ul > li.menu-item-has-children:not(.tours-list) .sub-menu.left,
+  .header--nav ul > li:not(.tours-list) .sub-menu,
   .header--nav ul > li:not(.tours-list) .sub-menu.left,
   .header--nav .headnav > li.menu-item-has-children:not(.tours-list) .sub-menu,
   .header--nav .headnav > li.menu-item-has-children:not(.tours-list) .sub-menu.left,
@@ -7546,7 +7591,8 @@ footer .footer_nav_wrap {
     display: inline-block;
   }
   .header--nav ul > li.menu-item-has-children:not(.tours-list) .sub-menu li,
-  .header--nav ul > li.menu-item-has-children:not(.tours-list) .sub-menu.left li, .header--nav ul > li:not(.tours-list) .sub-menu li,
+  .header--nav ul > li.menu-item-has-children:not(.tours-list) .sub-menu.left li,
+  .header--nav ul > li:not(.tours-list) .sub-menu li,
   .header--nav ul > li:not(.tours-list) .sub-menu.left li,
   .header--nav .headnav > li.menu-item-has-children:not(.tours-list) .sub-menu li,
   .header--nav .headnav > li.menu-item-has-children:not(.tours-list) .sub-menu.left li,
@@ -7567,19 +7613,25 @@ footer .footer_nav_wrap {
   .header--nav .headnav .tours-list > .sub-menu {
     background: transparent;
   }
-  .header--nav ul .tours-list > .sub-menu > li:hover a, .header--nav ul .tours-list > .sub-menu > li.active a, .header--nav ul .tours-list > .sub-menu > li a,
+  .header--nav ul .tours-list > .sub-menu > li:hover a,
+  .header--nav ul .tours-list > .sub-menu > li.active a,
+  .header--nav ul .tours-list > .sub-menu > li a,
   .header--nav .headnav .tours-list > .sub-menu > li:hover a,
   .header--nav .headnav .tours-list > .sub-menu > li.active a,
   .header--nav .headnav .tours-list > .sub-menu > li a {
     background: #1d262e;
   }
-  .header--nav ul .tours-list > .sub-menu > li:hover a:hover, .header--nav ul .tours-list > .sub-menu > li.active a:hover, .header--nav ul .tours-list > .sub-menu > li a:hover,
+  .header--nav ul .tours-list > .sub-menu > li:hover a:hover,
+  .header--nav ul .tours-list > .sub-menu > li.active a:hover,
+  .header--nav ul .tours-list > .sub-menu > li a:hover,
   .header--nav .headnav .tours-list > .sub-menu > li:hover a:hover,
   .header--nav .headnav .tours-list > .sub-menu > li.active a:hover,
   .header--nav .headnav .tours-list > .sub-menu > li a:hover {
     background: #1d262e;
   }
-  .header--nav ul .tours-list > .sub-menu > li:hover .sub-menu, .header--nav ul .tours-list > .sub-menu > li.active .sub-menu, .header--nav ul .tours-list > .sub-menu > li .sub-menu,
+  .header--nav ul .tours-list > .sub-menu > li:hover .sub-menu,
+  .header--nav ul .tours-list > .sub-menu > li.active .sub-menu,
+  .header--nav ul .tours-list > .sub-menu > li .sub-menu,
   .header--nav .headnav .tours-list > .sub-menu > li:hover .sub-menu,
   .header--nav .headnav .tours-list > .sub-menu > li.active .sub-menu,
   .header--nav .headnav .tours-list > .sub-menu > li .sub-menu {
@@ -7592,10 +7644,12 @@ footer .footer_nav_wrap {
   #main-slider .slide .slider-cont {
     width: 100%;
   }
-  #main-slider .slide .slider-cont .title-wrap h2 {
+  #main-slider .slide .slider-cont .title-wrap h2,
+  #main-slider .slide .slider-cont .title-wrap .h2 {
     font-size: 29px;
   }
-  .tours-sliders .tours-title h2 {
+  .tours-sliders .tours-title h2,
+  .tours-sliders .tours-title .h2 {
     font-size: 28px;
     display: inline-block;
     max-width: calc(100% - 125px);
@@ -7612,7 +7666,8 @@ footer .footer_nav_wrap {
     border: 0;
     border-radius: 0;
   }
-  .page-content .page-title-wrap .page-title h1 {
+  .page-content .page-title-wrap .page-title h1,
+  .page-content .page-title-wrap .page-title .h1 {
     width: calc(100% - 10px);
     min-width: 0;
   }
@@ -7648,7 +7703,8 @@ footer .footer_nav_wrap {
   .modal-content {
     padding: 30px 10px;
   }
-  .looper .looper-cont-wrap .looper-cont h3 {
+  .looper .looper-cont-wrap .looper-cont h3,
+  .looper .looper-cont-wrap .looper-cont .h3 {
     width: 100%;
   }
   .looper .looper-cont-wrap .looper-cont .looper-price {
@@ -7695,7 +7751,8 @@ footer .footer_nav_wrap {
     margin: 0;
     padding: 10px 20px;
   }
-  #main-slider .slide .slider-cont .title-wrap h2 {
+  #main-slider .slide .slider-cont .title-wrap h2,
+  #main-slider .slide .slider-cont .title-wrap .h2 {
     font-size: 27px;
   }
   #main-slider .owl-nav .owl-prev {
@@ -7732,14 +7789,16 @@ footer .footer_nav_wrap {
 }
 
 @media (max-width: 375px) {
-  #main-slider .slide .slider-cont .title-wrap h2 {
+  #main-slider .slide .slider-cont .title-wrap h2,
+  #main-slider .slide .slider-cont .title-wrap .h2 {
     font-size: 24px;
   }
   header .slogan {
     line-height: 1.1;
     width: 280px;
   }
-  .page-content .page-title-wrap .page-title h1 {
+  .page-content .page-title-wrap .page-title h1,
+  .page-content .page-title-wrap .page-title .h1 {
     width: 100%;
     min-width: 0;
   }
