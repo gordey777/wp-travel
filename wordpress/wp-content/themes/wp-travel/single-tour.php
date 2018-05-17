@@ -149,7 +149,8 @@ get_header(); ?>
 
                                 <div class="item">
                                   <div class="img-wrap ratio" style="background-image: url('<?php the_post_thumbnail_url( 'medium'); ?>'); " data-hkoef="0.85">
-                                    <a class="tour_link" href="<?php the_permalink(); ?>"><span><?php the_field('more_btn_title', $front__id);?></span></a>
+                                    <a href="#modalHotel" data-toggle="modal" class="hotel_btn tour_link" data-link="<?php the_permalink(); ?>" data-pageid="<?php the_ID(); ?>">
+                                    <!-- <a class="tour_link" href="<?php the_permalink(); ?>"> --><span><?php the_field('more_btn_title', $front__id);?></span></a>
                                   </div>
                                   <div class="hotel-title"><?php the_title(); ?></div>
                                 </div>

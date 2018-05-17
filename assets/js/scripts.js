@@ -4425,37 +4425,40 @@ jQuery(document).ready(function($) {
     childSlide.height(slideH);
   });
 
+$('.hotels-slider').each(function() {
+      $(this).owlCarousel({
+        lazyLoad: true,
+        loop: false,
 
-  $('.hotels-slider').each(function() {
-    $(this).owlCarousel({
-      lazyLoad: true,
-      loop: false,
-
-      nav: true,
-      dots: false,
-      navText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
-      //stagePadding:50,
-      responsive: {
-        0: {
-          items: 1
-        },
-        480: {
-          items: 2,
-          margin: 20,
-        },
-        992: {
-          margin: 30,
-          items: 2
+        nav: true,
+        dots: false,
+        navText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
+        //stagePadding:50,
+        responsive: {
+          0: {
+            items: 1
+          },
+          480: {
+            items: 2,
+            margin: 20,
+          },
+          992: {
+            margin: 30,
+            items: 2
+          }
         }
-      }
+      });
     });
-  });
 
-  $('.page_slider').each(function() {
+
+  hotelsSlider($('.page_slider'));
+
+  function hotelsSlider($selector) {
+    $selector.each(function() {
     $(this).owlCarousel({
       lazyLoad: true,
       loop: false,
-      autoWidth: true,
+      //autoWidth: true,
       nav: true,
       dots: false,
       navText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
@@ -4476,7 +4479,7 @@ jQuery(document).ready(function($) {
       }
     });
   });
-
+  }
   $('#workers-slider').owlCarousel({
 
     lazyLoad: true,
@@ -4534,6 +4537,7 @@ jQuery(document).ready(function($) {
 
   subMenuAlign();
   autoRatio();
+  myLazyLoad();
   searchResH();
   tagsPos();
 
@@ -4873,7 +4877,7 @@ jQuery(document).ready(function($) {
       $new_price = (Math.round($prise * $curr_koef[0]) + '').replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ');
       $(this).children('.price').text($new_price);
       $(this).children('.currency').text($curr_koef[1]);
-      console.log($new_price);
+      //console.log($new_price);
     });
   }
 
@@ -5026,6 +5030,7 @@ jQuery(document).ready(function($) {
         $('#response').html(data); // insert data
         //console.log(filter.serialize());
         autoRatio();
+        myLazyLoad();
         setTimeout(
           function() {
             searchResH();
@@ -5038,6 +5043,42 @@ jQuery(document).ready(function($) {
     });
 
     return false;
+  });
+
+
+
+  //modal hotels
+  $('.hotel_btn').click(function() {
+    var hotel_link = $(this).data('link'),
+      hotel_id = $(this).data('pageid'),
+      data = {
+        'action': 'modal_hotel',
+        'hotel_id': hotel_id,
+        'hotel_link': hotel_link,
+      };
+
+
+    $.ajax({
+      url: ajaxurl,
+      data: data,
+      type: 'POST',
+      beforeSend: function(xhr) {
+        $('#modalHotel_content').html('');
+        $('#modalHotel .modal-content').addClass('ajax_load');;
+      },
+      success: function(data) {
+        $('#modalHotel_content').html(data);
+        $('#modalHotel .modal-content').removeClass('ajax_load');
+        //console.log('hhhotel ' + hotel_id);
+        //hotelsSlider($(document).find('#modalHotel_content .hotels-slider'));
+        hotelsSlider($('.page_slider'));
+        autoRatio();
+        myLazyLoad();
+
+
+      }
+
+    });
   });
 
 
@@ -5096,6 +5137,7 @@ jQuery(document).ready(function($) {
   $('#favorite_open').click(function() {
     setTimeout(function() {
       autoRatio();
+      myLazyLoad();
     }, 500);
   });
 
@@ -5174,6 +5216,7 @@ jQuery(document).ready(function($) {
         updateFPLink($($this), link_id, link_post_id);
         updateFPCounter();
         autoRatio();
+        myLazyLoad();
         closeEmtyFPList();
       }
     });
@@ -5200,6 +5243,7 @@ jQuery(document).ready(function($) {
         loadingImg.fadeOut();
       }
     });
+
   }
 
   function updateFPCounter() {
@@ -5435,8 +5479,22 @@ jQuery(document).ready(function($) {
       });
       // || ((search_pos.left + searchW) >= (tag_pos.left + tagW) >= search_pos.top)
     }
+
   }
 
+
+  function myLazyLoad() {
+    $('.lazy__load').each(function(index, el) {
+      var data__url = $(this).data('imgurl');
+
+      if ($(this).is('[src]')) {
+        $(this).attr('src', data__url);
+        //console.log('fotochka');
+      } else if ($(this).css('background-image') !== false) {
+        $(this).css('background-image', 'url("' + data__url + '")');
+      }
+    });
+  }
 
   //tag cloud
   /*  if ($(document).find('#tags').length) {

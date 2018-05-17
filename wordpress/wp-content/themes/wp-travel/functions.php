@@ -38,7 +38,7 @@ function wpeStyles()  {
   wp_dequeue_style('fancybox');
   wp_dequeue_style('wp_dequeue_style');
 
-  wp_register_style('wpeasy-style', get_template_directory_uri() . '/css/main.css', array(), '1.0', 'all');
+  wp_register_style('wpeasy-style', get_template_directory_uri() . '/css/main.css', array(), '1.1', 'all');
   wp_enqueue_style('wpeasy-style'); // Enqueue it!
 }
 
@@ -58,7 +58,7 @@ function wpeHeaderScripts() {
     wp_deregister_script( 'jquery-form' );
 
     //  Load footer scripts (footer.php)
-    wp_register_script('wpeScripts', get_template_directory_uri() . '/js/scripts.js', array(), '1.0.6', true);
+    wp_register_script('wpeScripts', get_template_directory_uri() . '/js/scripts.js', array(), '1.0.8', true);
     wp_enqueue_script('wpeScripts');
 
   }
@@ -89,9 +89,11 @@ if (function_exists('add_theme_support')) {
   // Add Thumbnail Theme Support
   add_theme_support('post-thumbnails');
   add_image_size('large', 1200, '', true); // Large Thumbnail
+  add_image_size('hdmedium', 900, '', true); // Medium Thumbnail
   add_image_size('medium', 600, '', true); // Medium Thumbnail
+  add_image_size('premedium', 450, '', true); // Medium Thumbnail
   add_image_size('small', 250, '', true); // Small Thumbnail
-  add_image_size('custom-size', 700, 200, true); // Custom Thumbnail Size call using the_post_thumbnail('custom-size');
+  add_image_size('custom-size', 200, 200, true); // Custom Thumbnail Size call using the_post_thumbnail('custom-size');
 
   // Enables post and comment RSS feed links to head
   add_theme_support('automatic-feed-links');
@@ -883,7 +885,7 @@ function insert_slider() {
         foreach( $images as $img ):
 
             $html .= '<div class="page_slider_item item">';
-                $html .= '<div class="img_wrapp"><a href="' . $img['url'] . '" rel="lightbox"><img src="' . $img['sizes']['small'] . '"/></div></a>';
+                $html .= '<div class="img_wrapp"><a href="' . $img['url'] . '" rel="lightbox"><img src="' . $img['sizes']['custom-size'] . '"/></div></a>';
             $html .= '</div>';
         endforeach;
 
@@ -1280,6 +1282,32 @@ add_action('wp_ajax_update_fp', 'update_wpfp_list');
 add_action('wp_ajax_nopriv_update_fp', 'update_wpfp_list');
 
 
+
+function update_modal_hotel(){
+    $hotelId = (int)$_POST['hotel_id'];
+    //$linkData = $_POST['hotel_link'];
+
+    $queryHotel = new WP_Query( 'post_type="any"&p=' . $hotelId );
+    $queryPHotel = new WP_Query( 'post_type="any"&page=' . $hotelId );
+    if( $queryHotel->have_posts() ) {
+        while( $queryHotel->have_posts() ): $queryHotel->the_post();
+            get_template_part('modal-hotel');
+        endwhile;
+        wp_reset_postdata();
+    } else if( $queryHotel->have_posts()){
+        while( $queryPHotel->have_posts() ): $queryPHotel->the_post();
+            get_template_part('modal-hotel');
+        endwhile;
+        wp_reset_postdata();
+    }
+    die();
+}
+
+
+add_action('wp_ajax_modal_hotel', 'update_modal_hotel');
+add_action('wp_ajax_nopriv_modal_hotel', 'update_modal_hotel');
+
+
 function update_wpfp__link(){
   $linkPostId = $_POST['post_id'];
   if($linkPostId){
@@ -1470,5 +1498,19 @@ function my_admin_term_filter() {
 
 
 
+function remove_head_scripts() {
+   remove_action('wp_head', 'wp_print_scripts');
+   remove_action('wp_head', 'wp_print_head_scripts', 9);
+   remove_action('wp_head', 'wp_enqueue_scripts', 1);
+
+   add_action('wp_footer', 'wp_print_scripts', 5);
+   add_action('wp_footer', 'wp_enqueue_scripts', 5);
+   add_action('wp_footer', 'wp_print_head_scripts', 5);
+}
+add_action( 'wp_enqueue_scripts', 'remove_head_scripts' );
+
+
+remove_filter( 'pre_term_description', 'wp_filter_kses' );
+remove_filter( 'term_description', 'wp_kses_data' );
 
 ?>

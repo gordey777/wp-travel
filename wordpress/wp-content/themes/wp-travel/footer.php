@@ -20,7 +20,7 @@
                     <div class="workers">
                       <div class="img-wrap">
                         <?php if ( !empty($image)) { ?>
-                          <img src="<?php echo $image['url']; ?>" alt="<?php the_sub_field('btn_title'); ?>">
+                          <img class="lazy__load" data-imgurl="<?php echo $image['url']; ?>" src="<?php echo $image['sizes']['small']; ?>" alt="<?php the_sub_field('btn_title'); ?>">
                         <?php } ?>
                       </div>
                       <a href="<?php the_sub_field('link'); ?>" class="contact-link"><?php the_sub_field('btn_title'); ?></a>
@@ -121,6 +121,23 @@
   </div>
 </div>
 
+
+<div class="modal" id="modalHotel" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div id="modalHotel_content" class="container-fluid"></div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
   <script>
   var ajaxurl = '<?php echo site_url() ?>/wp-admin/admin-ajax.php';
   //var true_posts = '<?php echo serialize($wp_query->query_vars); ?>';
@@ -132,7 +149,7 @@
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAoPe7hiMA8FF0IpEVthypKGicTeL4Zy7o"></script>
     <?php wp_footer(); ?>
 
-    <?php the_field('front_scripts', $front__id);?>
+    <?php //the_field('front_scripts', $front__id);?>
 
 </body>
 </html>

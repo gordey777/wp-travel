@@ -4061,6 +4061,10 @@ picture {
   content: '\f004';
 }
 
+.owl-nav.disabled {
+  display: none;
+}
+
 #favorite_open {
   position: fixed;
   z-index: 10;
@@ -4172,6 +4176,10 @@ picture {
   border: 1px solid #fff;
   border-radius: 50%;
   background: transparent;
+}
+
+.modal-content.ajax_load {
+  min-height: 60vh;
 }
 
 .nav-tabs {
@@ -6585,10 +6593,6 @@ header .slogan {
 .section-contacts #workers-slider .owl-stage {
   margin-right: auto;
   margin-left: auto;
-}
-
-.section-contacts #workers-slider .owl-nav.disabled {
-  display: none;
 }
 
 .section-contacts .workers {

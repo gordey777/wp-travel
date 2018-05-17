@@ -43,7 +43,7 @@
         ?>
 
         <?php $bg_image = get_sub_field('img'); ?>
-        <div class="slide item" style="background-image: url(<?php if ( !empty($bg_image)) { echo $bg_image['url'];} ?>);">
+        <div class="slide item lazy__load" data-imgurl="<?php if ( !empty($bg_image)) { echo $bg_image['url'];} ?>" style="background-image: url(<?php if ( !empty($bg_image)) { echo $bg_image['sizes']['medium'];} ?>);">
         <div class="container">
           <div class="row">
             <div class="slider-cont-wrap col-xs-10 col-xs-offset-1">
