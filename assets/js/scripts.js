@@ -4425,60 +4425,64 @@ jQuery(document).ready(function($) {
     childSlide.height(slideH);
   });
 
-$('.hotels-slider').each(function() {
-      $(this).owlCarousel({
-        lazyLoad: true,
-        loop: false,
-
-        nav: true,
-        dots: false,
-        navText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
-        //stagePadding:50,
-        responsive: {
-          0: {
-            items: 1
-          },
-          480: {
-            items: 2,
-            margin: 20,
-          },
-          992: {
-            margin: 30,
-            items: 2
-          }
-        }
-      });
-    });
-
-
-  hotelsSlider($('.page_slider'));
-
-  function hotelsSlider($selector) {
-    $selector.each(function() {
+  $('.hotels-slider').each(function() {
     $(this).owlCarousel({
       lazyLoad: true,
       loop: false,
-      //autoWidth: true,
+
       nav: true,
       dots: false,
       navText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
       //stagePadding:50,
       responsive: {
         0: {
-          items: 2,
-          margin: 10,
+          items: 1
         },
         480: {
-          items: 3,
+          items: 2,
           margin: 20,
         },
         992: {
-          items: 4,
           margin: 30,
+          items: 2
         }
       }
     });
   });
+
+
+  hotelsSlider($('.page_slider'));
+
+  function hotelsSlider($selector) {
+    $selector.each(function() {
+      $(this).owlCarousel({
+        lazyLoad: true,
+        loop: false,
+        //autoWidth: true,
+        nav: true,
+        dots: false,
+        navText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
+        //stagePadding:50,
+        responsive: {
+          0: {
+            items: 2,
+            margin: 10,
+          },
+          600: {
+            items: 3,
+            margin: 20,
+          },
+          768: {
+            items: 4,
+            margin: 30,
+          },
+          992: {
+            items: 5,
+            margin: 30,
+          }
+        }
+      });
+    });
   }
   $('#workers-slider').owlCarousel({
 
@@ -4536,8 +4540,9 @@ $('.hotels-slider').each(function() {
 
 
   subMenuAlign();
-  autoRatio();
   myLazyLoad();
+  autoRatio();
+
   searchResH();
   tagsPos();
 

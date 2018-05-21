@@ -1,8 +1,6 @@
 
 <?php $front__id = (int)(get_option( 'page_on_front' )); ?>
 
-
-
   <?php if( have_rows('questions', $front__id) ): ?>
     <section class="section-contacts">
       <div class="container">
@@ -34,10 +32,6 @@
     </section>
   <?php endif; ?>
 
-
-
-
-
   <?php if( have_rows('advantages', $front__id) ): ?>
     <section class="section-advanteges">
       <div class="container">
@@ -61,9 +55,6 @@
       </div><!-- /.container -->
     </section>
   <?php endif; ?>
-
-
-
 
 </div><!-- /wrapper -->
 
@@ -89,38 +80,30 @@
     </div>
   </div>
 
-
-
   <div class="footer_nav_wrap">
     <nav class="container footer--nav">
       <?php wpeFootNav(); ?>
     </nav>
-
   </div>
 
 </footer><!-- /footer -->
 
- <a href="#" id="to_top" class="fa fa-angle-up"></a>
+<a href="#" id="to_top" class="fa fa-angle-up"></a>
 
 <div class="modal" id="favoritesTours" tabindex="-1">
   <div class="modal-dialog">
     <div class="modal-content">
-
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-
         <div class="container-fluid">
-
           <div id="favoritslist">
             <?php wpfp_list_favorite_posts(); ?>
           </div>
         </div>
-
     </div>
   </div>
 </div>
-
 
 <div class="modal" id="modalHotel" tabindex="-1">
   <div class="modal-dialog">
@@ -134,10 +117,6 @@
 </div>
 
 
-
-
-
-
   <script>
   var ajaxurl = '<?php echo site_url() ?>/wp-admin/admin-ajax.php';
   //var true_posts = '<?php echo serialize($wp_query->query_vars); ?>';
@@ -146,7 +125,7 @@
   var userid = '<?php echo get_current_user_id(); ?>';
   </script>
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAoPe7hiMA8FF0IpEVthypKGicTeL4Zy7o"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAoPe7hiMA8FF0IpEVthypKGicTeL4Zy7o"></script>
     <?php wp_footer(); ?>
 
     <?php //the_field('front_scripts', $front__id);?>

@@ -221,7 +221,7 @@ picture {
 }
 
 .owl-nav.disabled {
-  display: none;
+  display: none!important;
 }
 
 #favorite_open {
@@ -359,6 +359,9 @@ picture {
   }
   &.ajax_load {
     min-height: 60vh;
+  }
+  article{
+    padding: 0;
   }
 }
 
@@ -2097,7 +2100,7 @@ article {
     }
   }
   .bunner {
-    >img {
+    img {
       display: inline-block;
 
       width: 100%;
@@ -3776,6 +3779,7 @@ footer {
     }
   }
   #workers-slider,
+  .page_slider,
   .hotels-slider {
     .owl-nav {
       .owl-prev,
@@ -3953,6 +3957,7 @@ footer {
     }
   }
   #workers-slider,
+  .page_slider,
   .hotels-slider {
     width: calc(100% - 120px);
     margin: 0 auto;
@@ -4165,6 +4170,7 @@ footer {
     }
   }
   #workers-slider,
+  .page_slider,
   .hotels-slider {
     width: calc(100% - 80px);
     margin: 0 auto;
@@ -4352,6 +4358,7 @@ footer {
     }
   }
   #workers-slider,
+  .page_slider,
   .hotels-slider {
     width: 250px;
     margin: 0 auto;
