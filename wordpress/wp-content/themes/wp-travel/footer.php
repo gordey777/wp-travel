@@ -7,7 +7,7 @@
         <div class="row">
           <div class="col-md-10 col-md-offset-1">
             <div class="row">
-              <div class="col-md-12 title-wrapp"><h2><?php the_field('questions_title', $front__id); ?></h2></div>
+              <div class="col-md-12 title-wrapp"><p class="h2"><?php the_field('questions_title', $front__id); ?></p></div>
               <div class="clearfix"></div>
             </div><!-- /.row -->
 
@@ -36,7 +36,7 @@
     <section class="section-advanteges">
       <div class="container">
         <div class="row">
-          <div class="col-md-10 col-md-offset-1 title-wrapp"><h2><?php the_field('advantages_title', $front__id); ?></h2></div>
+          <div class="col-md-10 col-md-offset-1 title-wrapp"><p class="h2"><?php the_field('advantages_title', $front__id); ?></p></div>
           <div class="clearfix"></div>
 
           <?php while ( have_rows('advantages', $front__id) ) : the_row(); ?>
@@ -70,7 +70,7 @@
       </div>
 
       <div class="col-md-3 footer-search-wrapp">
-        <h3><?php the_field('footer_search_title', $front__id); ?></h3>
+        <p class="h3"><?php the_field('footer_search_title', $front__id); ?></p>
         <form class="footer-search" method="get" action="" role="search">
           <input class="search-input" type="search" name="s" placeholder="">
           <button class="search-submit" type="submit" role="button"><i class="fa fa-search" aria-hidden="true"></i></button>
@@ -131,4 +131,4 @@
     <?php //the_field('front_scripts', $front__id);?>
 
 </body>
-</html>
+</pml>

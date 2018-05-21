@@ -8,7 +8,7 @@
 
         <div class="col-sm-10 col-sm-offset-1">
           <div class="tours-title">
-            <h2><?php echo get_the_title($slider__id); ?></h2>
+            <p class="h2">><?php echo get_the_title($slider__id); ?></p>
             <a href="" class="more-tours btn red-btn">Смотреть все</a>
             <div class="clearfix"></div>
           </div>
@@ -45,7 +45,7 @@
                     <a href="<?php the_permalink(); ?>"><span><?php the_field('more_btn_title', $front__id);?></span></a>
                   </div>
                   <div class="tours-cont">
-                    <h3><?php the_title(); ?></h3>
+                    <p class="h3"><?php the_title(); ?></p>
                     <div class="tours-subcont">
                       <div class="tour-tags">
                         <?php  if( $categories = get_the_category( ) ) :
@@ -91,7 +91,7 @@
                       <?php } ?>
                     </div>
                     <div class="content">
-                      <h3><?php the_sub_field('tile'); ?></h3>
+                      <p class="h3">><?php the_sub_field('tile'); ?></p>
                       <a href="<?php the_sub_field('link'); ?>" class="btn gray-btn"><?php the_sub_field('button_label'); ?> <i class="fa fa-chevron-right"></i></a>
                     </div>
                   </div><!-- .item -->

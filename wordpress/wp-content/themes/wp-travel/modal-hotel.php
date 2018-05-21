@@ -2,7 +2,7 @@
     <article id="post-<?php the_ID(); ?>" <?php post_class('content-page'); ?>>
 
         <div class="row">
-          <div class="col-md-10 col-md-offset-1"><h1 class="page-title inner-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h1></div>
+          <div class="col-md-10 col-md-offset-1"><p class="h1 page-title inner-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></p></div>
 
         </div><!-- /.row -->
 

@@ -88,7 +88,7 @@
     <div class="container">
       <div class="row">
         <div class="col-md-12">
-          <h1><?php the_title(); ?></h1>
+          <p class="h1"><?php the_title(); ?></p>
             <form action="<?php echo site_url() ?>/wp-admin/admin-ajax.php" method="POST" id="filter">
               <div class="form-wrap">
 
@@ -301,7 +301,7 @@
   <?php $tour_sliders = get_field('search_tours_sliders'); ?>
   <?php  if( !empty($tour_sliders) ): ?>
   <div id="exclusive_tours">
-    <h3><?php the_field('exclusive_link_text', $front__id); ?></h3>
+    <p class="h3"><?php the_field('exclusive_link_text', $front__id); ?></p>
   </div>
   <section class="tours-sliders">
     <div class="container">
@@ -312,7 +312,7 @@
 
         <div class="col-sm-10 col-sm-offset-1">
           <div class="tours-title">
-            <h2><?php echo get_the_title($slider__id); ?></h2>
+            <p class="h2"><?php echo get_the_title($slider__id); ?></p>
             <a href="<?php the_field('more_tours_link', $slider__id); ?>" class="more-tours btn red-btn"><?php the_field('more_tours_link_text', $slider__id); ?></a>
             <div class="clearfix"></div>
           </div>
@@ -345,7 +345,7 @@
                     <a href="<?php the_permalink(); ?>"><span><?php the_field('more_btn_title', $front__id);?></span></a>
                   </div>
                   <div class="tours-cont">
-                    <h3><?php the_title(); ?></h3>
+                    <p class="h3"><?php the_title(); ?></p>
                     <div class="tours-subcont">
                       <div class="tour-tags">
                         <?php  if( $categories = get_the_category( ) ) :
@@ -391,7 +391,7 @@
                       <?php } ?>
                     </div>
                     <div class="content">
-                      <h3><?php the_sub_field('tile'); ?></h3>
+                      <p class="h3"><?php the_sub_field('tile'); ?></p>
                       <a href="<?php the_sub_field('link'); ?>" class="btn gray-btn"><?php the_sub_field('button_label'); ?> <i class="fa fa-chevron-right"></i></a>
                     </div>
                   </div><!-- .item -->

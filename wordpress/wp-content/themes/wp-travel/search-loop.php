@@ -46,7 +46,7 @@
           </div>
           <div class="looper-cont-wrap">
             <div class="looper-cont">
-              <h3><?php the_title(); ?> </h3>
+              <p class="h3"><?php the_title(); ?> </p>
               <div class="looper-price" data-price="<?php the_field('tour_price'); ?>"><span class="price"><?php echo number_format(get_field('tour_price', $slide_product),0,'',' '); ?></span> <span class="currency"><?php the_field('tour_currency', $front__id); ?></span></div>
             </div>
             <div class="looper-subcont">

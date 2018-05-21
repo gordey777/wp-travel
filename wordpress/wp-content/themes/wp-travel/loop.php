@@ -6,7 +6,7 @@
       </div>
       <div class="looper-cont-wrap">
         <div class="looper-cont">
-          <h3><?php the_title(); ?> </h3>
+          <p class="h3"><?php the_title(); ?> </p>
           <div class="looper-desc">
             <?php wpeExcerpt('wpeExcerpt20'); ?>
           </div>

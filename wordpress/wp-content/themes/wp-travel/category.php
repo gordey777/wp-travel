@@ -75,7 +75,7 @@
     <div class="container">
       <div class="row">
         <div class="col-md-12">
-          <h1><?php echo $cat_title; ?></h1>
+          <p class="h1"><?php echo $cat_title; ?></p>
 
             <form action="<?php echo site_url() ?>/wp-admin/admin-ajax.php" method="POST" id="filter">
               <div class="form-wrap">
@@ -287,7 +287,7 @@
       <div class="container">
         <div class="row">
           <div class="col-md-10 col-md-offset-1">
-            <h1 class="page-title inner-title"><?php if( is_category() ) echo get_queried_object()->name; ?></h1>
+            <p class="h1" class="page-title inner-title"><?php if( is_category() ) echo get_queried_object()->name; ?></p>
           </div>
         </div><!-- /.row -->
       </div><!-- /.container -->
@@ -364,7 +364,7 @@
           <?php if (have_posts()):  ?>
 
               <div class="hotels-slider-wrap">
-                <h3><?php the_field('cat_hotels_title', $curr_term); ?></h3>
+                <p class="h3"><?php the_field('cat_hotels_title', $curr_term); ?></p>
                 <div class="row">
                   <div class="col-sm-10 col-sm-offset-1">
                     <div class="hotels-slider owl-carousel">
@@ -409,7 +409,7 @@
                 <?php foreach( $places as $post): ?>
                   <?php setup_postdata($post); ?>
                   <div class="showplace">
-                    <h3><?php the_title(); ?></h3>
+                    <p class="h1"><?php the_title(); ?></p>
                     <div class="img-wrap">
                       <?php if ( has_post_thumbnail()) { ?>
                         <img src="<?php echo the_post_thumbnail_url('medium'); ?>" title="<?php the_title(); ?>" alt="<?php the_title(); ?>" />
@@ -432,7 +432,7 @@
     <div class="container content-page">
       <div class="row">
         <div class="col-md-10 col-md-offset-1">
-          <h1 class="page-title inner-title"><?php if( is_category() ) echo get_queried_object()->name; ?></h1>
+          <p class="h1 page-title inner-title"><?php if( is_category() ) echo get_queried_object()->name; ?></p>
         </div>
       </div><!-- /.row -->
     </div><!-- /.container -->
@@ -465,7 +465,7 @@
   <?php $tour_sliders = get_field('category_tours_sliders', $curr_term); ?>
   <?php  if( !empty($tour_sliders) ): ?>
   <div id="exclusive_tours">
-    <h3><?php the_field('exclusive_link_text', $front__id); ?></h3>
+    <p class="h3"><?php the_field('exclusive_link_text', $front__id); ?></p>
   </div>
 
 
@@ -478,7 +478,7 @@
 
         <div class="col-sm-10 col-sm-offset-1">
           <div class="tours-title">
-            <h2><?php echo get_the_title($slider__id); ?></h2>
+            <p class="h2"><?php echo get_the_title($slider__id); ?></p>
             <a href="<?php the_field('more_tours_link', $slider__id); ?>" class="more-tours btn red-btn"><?php the_field('more_tours_link_text', $slider__id); ?></a>
             <div class="clearfix"></div>
           </div>
@@ -511,7 +511,7 @@
                     <a href="<?php the_permalink(); ?>"><span><?php the_field('more_btn_title', $front__id);?></span></a>
                   </div>
                   <div class="tours-cont">
-                    <h3><?php the_title(); ?></h3>
+                    <p class="h3"><?php the_title(); ?></p>
                     <div class="tours-subcont">
                       <div class="tour-tags">
                         <?php  if( $categories = get_the_category( ) ) :
@@ -557,7 +557,7 @@
                       <?php } ?>
                     </div>
                     <div class="content">
-                      <h3><?php the_sub_field('tile'); ?></h3>
+                      <p class="h3"><?php the_sub_field('tile'); ?></p>
                       <a href="<?php the_sub_field('link'); ?>" class="btn gray-btn"><?php the_sub_field('button_label'); ?> <i class="fa fa-chevron-right"></i></a>
                     </div>
                   </div><!-- .item -->

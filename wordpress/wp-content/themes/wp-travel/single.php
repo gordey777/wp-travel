@@ -5,7 +5,6 @@
   <?php if( have_rows('main_slider', $front__id) ): ?>
     <div id="main-slider" class="owl-carousel">
       <?php while ( have_rows('main_slider', $front__id) ) : the_row(); ?>
-
         <?php //color & bg-color
         if ( get_sub_field('color_title')) {
           $color_title = 'color: '. get_sub_field('color_title').';';
@@ -34,13 +33,13 @@
         ?>
 
         <?php $bg_image = get_sub_field('img'); ?>
-        <div class="slide item" style="background-image: url(<?php if ( !empty($bg_image)) { echo $bg_image['url'];} ?>);">
+        <div class="slide item lazy__load" data-imgurl="<?php if ( !empty($bg_image)) { echo $bg_image['url'];} ?>" style="background-image: url(<?php if ( !empty($bg_image)) { echo $bg_image['sizes']['medium'];} ?>);">
         <div class="container">
           <div class="row">
             <div class="slider-cont-wrap col-xs-10 col-xs-offset-1">
               <div class="slider-cont">
                 <?php if ( get_sub_field('title')) { ?>
-                  <div class="title-wrap"><h2 style="<?php echo $color_title; ?><?php echo $color_title_bg; ?>"><?php the_sub_field('title'); ?></h2></div>
+                  <div class="title-wrap"><p class="h2" style="<?php echo $color_title; ?><?php echo $color_title_bg; ?>"><?php the_sub_field('title'); ?></p></div>
                 <?php } ?>
                 <?php if ( get_sub_field('days')) { ?>
                   <p class="time" style="<?php echo $color_days; ?><?php echo $color_days_bg; ?>"><?php the_sub_field('days'); ?></p>
@@ -76,7 +75,7 @@
     <article id="post-<?php the_ID(); ?>" <?php post_class('content-page'); ?>>
       <div class="container">
         <div class="row">
-          <div class="col-md-10 col-md-offset-1"><h1 class="page-title inner-title"><?php the_title(); ?></h1><?php edit_post_link(); ?></div>
+          <div class="col-md-10 col-md-offset-1"><p class="h2" class="page-title inner-title"><?php the_title(); ?></p><?php edit_post_link(); ?></div>
 
         </div><!-- /.row -->
       </div><!-- /.container -->
@@ -111,7 +110,7 @@
 
         <div class="col-sm-10 col-sm-offset-1">
           <div class="tours-title">
-            <h2><?php echo get_the_title($slider__id); ?></h2>
+            <p class="h2"><?php echo get_the_title($slider__id); ?></p>
             <a href="<?php the_field('more_tours_link', $slider__id); ?>" class="more-tours btn red-btn"><?php the_field('more_tours_link_text', $slider__id); ?></a>
             <div class="clearfix"></div>
           </div>
@@ -144,7 +143,7 @@
                     <a href="<?php the_permalink(); ?>"><span><?php the_field('more_btn_title', $front__id);?></span></a>
                   </div>
                   <div class="tours-cont">
-                    <h3><?php the_title(); ?></h3>
+                    <p class="h3"><?php the_title(); ?></p>
                     <div class="tours-subcont">
                       <div class="tour-tags">
                         <?php  if( $categories = get_the_category( ) ) :
@@ -190,7 +189,7 @@
                       <?php } ?>
                     </div>
                     <div class="content">
-                      <h3><?php the_sub_field('tile'); ?></h3>
+                      <p class="h3"><?php the_sub_field('tile'); ?></p>
                       <a href="<?php the_sub_field('link'); ?>" class="btn gray-btn"><?php the_sub_field('button_label'); ?> <i class="fa fa-chevron-right"></i></a>
                     </div>
                   </div><!-- .item -->
